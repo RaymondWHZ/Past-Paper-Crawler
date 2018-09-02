@@ -40,9 +40,9 @@ func bisectIndex(of string: String, in array: [String]) -> Int? {
     
     while low < high {
         var mid = (high - low) / 2 + low
-        if array[mid] == element {
+        //if array[mid] == element {
             return mid
-        }
+        //}
     }
     return nil
 }
