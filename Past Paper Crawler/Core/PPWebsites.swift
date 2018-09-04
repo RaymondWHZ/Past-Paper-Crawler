@@ -66,17 +66,20 @@ class PapaCambridge: PastPaperWebsite {
         let lv1SpecifiedUrl = bondString(root + level_site[level]! + subject + "/")
         let lv1f = getContentList(url: lv1SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
         
+        let group = DispatchGroup()
         for folder in lv1f{
-            let lv2SpecifiedUrl = bondString(lv1SpecifiedUrl + folder + "/")
-            for paper in getContentList(url: lv2SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." }){
-                guard paper.contains(".pdf") else{
-                    continue
+            group.enter()
+            DispatchQueue.global().async {
+                let lv2SpecifiedUrl = bondString(lv1SpecifiedUrl + folder + "/")
+                for paper in getContentList(url: lv2SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name.contains(".pdf") }){
+                    allPapers.append(paper)
                 }
-                print(paper)
-                allPapers.append(paper)
+                print("Completed: \(folder)")
+                group.leave()
             }
         }
         
+        group.wait()
         return allPapers
     }
     

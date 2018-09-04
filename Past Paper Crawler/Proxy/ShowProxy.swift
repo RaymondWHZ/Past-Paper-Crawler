@@ -31,7 +31,7 @@ class ShowProxy {
     
     var currentShowList: [String] {
         get {
-            return []
+            return wholeList
         }
     }
     
