@@ -12,7 +12,7 @@ protocol DownloadProxy {
     func downloadPapers(level: String, subject: String, specifiedPapers: [String])
 }
 
-class FileManagerProxy {
+class FileManagerProxy: DownloadProxy {
     // todo implement local file manager
     
     let website: PastPaperWebsite
@@ -21,6 +21,10 @@ class FileManagerProxy {
     init(website: PastPaperWebsite, localPath: String) {
         self.website = website
         self.localPath = localPath
+    }
+    
+    func downloadPapers(level: String, subject: String, specifiedPapers: [String]) {
+        
     }
 }
 

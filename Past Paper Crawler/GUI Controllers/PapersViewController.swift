@@ -17,6 +17,7 @@ class PapersViewController: NSViewController {
     @IBOutlet weak var typePopButton: NSPopUpButton!
     
     @IBOutlet weak var papersTable: NSTableView!
+    @IBOutlet weak var selectAllButton: NSButton!
     
     var subjectSystem: SubjectSystem?
     
@@ -58,6 +59,11 @@ class PapersViewController: NSViewController {
         refreshList()
     }
     
+    @IBAction func selectAllClicked(_ sender: Any) {
+        selected = Array(repeating: selectAllButton.state == .on, count: currentDisplay.count)
+        papersTable.reloadData()
+    }
+    
     @IBAction func changedShowOption(_ sender: Any) {
         // refresh pop button
         typePopButton.isHidden = showAllCheckbox.state == .off
@@ -88,6 +94,8 @@ class PapersViewController: NSViewController {
         
         // lock up buttons
         subjectPopButton.isEnabled = false
+        papersTable.isEnabled = false
+        selectAllButton.isEnabled = false
         papersProgress.startAnimation(nil)
         
         DispatchQueue.global().async {
@@ -98,6 +106,8 @@ class PapersViewController: NSViewController {
                 
                 // unlock buttons
                 self.subjectPopButton.isEnabled = true
+                self.papersTable.isEnabled = true
+                self.selectAllButton.isEnabled = true
                 self.papersProgress.stopAnimation(nil)
             }
         }
