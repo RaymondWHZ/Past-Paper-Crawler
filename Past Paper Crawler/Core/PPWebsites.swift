@@ -8,17 +8,8 @@
 
 import Foundation
 
-class Subject {
-    let level: String
-    let name: String
-    
-    init(_ level: String, _ name: String) {
-        self.level = level
-        self.name = name
-    }
-}
-
 func bondString(s: String) -> String {
+    // todo implement the function that replaces all spaces into %<number>
     /*
     var ns = ""
     for i in 0...s.count - 1 {
@@ -27,30 +18,22 @@ func bondString(s: String) -> String {
             s.
         }
     }
- */
+     */
     return ""
 }
 
-class PastPaperWebSite {
+protocol PastPaperWebsite {
     
-    func getLevels() -> [String] {
-        return []
-    }
+    func getLevels() -> [String]
     
-    func getSubjects(level: String) -> [String] {
-        return []
-    }
+    func getSubjects(level: String) -> [String]
     
-    func getPapers(level: String, subject: String) -> [String] {
-        return []
-    }
+    func getPapers(level: String, subject: String) -> [String]
     
-    func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
-        
-    }
+    func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String)
 }
 
-class PapaCambridge: PastPaperWebSite {
+class PapaCambridge: PastPaperWebsite {
     
     private let root = "https://pastpapers.papacambridge.com/?dir=Cambridge%20International%20Examinations%20%28CIE%29/"
     
@@ -60,20 +43,22 @@ class PapaCambridge: PastPaperWebSite {
         "O-Level": "GCE%20International%20O%20Level/"
     ]
     
-    override func getLevels() -> [String] {
+    func getLevels() -> [String] {
         return Array(level_site.keys)
     }
     
-    override func getSubjects(level: String) -> [String] {
+    func getSubjects(level: String) -> [String] {
         let specifiedUrl = root + level_site[level]!
         return getContentList(url: specifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
     }
     
-    override func getPapers(level: String, subject: String) -> [String] {
+    func getPapers(level: String, subject: String) -> [String] {
+        // todo implement get action
         return []
     }
     
-    override func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
+    func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
+        // todo implement download action
         
     }
 }

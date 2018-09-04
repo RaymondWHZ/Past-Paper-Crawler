@@ -71,17 +71,19 @@ class SubjectsSetViewController: NSViewController {
         
         lazySelectedLevel = levelPopButton.selectedItem!.title  // update lazy variable
         
-        levelPopButton.isEnabled = false  // lock up level button
-        subjectProgress.startAnimation(nil)  // start spinning
+        // lock up buttons
+        levelPopButton.isEnabled = false
+        subjectProgress.startAnimation(nil)
         
         DispatchQueue.global().async {
-            self.currentSubjects = usingSite.getSubjects(level: self.lazySelectedLevel)  // access website to get all subjects
+            self.currentSubjects = website.getSubjects(level: self.lazySelectedLevel)  // access website to get all subjects
             
             DispatchQueue.main.async {
                 self.updateTable()
                 
-                self.subjectProgress.stopAnimation(nil)  // stop spinning
-                self.levelPopButton.isEnabled = true  // unlock button
+                // unlock buttons
+                self.subjectProgress.stopAnimation(nil)
+                self.levelPopButton.isEnabled = true
             }
         }
     }
@@ -223,7 +225,7 @@ extension QuickListViewController: NSTableViewDataSource {
 
 extension QuickListViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if let newCell = tableColumn?.dataCell as? NSButtonCell{  // fetch template cell
+        if let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
             newCell.title = quickList[row]["name"]!  // get the title from list
             return newCell
         }

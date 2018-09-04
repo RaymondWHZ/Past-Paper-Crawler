@@ -8,8 +8,6 @@
 
 import Cocoa
 
-let usingSite = PapaCambridge()
-
 class MainViewController: NSViewController {
     
     @IBOutlet weak var subjectPopButton: NSPopUpButton!
@@ -23,11 +21,14 @@ class MainViewController: NSViewController {
         
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton) {
             level, subject in
-            
-            // usingSite.getPapers(level: level, subject: subject)
+            // load current subject
+            PapersViewController.currentSubject = ["level": level, "name": subject]
             
             // display paper window
             self.performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "Show Papers"), sender: nil)
+            
+            // switch back selection
+            self.subjectPopButton.selectItem(at: 0)
         }
         
         refreshAction = Action{
@@ -41,32 +42,6 @@ class MainViewController: NSViewController {
     }
     
     @IBAction func subjectSelected(_ sender: Any) { subjectSystem!.selectorClicked() }
-}
-
-class PapersViewController: NSViewController {
-    
-    @IBOutlet weak var seasonPopButton: NSPopUpButton!
-    @IBOutlet weak var showAllCheckbox: NSButton!
-    @IBOutlet weak var typePopButton: NSPopUpButton!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
-    func refreshFiles(files: [String]) {
-        
-    }
-    
-    @IBAction func changedShowOption(_ sender: Any) {
-        
-        // refresh pop button
-        typePopButton.isHidden = showAllCheckbox.state == .off
-    }
-    
-    @IBAction func seasonSelected(_ sender: Any) {
-        
-    }
 }
 
 

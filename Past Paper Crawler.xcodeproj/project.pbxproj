@@ -19,6 +19,19 @@
 		B6790961213ADF5B00E2F233 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790960213ADF5B00E2F233 /* Settings.swift */; };
 		B6790964213B9D2800E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
 		B6790966213C245200E2F233 /* Bisect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790965213C245200E2F233 /* Bisect.swift */; };
+		B679096A213C399600E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
+		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
+		B679096E213CC62800E2F233 /* ContentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096D213CC62800E2F233 /* ContentTableViewController.swift */; };
+		B6790976213D893200E2F233 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790975213D893200E2F233 /* main.swift */; };
+		B679097C213D897000E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
+		B679097D213D897000E2F233 /* Bisect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790965213C245200E2F233 /* Bisect.swift */; };
+		B679097E213D897000E2F233 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
+		B679097F213D897000E2F233 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
+		B6790980213D897000E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
+		B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
+		B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
+		B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
+		B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
 		B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +51,18 @@
 			remoteInfo = "Past Paper Crawler";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B6790971213D893100E2F233 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B60320D0213254AD00488A42 /* Past Paper Crawler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Past Paper Crawler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +85,13 @@
 		B6790960213ADF5B00E2F233 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B6790963213B9D2800E2F233 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B6790965213C245200E2F233 /* Bisect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bisect.swift; sourceTree = "<group>"; };
+		B6790969213C399600E2F233 /* ShowProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProxy.swift; sourceTree = "<group>"; };
+		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
+		B679096D213CC62800E2F233 /* ContentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewController.swift; sourceTree = "<group>"; };
+		B6790973213D893100E2F233 /* Crawler Core Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Crawler Core Test"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6790975213D893200E2F233 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B6790981213D8B6E00E2F233 /* DownloadProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProxy.swift; sourceTree = "<group>"; };
+		B6790986213E7D9200E2F233 /* PublicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicConstants.swift; sourceTree = "<group>"; };
 		B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectSystemControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +117,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B6790970213D893100E2F233 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -94,6 +133,7 @@
 				B60320D2213254AD00488A42 /* Past Paper Crawler */,
 				B60320E5213254AF00488A42 /* Past Paper CrawlerTests */,
 				B60320F0213254AF00488A42 /* Past Paper CrawlerUITests */,
+				B6790974213D893200E2F233 /* Crawler Core Test */,
 				B60320D1213254AD00488A42 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,6 +144,7 @@
 				B60320D0213254AD00488A42 /* Past Paper Crawler.app */,
 				B60320E2213254AF00488A42 /* Past Paper CrawlerTests.xctest */,
 				B60320ED213254AF00488A42 /* Past Paper CrawlerUITests.xctest */,
+				B6790973213D893100E2F233 /* Crawler Core Test */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,6 +152,7 @@
 		B60320D2213254AD00488A42 /* Past Paper Crawler */ = {
 			isa = PBXGroup;
 			children = (
+				B6790983213E73E100E2F233 /* Proxy */,
 				B6790962213B9D1A00E2F233 /* Util */,
 				B679095F213ADF4D00E2F233 /* IO */,
 				B6F859BF2136CDCB00D7002C /* Core */,
@@ -121,6 +163,7 @@
 				B60320D9213254AF00488A42 /* Main.storyboard */,
 				B60320DC213254AF00488A42 /* Info.plist */,
 				B60320DD213254AF00488A42 /* Past_Paper_Crawler.entitlements */,
+				B6790986213E7D9200E2F233 /* PublicConstants.swift */,
 			);
 			path = "Past Paper Crawler";
 			sourceTree = "<group>";
@@ -160,12 +203,31 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		B6790974213D893200E2F233 /* Crawler Core Test */ = {
+			isa = PBXGroup;
+			children = (
+				B6790975213D893200E2F233 /* main.swift */,
+			);
+			path = "Crawler Core Test";
+			sourceTree = "<group>";
+		};
+		B6790983213E73E100E2F233 /* Proxy */ = {
+			isa = PBXGroup;
+			children = (
+				B6790969213C399600E2F233 /* ShowProxy.swift */,
+				B6790981213D8B6E00E2F233 /* DownloadProxy.swift */,
+			);
+			path = Proxy;
+			sourceTree = "<group>";
+		};
 		B6F859BE2136CDAC00D7002C /* GUI Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				B60320D5213254AD00488A42 /* MainViewControllers.swift */,
 				B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */,
 				B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */,
+				B679096B213C3A9B00E2F233 /* PapersViewController.swift */,
+				B679096D213CC62800E2F233 /* ContentTableViewController.swift */,
 			);
 			path = "GUI Controllers";
 			sourceTree = "<group>";
@@ -235,6 +297,23 @@
 			productReference = B60320ED213254AF00488A42 /* Past Paper CrawlerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		B6790972213D893100E2F233 /* Crawler Core Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6790977213D893200E2F233 /* Build configuration list for PBXNativeTarget "Crawler Core Test" */;
+			buildPhases = (
+				B679096F213D893100E2F233 /* Sources */,
+				B6790970213D893100E2F233 /* Frameworks */,
+				B6790971213D893100E2F233 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Crawler Core Test";
+			productName = "Crawler Core Test";
+			productReference = B6790973213D893100E2F233 /* Crawler Core Test */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -249,7 +328,7 @@
 						CreatedOnToolsVersion = 9.4.1;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -260,6 +339,9 @@
 					B60320EC213254AF00488A42 = {
 						CreatedOnToolsVersion = 9.4.1;
 						TestTargetID = B60320CF213254AD00488A42;
+					};
+					B6790972213D893100E2F233 = {
+						CreatedOnToolsVersion = 9.4.1;
 					};
 				};
 			};
@@ -279,6 +361,7 @@
 				B60320CF213254AD00488A42 /* Past Paper Crawler */,
 				B60320E1213254AF00488A42 /* Past Paper CrawlerTests */,
 				B60320EC213254AF00488A42 /* Past Paper CrawlerUITests */,
+				B6790972213D893100E2F233 /* Crawler Core Test */,
 			);
 		};
 /* End PBXProject section */
@@ -314,11 +397,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */,
 				B6790964213B9D2800E2F233 /* Event.swift in Sources */,
 				B6032100213256F500488A42 /* Core.swift in Sources */,
+				B679096E213CC62800E2F233 /* ContentTableViewController.swift in Sources */,
+				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
 				B6790966213C245200E2F233 /* Bisect.swift in Sources */,
 				B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */,
+				B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */,
 				B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */,
+				B679096A213C399600E2F233 /* ShowProxy.swift in Sources */,
 				B60B0E3621356A0700DBE06E /* SettingViewsControllers.swift in Sources */,
 				B6790961213ADF5B00E2F233 /* Settings.swift in Sources */,
 				B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */,
@@ -339,6 +427,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				B60320F2213254AF00488A42 /* Past_Paper_CrawlerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B679096F213D893100E2F233 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */,
+				B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */,
+				B679097C213D897000E2F233 /* Event.swift in Sources */,
+				B679097D213D897000E2F233 /* Bisect.swift in Sources */,
+				B679097E213D897000E2F233 /* Core.swift in Sources */,
+				B679097F213D897000E2F233 /* PPWebsites.swift in Sources */,
+				B6790980213D897000E2F233 /* ShowProxy.swift in Sources */,
+				B6790976213D893200E2F233 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,7 +589,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Past Paper Crawler/Past Paper Crawler.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
@@ -505,7 +607,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Past Paper Crawler/Past Paper Crawler.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
@@ -602,6 +703,26 @@
 			};
 			name = Release;
 		};
+		B6790978213D893200E2F233 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9MVLP78N36;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		B6790979213D893200E2F233 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9MVLP78N36;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -637,6 +758,15 @@
 			buildConfigurations = (
 				B60320FD213254AF00488A42 /* Debug */,
 				B60320FE213254AF00488A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6790977213D893200E2F233 /* Build configuration list for PBXNativeTarget "Crawler Core Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6790978213D893200E2F233 /* Debug */,
+				B6790979213D893200E2F233 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

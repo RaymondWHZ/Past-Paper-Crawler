@@ -21,6 +21,9 @@ class SubjectSystem {
     let selector: NSPopUpButton
     let callback: (String, String) -> ()
     
+    var defaultItemNum = 4
+    var quickListStartFromIndex = 2
+    
     init(
         parent: NSViewController,
         selector: NSPopUpButton,
@@ -52,7 +55,7 @@ class SubjectSystem {
         else if selector.indexOfSelectedItem > 0{
             let selectedIndex = self.selector.indexOfSelectedItem
             DispatchQueue.global().async {
-                let selected = quickList[selectedIndex - 1]
+                let selected = quickList[selectedIndex - self.quickListStartFromIndex]
                 DispatchQueue.main.async {
                     self.callback(selected["level"]!, selected["name"]!)
                 }
@@ -61,11 +64,11 @@ class SubjectSystem {
     }
     
     func refresh() {
-        for _ in 3..<selector.numberOfItems {
-            selector.removeItem(at: 1)
+        for _ in 4..<selector.numberOfItems {
+            selector.removeItem(at: quickListStartFromIndex)
         }
         for i in 0..<quickList.count {
-            selector.insertItem(withTitle: quickList[i]["name"]!, at: i + 1)
+            selector.insertItem(withTitle: quickList[i]["name"]!, at: i + quickListStartFromIndex)
         }
     }
 }
@@ -106,7 +109,7 @@ class AllSubjectsViewController: NSViewController {
         subjectProgress.startAnimation(nil)
         
         DispatchQueue.global().async {
-            let subjects = usingSite.getSubjects(level: selectedLevel)
+            let subjects = website.getSubjects(level: selectedLevel)
             
             DispatchQueue.main.async {
                 self.subjectPopButton.addItems(withTitles: subjects)

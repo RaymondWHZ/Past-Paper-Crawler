@@ -25,7 +25,7 @@ func getContentList(url: String, nameTag: String, criteria: (String) -> Bool) ->
         if scanner.isAtEnd {
             return ret
         }
-        scanner.scanUpTo("\"", into: &cur)
+        scanner.scanUpTo("\"", into: nil)
         scanner.scanLocation += 1
         scanner.scanUpTo("\"", into: &cur)
         let s = cur! as String

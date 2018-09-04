@@ -160,7 +160,7 @@
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WHl-61-pIY">
                                 <rect key="frame" x="389" y="18" width="92" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="inline" title="View Selected" bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ojL-M1-Tyg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -194,7 +194,7 @@
                                 <rect key="frame" x="20" y="46" width="410" height="234"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="Dt9-qk-sgM">
-                                    <rect key="frame" x="1" y="23" width="408" height="210"/>
+                                    <rect key="frame" x="1" y="0.0" width="408" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="pZt-tS-doV" id="pP5-a4-bBI">
@@ -235,7 +235,7 @@
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9TB-Na-IdK">
                                 <rect key="frame" x="364" y="13" width="72" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Lv8-sn-80J">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -249,7 +249,7 @@ DQ
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="05p-Zi-42G">
                                 <rect key="frame" x="20" y="23" width="117" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Change sequence:" id="msn-Jg-gir">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -258,7 +258,7 @@ DQ
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5uV-g9-ZTb">
                                 <rect key="frame" x="143" y="21" width="28" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="inline" title="Up" bezelStyle="inline" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j8W-5i-gEH">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -270,7 +270,7 @@ DQ
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C4Y-cW-k3s">
                                 <rect key="frame" x="173" y="21" width="44" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="inline" title="Down" bezelStyle="inline" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nNx-Mo-HYV">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -480,7 +480,7 @@ Gw
                 </viewController>
                 <customObject id="kY0-jc-gfW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-525" y="898"/>
+            <point key="canvasLocation" x="-524" y="898"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="qKZ-ot-GtR">
@@ -570,6 +570,7 @@ Gw
                                             <menuItem title="(choose a subject)" state="on" id="zCt-AT-DPm">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
+                                            <menuItem isSeparatorItem="YES" id="4Wm-t3-df3"/>
                                             <menuItem isSeparatorItem="YES" id="FBJ-8G-4ri"/>
                                             <menuItem title="Other..." keyEquivalent="f" id="xy6-2T-DHu"/>
                                         </items>
@@ -616,7 +617,7 @@ Gw
                 </viewController>
                 <customObject id="tNu-xP-1gO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-524.5" y="623"/>
+            <point key="canvasLocation" x="-524" y="643"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -678,7 +679,7 @@ Gw
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="JjL-in-vxW">
-                                    <rect key="frame" x="1" y="355" width="449" height="15"/>
+                                    <rect key="frame" x="-7" y="8" width="0.0" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="uSR-sC-wQV">
@@ -703,7 +704,7 @@ Gw
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="seasonSelected:" target="XfG-lQ-9wD" id="RtX-tV-1vw"/>
+                                    <action selector="subjectSelected:" target="XfG-lQ-9wD" id="RtX-tV-1vw"/>
                                 </connections>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geV-Qa-LQD">
@@ -740,7 +741,7 @@ Gw
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="changedShowOption:" target="XfG-lQ-9wD" id="2dZ-cG-XcM"/>
+                                    <action selector="changedShowOption:" target="XfG-lQ-9wD" id="fxX-iJ-o0s"/>
                                 </connections>
                             </button>
                             <popUpButton hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEU-3c-2Lw">
@@ -771,21 +772,23 @@ Gw
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAx-Ov-jCy">
                                 <rect key="frame" x="18" y="456" width="456" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="-selected subject-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="f8I-vc-F3Q" id="y3f-f8-aOP">
+                                <popUpButtonCell key="cell" type="push" title="-selected subject-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="f8I-vc-F3Q" id="y3f-f8-aOP">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="oZX-4r-2AL">
                                         <items>
-                                            <menuItem title="-selected subject-" id="f8I-vc-F3Q">
+                                            <menuItem title="-selected subject-" state="on" id="f8I-vc-F3Q">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
-                                            <menuItem isSeparatorItem="YES" state="on" id="dur-MO-7Y2"/>
-                                            <menuItem title="Other..." id="bT8-TZ-MVh">
-                                                <modifierMask key="keyEquivalentModifierMask"/>
-                                            </menuItem>
+                                            <menuItem isSeparatorItem="YES" id="mcT-Dx-z7J"/>
+                                            <menuItem isSeparatorItem="YES" id="dur-MO-7Y2"/>
+                                            <menuItem title="Other..." keyEquivalent="f" id="bT8-TZ-MVh"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <connections>
+                                    <action selector="subjectSelected:" target="XfG-lQ-9wD" id="1ZT-2h-BUc"/>
+                                </connections>
                             </popUpButton>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ola-90-rgO">
                                 <rect key="frame" x="479" y="431" width="16" height="16"/>
@@ -803,13 +806,16 @@ Gw
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbh-vu-EAX">
                                 <rect key="frame" x="383" y="13" width="118" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="download" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C7f-Ft-7b2">
+                                <buttonCell key="cell" type="push" title="download" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C7f-Ft-7b2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="downloadClicked:" target="XfG-lQ-9wD" id="Q76-KZ-H8a"/>
+                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEa-Oi-fwH">
                                 <rect key="frame" x="20" y="49" width="377" height="17"/>
@@ -823,8 +829,11 @@ DQ
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="papersProgress" destination="lx2-AB-0kB" id="sey-S8-ut0"/>
+                        <outlet property="papersTable" destination="D9t-ZE-12Q" id="OEn-fy-3m6"/>
                         <outlet property="seasonPopButton" destination="X73-oQ-9Md" id="UkT-85-9Lw"/>
                         <outlet property="showAllCheckbox" destination="wvb-gV-RhV" id="w2H-yL-TVz"/>
+                        <outlet property="subjectPopButton" destination="XAx-Ov-jCy" id="f2R-CS-P9X"/>
                         <outlet property="typePopButton" destination="hEU-3c-2Lw" id="8jn-Et-0RO"/>
                     </connections>
                 </viewController>
@@ -834,6 +843,6 @@ DQ
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Fey-GU-wQo"/>
+        <segue reference="guZ-io-LGF"/>
     </inferredMetricsTieBreakers>
 </document>

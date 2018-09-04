@@ -8,33 +8,6 @@
 
 import Cocoa
 
-let notificationCenter = NotificationCenter.default
-let userDefaults = UserDefaults.standard
-
-var exitEvents = Event()
-
-let quickListToken = "Quick List"
-private var _quickList: [Dictionary<String, String>]? = nil
-var quickList: [Dictionary<String, String>] {
-    get {
-        if _quickList == nil {
-            if let list = userDefaults.array(forKey: quickListToken) as? [Dictionary<String, String>] {
-                _quickList = list
-            }
-            else {
-                _quickList = []
-            }
-            exitEvents.addAction(Action{
-                userDefaults.set(_quickList, forKey: quickListToken)
-            })
-        }
-        return _quickList!
-    }
-    set {
-        _quickList = newValue
-    }
-}
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
