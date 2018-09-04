@@ -8,18 +8,26 @@
 
 import Foundation
 
-func bondString(s: String) -> String {
-    // todo implement the function that replaces all spaces into %<number>
-    /*
-    var ns = ""
-    for i in 0...s.count - 1 {
-        var cs = &s[s.index(s.startIndex, offsetBy: i)]
-        if s[s.index(s.startIndex, offsetBy: i)] == " " {
-            s.
+func bondString(_ s: String) -> String {
+    var final: String = ""
+    let changeDict: [String: String] = [
+        " ": "%20",
+        "(": "%28",
+        ")": "%29"
+    ]
+    var char: String
+    
+    for c in s{
+        char = String(c)
+        for key in changeDict.keys{
+            if char == key{
+                char = changeDict[key]!
+                break
+            }
         }
+        final += char
     }
-     */
-    return ""
+    return final
 }
 
 protocol PastPaperWebsite {
@@ -53,12 +61,27 @@ class PapaCambridge: PastPaperWebsite {
     }
     
     func getPapers(level: String, subject: String) -> [String] {
-        // todo implement get action
-        return []
+        var allPapers: [String] = Array()
+        
+        let lv1SpecifiedUrl = bondString(root + level_site[level]! + subject + "/")
+        let lv1f = getContentList(url: lv1SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
+        
+        for folder in lv1f{
+            let lv2SpecifiedUrl = bondString(lv1SpecifiedUrl + folder + "/")
+            for paper in getContentList(url: lv2SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." }){
+                guard paper.contains(".pdf") else{
+                    continue
+                }
+                print(paper)
+                allPapers.append(paper)
+            }
+        }
+        
+        return allPapers
     }
     
     func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
         // todo implement download action
-        
     }
+    
 }

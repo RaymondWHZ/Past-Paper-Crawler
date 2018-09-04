@@ -127,7 +127,7 @@ class AllSubjectsViewController: NSViewController {
             return
         }
         
-        let selectedLevel = subjectPopButton.selectedItem!.title
+        let selectedLevel = levelPopButton.selectedItem!.title
         let selectedSubject = subjectPopButton.selectedItem!.title
         self.dismiss(nil)
         self.callback(selectedLevel, selectedSubject)
