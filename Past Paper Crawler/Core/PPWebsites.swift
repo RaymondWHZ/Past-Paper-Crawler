@@ -71,13 +71,10 @@ class PapaCambridge: PastPaperWebsite {
             group.enter()
             DispatchQueue.global().async {
                 let lv2SpecifiedUrl = bondString(lv1SpecifiedUrl + folder + "/")
-                for paper in getContentList(url: lv2SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." }){
-                    guard paper.contains(".pdf") else{
-                        continue
-                    }
+                for paper in getContentList(url: lv2SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name.contains(".pdf") }){
                     allPapers.append(paper)
                 }
-                print("Completed one")
+                print("Completed: \(folder)")
                 group.leave()
             }
         }
