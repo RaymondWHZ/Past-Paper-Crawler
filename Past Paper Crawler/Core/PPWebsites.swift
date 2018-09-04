@@ -44,6 +44,7 @@ protocol PastPaperWebsite {
 class PapaCambridge: PastPaperWebsite {
     
     private let root = "https://pastpapers.papacambridge.com/?dir=Cambridge%20International%20Examinations%20%28CIE%29/"
+    private let downloadRoot = "https://pastpapers.papacambridge.com/Cambridge%20International%20Examinations%20(CIE)/"
     
     private let level_site = [
         "IGCSE": "IGCSE/",
@@ -84,14 +85,42 @@ class PapaCambridge: PastPaperWebsite {
     }
     
     private func downloadPaper(url: String, toPath: String){
-        let url = URL(string: url)!
+        print(url)
+        
+        let url = URL(string: bondString(url))!
         let data = NSData(contentsOf: url)
         data?.write(toFile: toPath, atomically: true)
     }
     
     func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
-        let rootUrl = root + level_site[level]! + subject + "/"
-        print(rootUrl)
+        let seasons: [String: String] = [
+            "w": "Nov/", "s": "Jun/", "m": "Mar/"
+        ]
+        let group = DispatchGroup()
+        
+        let rootUrl = downloadRoot + level_site[level]! + subject + "/"
+        for paper in specifiedPapers{
+            group.enter()
+            DispatchQueue.global().async {
+                var pSeason = String(paper[paper.index(paper.startIndex, offsetBy: 5)])
+                let pYear = "20" + paper[paper.index(paper.startIndex, offsetBy: 6)...paper.index(paper.startIndex, offsetBy: 7)] + "%20"
+                
+                for season in seasons.keys{
+                    if pSeason == season{
+                        pSeason = seasons[season]!
+                        break
+                    }
+                    
+                let specifiedUrl = rootUrl + pYear + pSeason + paper + ".pdf"
+                let location = toPath + paper + ".pdf"
+        
+                self.downloadPaper(url: specifiedUrl, toPath: location)
+                    
+                }
+                group.leave()
+            }
+        }
+        group.wait()
     }
     
 }
