@@ -80,8 +80,15 @@ class PapaCambridge: PastPaperWebsite {
         return allPapers
     }
     
+    private func downloadPaper(url: String, toPath: String){
+        let url = URL(string: url)!
+        let data = NSData(contentsOf: url)
+        data?.write(toFile: toPath, atomically: true)
+    }
+    
     func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
-        // todo implement download action
+        let rootUrl = root + level_site[level]! + subject + "/"
+        print(rootUrl)
     }
     
 }

@@ -8,5 +8,4 @@
 
 import Cocoa
 
-// insert code to test core here
-
+// insert code to test cor
