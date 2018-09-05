@@ -8,26 +8,28 @@
 
 import Foundation
 
-func bondString(_ s: String) -> String {
-    var final: String = ""
-    let changeDict: [String: String] = [
-        " ": "%20",
-        "(": "%28",
-        ")": "%29"
-    ]
-    var char: String
+class WebFile {
+    let name: String
+    let fullUrl: URL
     
-    for c in s{
-        char = String(c)
-        for key in changeDict.keys{
-            if char == key{
-                char = changeDict[key]!
-                break
-            }
+    init(url: String) {
+        var index = url.index(before: url.endIndex)
+        while url[index] != "/" {
+            index = url.index(before: index)
         }
-        final += char
+        
+        name = String(url[url.index(after: index)...])
+        fullUrl = URL(string: url)!
     }
-    return final
+    
+    func download(to path: String) {
+        let data = NSData(contentsOf: fullUrl)!
+        var p = path
+        if p.last != "/" {
+            p += "/"
+        }
+        data.write(toFile: p + name, atomically: true)
+    }
 }
 
 protocol PastPaperWebsite {
@@ -36,15 +38,15 @@ protocol PastPaperWebsite {
     
     func getSubjects(level: String) -> [String]
     
-    func getPapers(level: String, subject: String) -> [String]
+    func getPapers(level: String, subject: String) -> [WebFile]
     
-    func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String)
+    func downloadPapers(specifiedPapers: [WebFile], to path: String)
 }
 
 class PapaCambridge: PastPaperWebsite {
     
     private let root = "https://pastpapers.papacambridge.com/?dir=Cambridge%20International%20Examinations%20%28CIE%29/"
-    private let downloadRoot = "https://pastpapers.papacambridge.com/Cambridge%20International%20Examinations%20(CIE)/"
+    private let fileRoot = "https://pastpapers.papacambridge.com/Cambridge%20International%20Examinations%20(CIE)/"
     
     private let level_site = [
         "IGCSE": "IGCSE/",
@@ -61,21 +63,27 @@ class PapaCambridge: PastPaperWebsite {
         return getContentList(url: specifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
     }
     
-    func getPapers(level: String, subject: String) -> [String] {
-        var allPapers: [String] = Array()
+    func getPapers(level: String, subject: String) -> [WebFile] {
+        var allPapers: [WebFile] = []
         
-        let lv1SpecifiedUrl = bondString(root + level_site[level]! + subject + "/")
-        let lv1f = getContentList(url: lv1SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
+        let seasonsUrl = root + level_site[level]! + bond(subject) + "/"
+        let seasons = getContentList(url: seasonsUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
+        
+        let fileSeasonsUrl = fileRoot + level_site[level]! + bond(subject, by: [" ": "%20"]) + "/"
         
         let group = DispatchGroup()
-        for folder in lv1f{
+        for season in seasons{
             group.enter()
             DispatchQueue.global().async {
-                let lv2SpecifiedUrl = bondString(lv1SpecifiedUrl + folder + "/")
-                for paper in getContentList(url: lv2SpecifiedUrl, nameTag: "<li data-name=", criteria: { name in name.contains(".pdf") }){
-                    allPapers.append(paper)
+                let papersUrl = seasonsUrl + bond(season) + "/"
+                let papers = getContentList(url: papersUrl, nameTag: "<li data-name=", criteria: { name in name.contains(".pdf") })
+                
+                let filePapersUrl = fileSeasonsUrl + bond(season, by: [" ": "%20"]) + "/"
+                
+                for paper in papers{
+                    let paperUrl = filePapersUrl + paper
+                    allPapers.append(WebFile(url: paperUrl))
                 }
-                print("Completed: \(folder)")
                 group.leave()
             }
         }
@@ -84,39 +92,12 @@ class PapaCambridge: PastPaperWebsite {
         return allPapers
     }
     
-    private func downloadPaper(url: String, toPath: String){
-        print(url)
-        
-        let url = URL(string: bondString(url))!
-        let data = NSData(contentsOf: url)
-        data?.write(toFile: toPath, atomically: true)
-    }
-    
-    func downloadPapers(level: String, subject: String, specifiedPapers: [String], toPath: String) {
-        let seasons: [String: String] = [
-            "w": "Nov/", "s": "Jun/", "m": "Mar/"
-        ]
+    func downloadPapers(specifiedPapers: [WebFile], to path: String) {
         let group = DispatchGroup()
-        
-        let rootUrl = downloadRoot + level_site[level]! + subject + "/"
         for paper in specifiedPapers{
             group.enter()
             DispatchQueue.global().async {
-                var pSeason = String(paper[paper.index(paper.startIndex, offsetBy: 5)])
-                let pYear = "20" + paper[paper.index(paper.startIndex, offsetBy: 6)...paper.index(paper.startIndex, offsetBy: 7)] + "%20"
-                
-                for season in seasons.keys{
-                    if pSeason == season{
-                        pSeason = seasons[season]!
-                        break
-                    }
-                    
-                let specifiedUrl = rootUrl + pYear + pSeason + paper + ".pdf"
-                let location = toPath + paper + ".pdf"
-        
-                self.downloadPaper(url: specifiedUrl, toPath: location)
-                    
-                }
+                paper.download(to: path)
                 group.leave()
             }
         }

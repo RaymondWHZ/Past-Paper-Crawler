@@ -9,10 +9,11 @@
 import Cocoa
 
 protocol DownloadProxy {
-    func downloadPapers(level: String, subject: String, specifiedPapers: [String])
+    func downloadPapers(specifiedPapers: [WebFile])
 }
 
 class FileManagerProxy: DownloadProxy {
+    
     // todo implement local file manager
     
     let website: PastPaperWebsite
@@ -23,13 +24,13 @@ class FileManagerProxy: DownloadProxy {
         self.localPath = localPath
     }
     
-    func downloadPapers(level: String, subject: String, specifiedPapers: [String]) {
+    func downloadPapers(specifiedPapers: [WebFile]) {
         
     }
 }
 
 class DirectAccess: DownloadProxy {
-    func downloadPapers(level: String, subject: String, specifiedPapers: [String]) {
+    func downloadPapers(specifiedPapers: [WebFile]) {
         let openPanel = NSOpenPanel()
         openPanel.canChooseFiles = false
         openPanel.canChooseDirectories = true
@@ -37,7 +38,7 @@ class DirectAccess: DownloadProxy {
         openPanel.treatsFilePackagesAsDirectories = true
         openPanel.begin{ result in
             if result == NSApplication.ModalResponse.OK {
-                website.downloadPapers(level: level, subject: subject, specifiedPapers: specifiedPapers, toPath: openPanel.url!.path)
+                website.downloadPapers(specifiedPapers: specifiedPapers, to: openPanel.url!.path)
             }
         }
     }

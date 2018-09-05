@@ -34,3 +34,21 @@ func getContentList(url: String, nameTag: String, criteria: (String) -> Bool) ->
         }
     }
 }
+
+let defaultDict: [Character: String] = [
+    " ": "%20",
+    "(": "%28",
+    ")": "%29"
+]
+
+func bond(_ s: String, by dict: Dictionary<Character, String> = defaultDict) -> String {
+    var final = ""
+    for c in s{
+        if dict.keys.contains(c) {
+            final += dict[c]!
+            continue
+        }
+        final.append(c)
+    }
+    return final
+}

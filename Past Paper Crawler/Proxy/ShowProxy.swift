@@ -14,37 +14,70 @@ class ShowProxy {
     var subject: String?
     
     // authoritized keys: season, paper, edition, type
-    private var _criteriaSummary: Dictionary<String, [String]>?
+    private var criteriaSummaryCache: Dictionary<String, [String]>?
     var criteriaSummary: Dictionary<String, [String]> {
         get {
-            if _criteriaSummary == nil {
-                _criteriaSummary = [:]
+            if criteriaSummaryCache == nil {
+                criteriaSummaryCache = [:]
             }
             
-            return _criteriaSummary!
+            return criteriaSummaryCache!
         }
     }
     
-    var currentCriteria: Dictionary<String, String> = [:]
-    
-    private var wholeList: [String] = []
-    
-    var currentShowList: [String] {
-        get {
-            return wholeList
-        }
-    }
+    private var wholeList: [WebFile] = []
+    private var currentCriteria: Dictionary<String, String> = [:]
     
     func reloadFrom(level: String, subject: String) {
         wholeList = website.getPapers(level: level, subject: subject)
+        
+        // all cache must be reloaded
+        criteriaSummaryCache = nil
+        currentListCache = nil
+        showListCache = nil
+    }
+    
+    func setCriterion(name: String, value: String) {
+        currentCriteria[name] = value
+        
+        // show lists must be reloaded
+        currentListCache = nil
+        showListCache = nil
+    }
+    
+    private var currentListCache: [WebFile]?
+    var currentList: [WebFile] {
+        get {
+            if currentListCache == nil {
+                currentListCache = wholeList
+                // implement filter according to criteria
+            }
+            
+            return currentListCache!
+        }
+    }
+    
+    private var showListCache: [String]?
+    var currentShowList: [String] {
+        get {
+            if showListCache == nil {
+                showListCache = []
+                
+                for webFile in currentList {
+                    showListCache!.append(webFile.name)
+                }
+            }
+            
+            return showListCache!
+        }
     }
     
     func downloadPapers(at indices: [Int]) {
-        var papers: [String] = []
+        var papers: [WebFile] = []
         for index in indices {
-            papers.append(currentShowList[index])
+            papers.append(currentList[index])
         }
-        downloadProxy.downloadPapers(level: level!, subject: subject!, specifiedPapers: papers)
+        downloadProxy.downloadPapers(specifiedPapers: papers)
     }
 }
 
