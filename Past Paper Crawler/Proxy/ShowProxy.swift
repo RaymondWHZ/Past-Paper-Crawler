@@ -57,6 +57,7 @@ class ShowProxy {
         wholeList = website.getPapers(level: level, subject: subject)
         
         // all cache must be reloaded
+        currentCriteria = [:]
         criteriaSummaryCache = nil
         currentListCache = nil
         showListCache = nil
@@ -69,10 +70,19 @@ class ShowProxy {
         currentListCache = nil
         showListCache = nil
     }
+    
+    func removeCriterion(name: String) {
+        currentCriteria.removeValue(forKey: name)
+        
+        // show lists must be reloaded
+        currentListCache = nil
+        showListCache = nil
+    }
+    
     //"0478_s18_ms_11.pdf"
     private func slice(paper: String) -> [String: String]{
         guard paper.count == 18 else{
-            return["year": "xx", "season": "x", "paper": "x", "Edition": "x", "type": "xx"]
+            return["year": "xx", "season": "x", "paper": "x", "edition": "x", "type": "xx"]
         }
         let cYear: String = paper.slice(from: 6, to: 7)
         let cSeason: String = paper.slice(from: 5, to: 5)
@@ -101,7 +111,6 @@ class ShowProxy {
                 }
             }
             return currentListCache!
-            
         }
     }
     

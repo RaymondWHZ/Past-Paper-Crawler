@@ -692,7 +692,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X73-oQ-9Md">
+                            <popUpButton identifier="season" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X73-oQ-9Md">
                                 <rect key="frame" x="203" y="426" width="106" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All seasons" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="eJR-kw-E73" id="fSu-zw-HNE">
@@ -708,7 +708,7 @@ Gw
                                     <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="GCg-XZ-iuw"/>
                                 </connections>
                             </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geV-Qa-LQD">
+                            <popUpButton identifier="paper" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geV-Qa-LQD">
                                 <rect key="frame" x="312" y="426" width="98" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All papers" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3P6-Wj-ZId" id="e7B-op-Uv5">
@@ -724,7 +724,7 @@ Gw
                                     <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="vV6-GW-dvP"/>
                                 </connections>
                             </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldm-wS-9R5">
+                            <popUpButton identifier="edition" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldm-wS-9R5">
                                 <rect key="frame" x="413" y="426" width="104" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All editions" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="d2w-1l-Vd4" id="zVs-Xq-nfA">
@@ -751,7 +751,7 @@ Gw
                                     <action selector="changedShowOption:" target="XfG-lQ-9wD" id="V3H-di-fuI"/>
                                 </connections>
                             </button>
-                            <popUpButton hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEU-3c-2Lw">
+                            <popUpButton identifier="type" hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEU-3c-2Lw">
                                 <rect key="frame" x="127" y="17" width="90" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All types" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fLh-sL-Nel" id="wZo-YS-UeK">
@@ -839,7 +839,7 @@ DQ
                                     <action selector="selectAllClicked:" target="XfG-lQ-9wD" id="yp8-wx-BHh"/>
                                 </connections>
                             </button>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbS-r3-VU1">
+                            <popUpButton identifier="year" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbS-r3-VU1">
                                 <rect key="frame" x="111" y="427" width="89" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All years" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5d-1C-hyE" id="dnR-X1-usg">

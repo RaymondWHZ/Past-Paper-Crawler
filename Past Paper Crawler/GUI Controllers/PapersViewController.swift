@@ -110,9 +110,14 @@ class PapersViewController: NSViewController {
     @IBAction func criteriaSelected(_ sender: Any) {
         let popButton = sender as! NSPopUpButton
         let name = popButton.identifier!.rawValue
-        let value = popButton.selectedItem!.title
-        
-        showProxy.setCriterion(name: name, value: value)
+        let index = popButton.indexOfSelectedItem
+        if index == 0 {
+            showProxy.removeCriterion(name: name)
+        }
+        else {
+            let value = popButton.item(at: index)!.title
+            showProxy.setCriterion(name: name, value: value)
+        }
         papersTable.reloadData()
     }
     
@@ -160,7 +165,7 @@ class PapersViewController: NSViewController {
             typePopButton
             ] {
                 let identifier = popButton!.identifier!.rawValue
-                popButton!.addItems(withTitles: summary[identifier]!)
+                popButton!.addItems(withTitles: Array(summary[identifier]!))
         }
     }
 }
