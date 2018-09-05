@@ -8,12 +8,24 @@
 
 import Foundation
 
+extension String{
+    func slice(from: Int, to: Int) -> String {
+        
+        let startIndex = self.index(self.startIndex, offsetBy: from)
+        let endIndex = self.index(self.startIndex, offsetBy: to)
+        
+        return String(self[startIndex...endIndex])
+    }
+}
+
+
+
 class ShowProxy {
     
     var level: String?
     var subject: String?
     
-    // authoritized keys: season, paper, edition, type
+    // authoritized keys: year, season, paper, edition, type
     private var criteriaSummaryCache: Dictionary<String, [String]>?
     var criteriaSummary: Dictionary<String, [String]> {
         get {
@@ -26,6 +38,8 @@ class ShowProxy {
     }
     
     private var wholeList: [WebFile] = []
+    
+    // e.g. ["year": "2018", "season": "s"]
     private var currentCriteria: Dictionary<String, String> = [:]
     
     func reloadFrom(level: String, subject: String) {
@@ -44,16 +58,43 @@ class ShowProxy {
         currentListCache = nil
         showListCache = nil
     }
+    //"0478_s18_ms_11.pdf"
+    private func slice(paper: String) -> [String: String]{
+        guard paper.count == 18 else{
+            return["year": "xx", "season": "x", "paper": "x", "Edition": "x", "type": "xx"]
+        }
+        let cYear: String = paper.slice(from: 6, to: 7)
+        let cSeason: String = paper.slice(from: 5, to: 5)
+        let cPaper: String = paper.slice(from: 12, to: 12)
+        let cEdition: String = paper.slice(from: 13, to: 13)
+        let cType: String = paper.slice(from: 9, to: 10)
+        
+        return["year": cYear, "season": cSeason, "paper": cPaper, "edition": cEdition, "type": cType]
+    }
     
     private var currentListCache: [WebFile]?
     var currentList: [WebFile] {
+        // filtered list acording to criteria
         get {
             if currentListCache == nil {
-                currentListCache = wholeList
-                // implement filter according to criteria
+                currentListCache = wholeList.filter{
+                    (raw) in
+                    let paperInfo = slice(paper: raw.name)
+                    
+                    for cri in currentCriteria.keys{
+                        if paperInfo[cri] != currentCriteria[cri]{
+                            return false
+                        }
+                    }
+                    return true
+                }
             }
+                
+                
+                // todo implement filter according to criteria
             
             return currentListCache!
+            
         }
     }
     
@@ -62,7 +103,6 @@ class ShowProxy {
         get {
             if showListCache == nil {
                 showListCache = []
-                
                 for webFile in currentList {
                     showListCache!.append(webFile.name)
                 }
