@@ -25,14 +25,23 @@ class ShowProxy {
     var currentLevel: String = ""
     var currentSubject: String = ""
     
-    // authoritized keys: year, season, paper, edition, type
-    private var criteriaSummaryCache: Dictionary<String, [String]>?
-    var criteriaSummary: Dictionary<String, [String]> {
+    private let authoritizedKeys = ["year", "season", "paper", "edition", "type"]
+    private var criteriaSummaryCache: Dictionary<String, Set<String>>?
+    var criteriaSummary: Dictionary<String, Set<String>> {
         get {
             if criteriaSummaryCache == nil {
                 criteriaSummaryCache = [:]
+                for key in authoritizedKeys {
+                    criteriaSummaryCache![key] = Set()
+                }
+
+                for rawPaper in wholeList{
+                    let paperInfo = slice(paper: rawPaper.name)
+                    for key in authoritizedKeys {
+                        criteriaSummaryCache![key]?.insert(paperInfo[key]!)
+                    }
+                }
             }
-            
             return criteriaSummaryCache!
         }
     }
@@ -91,10 +100,6 @@ class ShowProxy {
                     return true
                 }
             }
-                
-                
-                // todo implement filter according to criteria
-            
             return currentListCache!
             
         }
