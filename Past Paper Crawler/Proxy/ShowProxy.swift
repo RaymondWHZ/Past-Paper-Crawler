@@ -10,8 +10,8 @@ import Foundation
 
 class ShowProxy {
     
-    var level: String?
-    var subject: String?
+    var currentLevel: String = ""
+    var currentSubject: String = ""
     
     // authoritized keys: season, paper, edition, type
     private var criteriaSummaryCache: Dictionary<String, [String]>?
@@ -28,7 +28,9 @@ class ShowProxy {
     private var wholeList: [WebFile] = []
     private var currentCriteria: Dictionary<String, String> = [:]
     
-    func reloadFrom(level: String, subject: String) {
+    func loadFrom(level: String, subject: String) {
+        currentLevel = level
+        currentSubject = subject
         wholeList = website.getPapers(level: level, subject: subject)
         
         // all cache must be reloaded

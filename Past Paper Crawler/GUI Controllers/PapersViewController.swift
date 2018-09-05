@@ -12,32 +12,64 @@ class PapersViewController: NSViewController {
     
     @IBOutlet weak var subjectPopButton: NSPopUpButton!
     @IBOutlet weak var papersProgress: NSProgressIndicator!
+    
+    @IBOutlet weak var yearPopButton: NSPopUpButton!
     @IBOutlet weak var seasonPopButton: NSPopUpButton!
-    @IBOutlet weak var showAllCheckbox: NSButton!
-    @IBOutlet weak var typePopButton: NSPopUpButton!
+    @IBOutlet weak var paperPopButton: NSPopUpButton!
+    @IBOutlet weak var editionPopButton: NSPopUpButton!
     
     @IBOutlet weak var papersTable: NSTableView!
     @IBOutlet weak var selectAllButton: NSButton!
     
-    var subjectSystem: SubjectSystem?
+    @IBOutlet weak var showAllCheckbox: NSButton!
+    @IBOutlet weak var typePopButton: NSPopUpButton!
     
-    static var currentSubject: Dictionary<String, String>?
+    @IBOutlet weak var downloadButton: NSButton!
+    
+    var operationEnabled: Bool {
+        get {
+            return subjectPopButton.isEnabled
+        }
+        set {
+            let b = newValue
+            
+            subjectPopButton.isEnabled = b
+            
+            yearPopButton.isEnabled = b
+            seasonPopButton.isEnabled = b
+            paperPopButton.isEnabled = b
+            editionPopButton.isEnabled = b
+            
+            papersTable.isEnabled = b
+            selectAllButton.isEnabled = b
+            
+            showAllCheckbox.isEnabled = b
+            typePopButton.isEnabled = b
+            
+            downloadButton.isEnabled = b
+        }
+    }
+    
+    var subjectSystem: SubjectSystem?
+    var refreshAction: Action?
+    
+    // quick accesses to showProxy
     var currentLevel: String {
         get {
-            return PapersViewController.currentSubject!["level"]!
+            return showProxy.currentLevel
         }
     }
-    var currentName: String {
+    var currentSubject: String {
         get {
-            return PapersViewController.currentSubject!["name"]!
+            return showProxy.currentSubject
         }
     }
-    
     var currentDisplay: [String] {
         get {
             return showProxy.currentShowList
         }
     }
+    
     var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
     
     override func viewDidLoad() {
@@ -47,20 +79,21 @@ class PapersViewController: NSViewController {
         papersTable.dataSource = self
         papersTable.delegate = self
         
-        subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton) {
-            level, subject in
-            // change current subject
-            PapersViewController.currentSubject = ["level": level, "name": subject]
-            
-            self.refreshList()
-        }
+        subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton, loadList)
         
-        // refresh for the first time in case static subject had been set
-        refreshList()
+        refreshAction = Action{
+            self.subjectSystem!.refresh()
+        }
+        SubjectsSetViewController.viewCloseEvent.addAction(refreshAction!)
+        
+        subjectPopButton.item(at: 0)!.title = currentSubject
+    }
+    
+    override func viewWillDisappear() {
+        SubjectsSetViewController.viewCloseEvent.removeAction(refreshAction!)
     }
     
     @IBAction func selectAllClicked(_ sender: Any) {
-        selected = Array(repeating: selectAllButton.state == .on, count: currentDisplay.count)
         papersTable.reloadData()
     }
     
@@ -83,45 +116,34 @@ class PapersViewController: NSViewController {
         showProxy.downloadPapers(at: selectedIndices)
     }
     
-    func refreshList() {
-        if PapersViewController.currentSubject == nil {
-            return
-        }
-        
+    func loadList(level: String, subject: String) {
         // set selected subject
-        subjectPopButton.item(at: 0)!.title = currentName
+        subjectPopButton.item(at: 0)!.title = subject
         subjectPopButton.selectItem(at: 0)
         
         // lock up buttons
-        subjectPopButton.isEnabled = false
-        papersTable.isEnabled = false
-        selectAllButton.isEnabled = false
+        operationEnabled = false
         papersProgress.startAnimation(nil)
         
         DispatchQueue.global().async {
-            showProxy.reloadFrom(level: self.currentLevel, subject: self.currentName)  // access website to get all papers
+            showProxy.loadFrom(level: level, subject: subject)  // access website to get all papers
             
             DispatchQueue.main.async {
-                self.updateTable()
+                self.papersTable.reloadData()
                 
                 // unlock buttons
-                self.subjectPopButton.isEnabled = true
-                self.papersTable.isEnabled = true
-                self.selectAllButton.isEnabled = true
+                self.operationEnabled = true
                 self.papersProgress.stopAnimation(nil)
             }
         }
-    }
-    
-    func updateTable() {  // updates table view according to display list
-        selected = Array(repeating: false, count: currentDisplay.count)
-        papersTable.reloadData()
     }
 }
 
 extension PapersViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return currentDisplay.count
+        let number = currentDisplay.count
+        selected = Array(repeating: selectAllButton.state == .on, count: number)
+        return number
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {

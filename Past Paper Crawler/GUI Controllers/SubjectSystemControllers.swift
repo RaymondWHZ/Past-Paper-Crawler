@@ -64,10 +64,10 @@ class SubjectSystem {
     }
     
     func refresh() {
-        for _ in 4..<selector.numberOfItems {
+        for _ in defaultItemNum..<selector.numberOfItems {
             selector.removeItem(at: quickListStartFromIndex)
         }
-        for i in 0..<quickList.count {
+        for i in quickList.indices {
             selector.insertItem(withTitle: quickList[i]["name"]!, at: i + quickListStartFromIndex)
         }
     }

@@ -11,24 +11,37 @@ import Cocoa
 class MainViewController: NSViewController {
     
     @IBOutlet weak var subjectPopButton: NSPopUpButton!
+    @IBOutlet weak var papersProgress: NSProgressIndicator!
     
     var subjectSystem: SubjectSystem?
     
-    var refreshAction: Action? = nil
+    var refreshAction: Action?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton) {
             level, subject in
-            // load current subject
-            PapersViewController.currentSubject = ["level": level, "name": subject]
+            // lock up button
+            self.subjectPopButton.isEnabled = false
+            self.papersProgress.startAnimation(nil)
             
-            // display paper window
-            self.performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "Show Papers"), sender: nil)
-            
-            // switch back selection
-            self.subjectPopButton.selectItem(at: 0)
+            DispatchQueue.global().async {
+                // load current subject
+                showProxy.loadFrom(level: level, subject: subject)
+                
+                DispatchQueue.main.async {
+                    // display paper window
+                    self.performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "Show Papers"), sender: nil)
+                    
+                    // switch back selection
+                    self.subjectPopButton.selectItem(at: 0)
+                    
+                    // unlock button
+                    self.subjectPopButton.isEnabled = true
+                    self.papersProgress.stopAnimation(nil)
+                }
+            }
         }
         
         refreshAction = Action{
