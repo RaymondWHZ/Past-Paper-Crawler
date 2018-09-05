@@ -26,7 +26,7 @@ class PapersViewController: NSViewController {
     
     @IBOutlet weak var downloadButton: NSButton!
     
-    var operationEnabled: Bool {
+    var operationEnabled: Bool {  // whether to lock up the whole view
         get {
             return subjectPopButton.isEnabled
         }
@@ -79,14 +79,15 @@ class PapersViewController: NSViewController {
         papersTable.dataSource = self
         papersTable.delegate = self
         
+        // initiate criteria and subject display
+        setUpSurrounding()
+        
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton, loadList)
         
         refreshAction = Action{
             self.subjectSystem!.refresh()
         }
         SubjectsSetViewController.viewCloseEvent.addAction(refreshAction!)
-        
-        subjectPopButton.item(at: 0)!.title = currentSubject
     }
     
     override func viewWillDisappear() {
@@ -106,6 +107,15 @@ class PapersViewController: NSViewController {
         subjectSystem!.selectorClicked()
     }
     
+    @IBAction func criteriaSelected(_ sender: Any) {
+        let popButton = sender as! NSPopUpButton
+        let name = popButton.identifier!.rawValue
+        let value = popButton.selectedItem!.title
+        
+        showProxy.setCriterion(name: name, value: value)
+        papersTable.reloadData()
+    }
+    
     @IBAction func downloadClicked(_ sender: Any) {
         var selectedIndices: [Int] = []
         for (index, state) in selected.enumerated() {
@@ -118,7 +128,6 @@ class PapersViewController: NSViewController {
     
     func loadList(level: String, subject: String) {
         // set selected subject
-        subjectPopButton.item(at: 0)!.title = subject
         subjectPopButton.selectItem(at: 0)
         
         // lock up buttons
@@ -130,11 +139,28 @@ class PapersViewController: NSViewController {
             
             DispatchQueue.main.async {
                 self.papersTable.reloadData()
+                self.setUpSurrounding()
                 
                 // unlock buttons
                 self.operationEnabled = true
                 self.papersProgress.stopAnimation(nil)
             }
+        }
+    }
+    
+    func setUpSurrounding() {
+        subjectPopButton.item(at: 0)!.title = currentSubject
+        
+        let summary = showProxy.criteriaSummary
+        for popButton in [
+            yearPopButton,
+            seasonPopButton,
+            paperPopButton,
+            editionPopButton,
+            typePopButton
+            ] {
+                let identifier = popButton!.identifier!.rawValue
+                popButton!.addItems(withTitles: summary[identifier]!)
         }
     }
 }
