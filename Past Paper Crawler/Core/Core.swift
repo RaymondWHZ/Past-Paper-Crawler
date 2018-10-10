@@ -8,13 +8,16 @@
 
 import Foundation
 
-func readUrl(url: String) -> Data {
+func readUrl(url: String) -> Data? {
     let url = URL(string: url)!
-    return try! Data(contentsOf: url)
+    return try? Data(contentsOf: url)
 }
 
-func getContentList(url: String, nameTag: String, criteria: (String) -> Bool) -> [String] {
-    let data = readUrl(url: url)
+func getContentList(url: String, nameTag: String, criteria: (String) -> Bool) -> [String]? {
+    guard let data = readUrl(url: url) else {
+        return nil
+    }
+    
     let str = String(data: data, encoding: String.Encoding.utf8)!
     let scanner = Scanner.init(string: str)
     

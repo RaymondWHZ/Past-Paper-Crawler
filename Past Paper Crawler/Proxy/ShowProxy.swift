@@ -8,8 +8,38 @@
 
 import Foundation
 
+private let year = "year"
+private let season = "season"
+private let paper = "paper"
+private let edition = "edition"
+private let type = "type"
+
+private let yearPrefix = "20"
+private let editionOne = "Edition \(1)"
+private let none = "None"
+private let other = "other..."
+
+private let seasons = [
+    "s": "May/June",
+    "w": "November",
+    "m": "March",
+    "y": none
+]
+
+let types = [
+    "ms": "Mark Scheme",
+    "qp": "Question Paper",
+    "er": "Examiner Report",
+    "qr": "Question Recording"
+]
+
+private let paperPrefix = "Paper "
+private let editionPrefix = "Edition "
+
+
+
 extension String{
-    func slice(from: Int, to: Int) -> String {
+    func subString(from: Int, to: Int) -> String {
         
         let startIndex = self.index(self.startIndex, offsetBy: from)
         let endIndex = self.index(self.startIndex, offsetBy: to)
@@ -19,124 +49,314 @@ extension String{
 }
 
 
+//"0478_s18_ms_11.pdf"
+func info(of paperName: String) -> [String: String]{
+    let count = paperName.count
+    
+    var ret: [String: String] = [year: "", season: "", paper: none, edition: editionOne, type: ""]
+    
+    let cYear: String = paperName.subString(from: 6, to: 7)
+    ret[year] = yearPrefix + cYear
+    
+    let cSeason: String = paperName.subString(from: 5, to: 5)
+    ret[season] = seasons[cSeason] ?? other
+    
+    let cType: String = paperName.subString(from: 9, to: 10)
+    ret[type] = types[cType] ?? other
+    
+    if count >= 13 + 4 {
+        let cPaper: String = paperName.subString(from: 12, to: 12)
+        ret[paper] = paperPrefix + cPaper
+    }
+    
+    if count >= 14 + 4 {
+        let cEdition: String = paperName.subString(from: 13, to: 13)
+        ret[edition] = editionPrefix + cEdition
+    }
+    
+    if count >= 15 + 4 {
+        ret[paper] = other
+        ret[edition] = editionOne
+    }
+    
+    return ret
+}
+
+func infoStrWithoutType(file: WebFile) -> String {
+    let fInfo = info(of: file.name)
+    return "\(fInfo[year]!) \(fInfo[season]!) \(fInfo[paper]!) \(fInfo[edition]!)"
+}
+
+
 
 class ShowProxy {
     
     var currentLevel: String = ""
     var currentSubject: String = ""
     
-    private let authoritizedKeys = ["year", "season", "paper", "edition", "type"]
-    private var criteriaSummaryCache: Dictionary<String, Set<String>>?
-    var criteriaSummary: Dictionary<String, Set<String>> {
-        get {
-            if criteriaSummaryCache == nil {
-                criteriaSummaryCache = [:]
+    fileprivate var wholeList: [WebFile] = []
+    
+    let authoritizedKeys = [year, season, paper, edition, type]
+    
+    // e.g. [year: "2018", season: "s"]
+    fileprivate var currentCriteria: Dictionary<String, String> = [:]
+    
+    fileprivate var criteriaSummaryCache: Dictionary<String, [String]>?
+    var criteriaSummary: Dictionary<String, [String]> {
+        if criteriaSummaryCache == nil {
+            // set is able to exclude duplicated items automatically
+            var setSummary: [String: Set<String>] = [:]
+            for key in authoritizedKeys {
+                setSummary[key] = Set()
+            }
+            
+            // get all paper infos and put them together into set
+            for rawPaper in wholeList{
+                let paperInfo = info(of: rawPaper.name)
                 for key in authoritizedKeys {
-                    criteriaSummaryCache![key] = Set()
-                }
-
-                for rawPaper in wholeList{
-                    let paperInfo = slice(paper: rawPaper.name)
-                    for key in authoritizedKeys {
-                        criteriaSummaryCache![key]?.insert(paperInfo[key]!)
-                    }
+                    setSummary[key]!.insert(paperInfo[key]!)
                 }
             }
-            return criteriaSummaryCache!
+            
+            // sort the elements in each set and put them into final summary
+            criteriaSummaryCache = [:]
+            for key in authoritizedKeys {
+                let unsorted = setSummary[key]!
+                
+                if unsorted.count == 1 {
+                    criteriaSummaryCache![key] = []
+                    continue
+                }
+                
+                let sorted = unsorted.sorted()
+                criteriaSummaryCache![key] = sorted
+            }
         }
+        
+        return criteriaSummaryCache!
     }
     
-    private var wholeList: [WebFile] = []
-    
-    // e.g. ["year": "2018", "season": "s"]
-    private var currentCriteria: Dictionary<String, String> = [:]
-    
-    func loadFrom(level: String, subject: String) {
-        currentLevel = level
-        currentSubject = subject
-        wholeList = website.getPapers(level: level, subject: subject)
-        
-        // all cache must be reloaded
-        currentCriteria = [:]
-        criteriaSummaryCache = nil
+    func cleanShowListCache() {
         currentListCache = nil
         showListCache = nil
+    }
+    
+    func cleanAllCache() {
+        currentCriteria = [:]
+        criteriaSummaryCache = nil
+        
+        cleanShowListCache()
+    }
+    
+    func loadFrom(level: String, subject: String) -> Bool {
+        guard let paperList = website.getPapers(level: level, subject: subject) else {
+            return false
+        }
+        
+        currentLevel = level
+        currentSubject = subject
+        wholeList = paperList
+        
+        // all cache must be reloaded
+        cleanAllCache()
+        
+        return true
+    }
+    
+    func restoreFrom(other instance: ShowProxy) {
+        currentLevel = instance.currentLevel
+        currentSubject = instance.currentSubject
+        wholeList = instance.wholeList
+        
+        // all cache must be reloaded
+        cleanAllCache()
     }
     
     func setCriterion(name: String, value: String) {
         currentCriteria[name] = value
         
         // show lists must be reloaded
-        currentListCache = nil
-        showListCache = nil
+        cleanShowListCache()
     }
     
     func removeCriterion(name: String) {
         currentCriteria.removeValue(forKey: name)
         
         // show lists must be reloaded
-        currentListCache = nil
-        showListCache = nil
+        cleanShowListCache()
     }
     
-    //"0478_s18_ms_11.pdf"
-    private func slice(paper: String) -> [String: String]{
-        guard paper.count == 18 else{
-            return["year": "xx", "season": "x", "paper": "x", "edition": "x", "type": "xx"]
-        }
-        let cYear: String = paper.slice(from: 6, to: 7)
-        let cSeason: String = paper.slice(from: 5, to: 5)
-        let cPaper: String = paper.slice(from: 12, to: 12)
-        let cEdition: String = paper.slice(from: 13, to: 13)
-        let cType: String = paper.slice(from: 9, to: 10)
-        
-        return["year": cYear, "season": cSeason, "paper": cPaper, "edition": cEdition, "type": cType]
-    }
-    
-    private var currentListCache: [WebFile]?
+    fileprivate var currentListCache: [WebFile]?
     var currentList: [WebFile] {
         // filtered list acording to criteria
-        get {
-            if currentListCache == nil {
-                currentListCache = wholeList.filter{
-                    (raw) in
-                    let paperInfo = slice(paper: raw.name)
-                    
-                    for cri in currentCriteria.keys{
-                        if paperInfo[cri] != currentCriteria[cri]{
-                            return false
-                        }
+        if currentListCache == nil {
+            currentListCache = wholeList.filter{
+                (raw) in
+                
+                let paperInfo = info(of: raw.name)
+                for cri in currentCriteria.keys{
+                    if paperInfo[cri] != currentCriteria[cri]{
+                        return false
                     }
-                    return true
                 }
+                
+                return true
             }
-            return currentListCache!
         }
+        
+        return currentListCache!
     }
     
-    private var showListCache: [String]?
+    fileprivate var showListCache: [String]?
     var currentShowList: [String] {
-        get {
-            if showListCache == nil {
-                showListCache = []
-                for webFile in currentList {
-                    showListCache!.append(webFile.name)
-                }
-            }
-            
-            return showListCache!
+        if showListCache == nil {
+            showListCache = currentList.map({ $0.name })
         }
+        
+        return showListCache!
     }
     
-    func downloadPapers(at indices: [Int]) {
+    func downloadPapers(at indices: [Int], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
         var papers: [WebFile] = []
         for index in indices {
             papers.append(currentList[index])
         }
-        downloadProxy.downloadPapers(specifiedPapers: papers)
+        downloadProxy.downloadPapers(specifiedPapers: papers, exitAction: exitAction)
     }
 }
 
+
+
+class FileCouple {
+    
+    let questionPaper: WebFile
+    let markScheme: WebFile
+    
+    let fInfo: [String: String]
+    
+    private var desc: String
+    
+    init?(qp: WebFile, ms: WebFile) {
+        var qpInfo = info(of: qp.name)
+        let msInfo = info(of: ms.name)
+        
+        if qpInfo[type] != types["qp"] || msInfo[type] != types["ms"] {
+            return nil
+            //fatalError("Wrong file type!")
+        }
+        
+        if infoStrWithoutType(file: qp) != infoStrWithoutType(file: ms) {
+            return nil
+            //fatalError("Question paper and mark scheme not match!")
+        }
+        
+        questionPaper = qp
+        markScheme = ms
+        
+        qpInfo.removeValue(forKey: type)
+        fInfo = qpInfo
+        
+        desc = infoStrWithoutType(file: qp)
+    }
+    
+    var description: String {
+        return desc
+    }
+}
+
+
+
 class PapersWithAnswer: ShowProxy {
     
+    var coupleListCache: [FileCouple]? = nil
+    var wholeCoupleList: [FileCouple] {
+        if coupleListCache == nil {
+            // filter out files that are not qp or ms and those before 2005
+            let filtered = wholeList.filter { (f) -> Bool in
+                let fInfo = info(of: f.name)
+                if fInfo["type"] == types["ms"] || fInfo["type"] == types["qp"] {
+                    return fInfo["year"]!.compare("2004") == ComparisonResult.orderedDescending
+                }
+                return false
+            }
+            // sort the files to put same qp and ms together (faster than random search, nlogn < n^2)
+            let sortedList = filtered.sorted { (f1, f2) -> Bool in
+                let f1InfoStr = infoStrWithoutType(file: f1)
+                let f2InfoStr = infoStrWithoutType(file: f2)
+                return f1InfoStr.compare(f2InfoStr) == ComparisonResult.orderedAscending
+            }
+            
+            // find all couples and put them into array
+            coupleListCache = []
+            var currentPos = 0
+            while currentPos < sortedList.count {
+                let currentFile = sortedList[currentPos]
+                let cfInfo = info(of: currentFile.name)
+                currentPos += 1
+                
+                let nextFile = sortedList[currentPos]
+                
+                if cfInfo["type"] == types["qp"] {
+                    if let fileCouple = FileCouple(qp: currentFile, ms: nextFile) {
+                        coupleListCache!.append(fileCouple)
+                        currentPos += 1
+                    }
+                }
+                else {
+                    if let fileCouple = FileCouple(qp: nextFile, ms: currentFile) {
+                        coupleListCache!.append(fileCouple)
+                        currentPos += 1
+                    }
+                }
+            }
+        }
+        
+        return coupleListCache!
+    }
+    
+    var currentCoupleListCache: [FileCouple]? = nil
+    var currentCoupleList: [FileCouple] {
+        // filtered list acording to criteria
+        if currentCoupleListCache == nil {
+            currentCoupleListCache = wholeCoupleList.filter{
+                (raw) in
+                
+                let fInfo = raw.fInfo
+                for cri in currentCriteria.keys{
+                    if fInfo[cri] != currentCriteria[cri]! {
+                        return false
+                    }
+                }
+                
+                return true
+            }
+        }
+        
+        return currentCoupleListCache!
+    }
+    
+    override var currentShowList: [String] {
+        if showListCache == nil {
+            showListCache = currentCoupleList.map({ $0.description })
+        }
+        
+        return showListCache!
+    }
+    
+    override func cleanShowListCache() {
+        super.cleanShowListCache()
+        
+        coupleListCache = nil
+        currentCoupleListCache = nil
+    }
+    
+    override func downloadPapers(at indices: [Int], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
+        var papers: [WebFile] = []
+        for index in indices {
+            let fileCouple = wholeCoupleList[index]
+            papers.append(fileCouple.questionPaper)
+            papers.append(fileCouple.markScheme)
+        }
+        downloadProxy.downloadPapers(specifiedPapers: papers, exitAction: exitAction)
+    }
 }

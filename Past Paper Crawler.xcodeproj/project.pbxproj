@@ -15,13 +15,13 @@
 		B60320F2213254AF00488A42 /* Past_Paper_CrawlerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */; };
 		B6032100213256F500488A42 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
 		B60B0E3621356A0700DBE06E /* SettingViewsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */; };
+		B622E029216B885E00229054 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* Util.swift */; };
 		B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B6790961213ADF5B00E2F233 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790960213ADF5B00E2F233 /* Settings.swift */; };
 		B6790964213B9D2800E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
 		B6790966213C245200E2F233 /* Bisect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790965213C245200E2F233 /* Bisect.swift */; };
 		B679096A213C399600E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
-		B679096E213CC62800E2F233 /* ContentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096D213CC62800E2F233 /* ContentTableViewController.swift */; };
 		B6790976213D893200E2F233 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790975213D893200E2F233 /* main.swift */; };
 		B679097C213D897000E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
 		B679097D213D897000E2F233 /* Bisect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790965213C245200E2F233 /* Bisect.swift */; };
@@ -32,7 +32,11 @@
 		B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
 		B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
 		B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
+		B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabelControllers.swift */; };
+		B6E916482163BFDA0061F5BF /* DownloadRepresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */; };
 		B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
+		B6F988E521636B6400F07404 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
+		B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,7 @@
 		B60320F3213254AF00488A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B60320FF213256F500488A42 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewsControllers.swift; sourceTree = "<group>"; };
+		B622E028216B885E00229054 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		B63BCC692134574700F56334 /* Past Paper Crawler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Past Paper Crawler.entitlements"; sourceTree = "<group>"; };
 		B63BCC6A2134C65800F56334 /* PPWebsites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPWebsites.swift; sourceTree = "<group>"; };
 		B6790960213ADF5B00E2F233 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -87,12 +92,15 @@
 		B6790965213C245200E2F233 /* Bisect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bisect.swift; sourceTree = "<group>"; };
 		B6790969213C399600E2F233 /* ShowProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProxy.swift; sourceTree = "<group>"; };
 		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
-		B679096D213CC62800E2F233 /* ContentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewController.swift; sourceTree = "<group>"; };
 		B6790973213D893100E2F233 /* Crawler Core Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Crawler Core Test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6790975213D893200E2F233 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B6790981213D8B6E00E2F233 /* DownloadProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProxy.swift; sourceTree = "<group>"; };
 		B6790986213E7D9200E2F233 /* PublicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicConstants.swift; sourceTree = "<group>"; };
+		B6830D8921608EA800927B73 /* PromptLabelControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptLabelControllers.swift; path = "Past Paper Crawler/GUI Controllers/PromptLabelControllers.swift"; sourceTree = SOURCE_ROOT; };
+		B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRepresentor.swift; sourceTree = "<group>"; };
 		B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectSystemControllers.swift; sourceTree = "<group>"; };
+		B6F988E421636B6400F07404 /* WebFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFile.swift; sourceTree = "<group>"; };
+		B6F988E62163B79D00F07404 /* FailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,11 +231,13 @@
 		B6F859BE2136CDAC00D7002C /* GUI Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B6830D8921608EA800927B73 /* PromptLabelControllers.swift */,
 				B60320D5213254AD00488A42 /* MainViewControllers.swift */,
 				B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */,
 				B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */,
 				B679096B213C3A9B00E2F233 /* PapersViewController.swift */,
-				B679096D213CC62800E2F233 /* ContentTableViewController.swift */,
+				B6F988E62163B79D00F07404 /* FailedViewController.swift */,
+				B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */,
 			);
 			path = "GUI Controllers";
 			sourceTree = "<group>";
@@ -237,6 +247,8 @@
 			children = (
 				B60320FF213256F500488A42 /* Core.swift */,
 				B63BCC6A2134C65800F56334 /* PPWebsites.swift */,
+				B6F988E421636B6400F07404 /* WebFile.swift */,
+				B622E028216B885E00229054 /* Util.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -326,6 +338,7 @@
 				TargetAttributes = {
 					B60320CF213254AD00488A42 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -334,10 +347,12 @@
 					};
 					B60320E1213254AF00488A42 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = B60320CF213254AD00488A42;
 					};
 					B60320EC213254AF00488A42 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = B60320CF213254AD00488A42;
 					};
 					B6790972213D893100E2F233 = {
@@ -398,19 +413,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */,
+				B622E029216B885E00229054 /* Util.swift in Sources */,
 				B6790964213B9D2800E2F233 /* Event.swift in Sources */,
 				B6032100213256F500488A42 /* Core.swift in Sources */,
-				B679096E213CC62800E2F233 /* ContentTableViewController.swift in Sources */,
 				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
 				B6790966213C245200E2F233 /* Bisect.swift in Sources */,
 				B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */,
 				B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */,
 				B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */,
+				B6E916482163BFDA0061F5BF /* DownloadRepresentor.swift in Sources */,
 				B679096A213C399600E2F233 /* ShowProxy.swift in Sources */,
+				B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */,
 				B60B0E3621356A0700DBE06E /* SettingViewsControllers.swift in Sources */,
 				B6790961213ADF5B00E2F233 /* Settings.swift in Sources */,
 				B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */,
+				B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */,
 				B60320D4213254AD00488A42 /* AppDelegate.swift in Sources */,
+				B6F988E521636B6400F07404 /* WebFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,7 +620,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -621,7 +640,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -641,7 +660,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Past Paper Crawler.app/Contents/MacOS/Past Paper Crawler";
 			};
 			name = Debug;
@@ -662,7 +681,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Past Paper Crawler.app/Contents/MacOS/Past Paper Crawler";
 			};
 			name = Release;
@@ -682,7 +701,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = "Past Paper Crawler";
 			};
 			name = Debug;
@@ -702,7 +721,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = "Past Paper Crawler";
 			};
 			name = Release;
@@ -711,7 +730,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UMVZYRF6UZ;
+				DEVELOPMENT_TEAM = 9MVLP78N36;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -721,7 +740,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UMVZYRF6UZ;
+				DEVELOPMENT_TEAM = 9MVLP78N36;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};

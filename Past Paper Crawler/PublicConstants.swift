@@ -8,13 +8,21 @@
 
 import Cocoa
 
+let storyboard = NSStoryboard(name: "Main", bundle: nil)
+func getController(_ name: String) -> Any {
+    let rawValue = storyboard.instantiateController(withIdentifier: name)
+    return rawValue
+}
+
 let notificationCenter = NotificationCenter.default
 let userDefaults = UserDefaults.standard
 let fileManager = FileManager.default
 
 let website = PapaCambridge()
-let showProxy = ShowProxy()
 let downloadProxy = DirectAccess()
+var defaultShowProxy: ShowProxy {
+    return PapersWithAnswer()
+}
 
 var exitEvents = Event()
 

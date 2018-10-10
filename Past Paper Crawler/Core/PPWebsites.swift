@@ -8,39 +8,13 @@
 
 import Foundation
 
-class WebFile {
-    let name: String
-    let fullUrl: URL
-    
-    init(url: String) {
-        var index = url.index(before: url.endIndex)
-        while url[index] != "/" {
-            index = url.index(before: index)
-        }
-        
-        name = String(url[url.index(after: index)...])
-        fullUrl = URL(string: url)!
-    }
-    
-    func download(to path: String) {
-        let data = NSData(contentsOf: fullUrl)!
-        var p = path
-        if p.last != "/" {
-            p += "/"
-        }
-        data.write(toFile: p + name, atomically: true)
-    }
-}
-
 protocol PastPaperWebsite {
     
-    func getLevels() -> [String]
+    func getLevels() -> [String]?
     
-    func getSubjects(level: String) -> [String]
+    func getSubjects(level: String) -> [String]?
     
-    func getPapers(level: String, subject: String) -> [WebFile]
-    
-    func downloadPapers(specifiedPapers: [WebFile], to path: String)
+    func getPapers(level: String, subject: String) -> [WebFile]?
 }
 
 class PapaCambridge: PastPaperWebsite {
@@ -54,54 +28,55 @@ class PapaCambridge: PastPaperWebsite {
         "O-Level": "GCE%20International%20O%20Level/"
     ]
     
-    func getLevels() -> [String] {
+    func getLevels() -> [String]? {
         return Array(level_site.keys)
     }
     
-    func getSubjects(level: String) -> [String] {
+    func getSubjects(level: String) -> [String]? {
         let specifiedUrl = root + level_site[level]!
         return getContentList(url: specifiedUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
     }
     
-    func getPapers(level: String, subject: String) -> [WebFile] {
+    func getPapers(level: String, subject: String) -> [WebFile]? {
         var allPapers: [WebFile] = []
         
         let seasonsUrl = root + level_site[level]! + bond(subject) + "/"
-        let seasons = getContentList(url: seasonsUrl, nameTag: "<li data-name=", criteria: { name in name != ".." })
+        guard let seasons = getContentList(url: seasonsUrl, nameTag: "<li data-name=", criteria: { name in name != ".." }) else {
+            return nil
+        }
         
         let fileSeasonsUrl = fileRoot + level_site[level]! + bond(subject, by: [" ": "%20"]) + "/"
         
+        var exception = false
+        
         let group = DispatchGroup()
-        for season in seasons{
-            group.enter()
+        for season in seasons {
             DispatchQueue.global().async {
+                group.enter()
+                defer {
+                    group.leave()
+                }
+                
                 let papersUrl = seasonsUrl + bond(season) + "/"
-                let papers = getContentList(url: papersUrl, nameTag: "<li data-name=", criteria: { name in name.contains(".pdf") })
+                guard let papers = getContentList(url: papersUrl, nameTag: "<li data-name=", criteria: { name in name.contains(".pdf") }) else {
+                    exception = true
+                    return
+                }
                 
                 let filePapersUrl = fileSeasonsUrl + bond(season, by: [" ": "%20"]) + "/"
                 
                 for paper in papers{
                     let paperUrl = filePapersUrl + paper
-                    allPapers.append(WebFile(url: paperUrl))
+                    allPapers.append(WebFile(url: paperUrl)!)
                 }
-                group.leave()
             }
+        }
+        group.wait()
+        
+        if exception {
+            return nil
         }
         
-        group.wait()
-        return allPapers
+        return allPapers.sorted(by: { $0.name.compare($1.name) == ComparisonResult.orderedAscending })
     }
-    
-    func downloadPapers(specifiedPapers: [WebFile], to path: String) {
-        let group = DispatchGroup()
-        for paper in specifiedPapers{
-            group.enter()
-            DispatchQueue.global().async {
-                paper.download(to: path)
-                group.leave()
-            }
-        }
-        group.wait()
-    }
-    
 }

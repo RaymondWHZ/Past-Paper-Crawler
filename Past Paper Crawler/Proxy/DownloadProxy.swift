@@ -9,11 +9,10 @@
 import Cocoa
 
 protocol DownloadProxy {
-    func downloadPapers(specifiedPapers: [WebFile])
+    func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> ())
 }
 
 class FileManagerProxy: DownloadProxy {
-    
     // todo implement local file manager
     
     let website: PastPaperWebsite
@@ -24,21 +23,34 @@ class FileManagerProxy: DownloadProxy {
         self.localPath = localPath
     }
     
-    func downloadPapers(specifiedPapers: [WebFile]) {
+    func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
         
     }
 }
 
 class DirectAccess: DownloadProxy {
-    func downloadPapers(specifiedPapers: [WebFile]) {
-        let openPanel = NSOpenPanel()
+    let openPanel = NSOpenPanel()
+    
+    init() {
         openPanel.canChooseFiles = false
         openPanel.canChooseDirectories = true
         openPanel.canCreateDirectories = true
         openPanel.treatsFilePackagesAsDirectories = true
-        openPanel.begin{ result in
-            if result == NSApplication.ModalResponse.OK {
-                website.downloadPapers(specifiedPapers: specifiedPapers, to: openPanel.url!.path)
+    }
+    
+    func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
+        self.openPanel.begin{ result in
+            DispatchQueue.global().async {
+                
+                var failed: [WebFile] = []
+                
+                if result == NSApplication.ModalResponse.OK {
+                    failed = downloadFiles(specifiedFiles: specifiedPapers, to: self.openPanel.url!.path)
+                }
+                
+                DispatchQueue.main.async {
+                    exitAction(failed)
+                }
             }
         }
     }

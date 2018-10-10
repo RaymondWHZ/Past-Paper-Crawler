@@ -15,14 +15,16 @@ import Cocoa
  ]
  */
 
+private let allSubjectViewController = getController("All Subjects View") as! AllSubjectsViewController
+
 class SubjectSystem {
     
     let parent: NSViewController
     let selector: NSPopUpButton
     let callback: (String, String) -> ()
     
-    var defaultItemNum = 4
-    var quickListStartFromIndex = 2
+    let defaultItemNum = 4
+    let quickListStartFromIndex = 2
     
     init(
         parent: NSViewController,
@@ -41,32 +43,37 @@ class SubjectSystem {
             return
         }
         
+        // do nothing for the first item
+        if selector.indexOfSelectedItem == 0 {
+            return
+        }
+        
+        // last item should be 'other...', open selection menu
         if selectedItem == selector.lastItem {
             selector.selectItem(at: 0)
             
-            let controller = parent.storyboard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "All Subjects View")) as! AllSubjectsViewController
-            controller.callback = {
+            allSubjectViewController.callback = {
                 level, subject in
                 self.selector.item(at: 0)!.title = subject
                 self.callback(level, subject)
             }
-            parent.presentViewControllerAsSheet(controller)
+            parent.presentAsSheet(allSubjectViewController)
         }
-        else if selector.indexOfSelectedItem > 0{
-            let selectedIndex = self.selector.indexOfSelectedItem
-            DispatchQueue.global().async {
-                let selected = quickList[selectedIndex - self.quickListStartFromIndex]
-                DispatchQueue.main.async {
-                    self.callback(selected["level"]!, selected["name"]!)
-                }
-            }
+        // otherwise an ordinary item in displayed list is selected
+        else {
+            let selectedIndex = selector.indexOfSelectedItem
+            let selected = quickList[selectedIndex - quickListStartFromIndex]
+            callback(selected["level"]!, selected["name"]!)
         }
     }
     
     func refresh() {
+        // remove original items in the displayed list
         for _ in defaultItemNum..<selector.numberOfItems {
             selector.removeItem(at: quickListStartFromIndex)
         }
+        
+        // add in new items
         for i in quickList.indices {
             selector.insertItem(withTitle: quickList[i]["name"]!, at: i + quickListStartFromIndex)
         }
@@ -79,6 +86,8 @@ class AllSubjectsViewController: NSViewController {
     @IBOutlet weak var subjectPopButton: NSPopUpButton!
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
     @IBOutlet weak var customProgress: NSProgressIndicator!
+    @IBOutlet var promptLabel: NSTextField!
+    var prompt: PromptLabelController?
     
     var callback: (String, String) -> () = {
         _, _ in
@@ -88,36 +97,54 @@ class AllSubjectsViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        prompt = PromptLabelController(promptLabel)
     }
     
     @IBAction func levelSelected(_ sender: Any) {
+        // clear the prompt
+        prompt?.setToDefault()
         
+        // remove original items in subject list
         let topTitle = subjectPopButton.itemTitle(at: 0)
         subjectPopButton.removeAllItems()
         subjectPopButton.addItem(withTitle: topTitle)
+        
+        // lock up subject button since the list is either empty or in progress
         subjectPopButton.isEnabled = false
         
+        // do not deal with the first item
         if levelPopButton.indexOfSelectedItem == 0 {
             return
         }
         
+        // lock up button
         levelPopButton.isEnabled = false
-        
-        let selectedLevel = levelPopButton.selectedItem!.title
-        
         subjectProgress.startAnimation(nil)
         
+        // get level name
+        let selectedLevel = levelPopButton.selectedItem!.title
+        
         DispatchQueue.global().async {
-            let subjects = website.getSubjects(level: selectedLevel)
+            defer {
+                DispatchQueue.main.async {
+                    // unlock buttons
+                    self.levelPopButton.isEnabled = true
+                    self.subjectPopButton.isEnabled = true
+                    self.subjectProgress.stopAnimation(nil)
+                }
+            }
+            
+            guard let subjects = website.getSubjects(level: selectedLevel) else {
+                DispatchQueue.main.async {
+                    self.prompt?.showError("Failed to get subjects!")
+                }
+                
+                return
+            }
             
             DispatchQueue.main.async {
+                // add all items into subject button
                 self.subjectPopButton.addItems(withTitles: subjects)
-                
-                self.subjectProgress.stopAnimation(nil)
-                self.subjectPopButton.isEnabled = true
-                
-                self.levelPopButton.isEnabled = true
             }
         }
     }

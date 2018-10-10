@@ -25,13 +25,15 @@ class SubjectsSetViewController: NSViewController {
     @IBOutlet weak var levelPopButton: NSPopUpButton!
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
     @IBOutlet weak var subjectTable: NSTableView!
+    @IBOutlet var promptLabel: NSTextField!
+    var prompt: PromptLabelController?
     
     var currentSubjects: [String] = []  // subjects that display in the table
     var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
     var changes: [(String, Bool)] = []  // record all changes made to selection (subject name, change to state)
     var lazySelectedLevel = ""  // remain previous when level button changes, used to update changes
     
-    var updateAction: Action? = nil  // action that updates table, record here in case having to remove from event later
+    var updateAction: Action? = nil  // action that updates table, will be sent to 'view selected', record here in case having to remove from event later
     
     static var viewCloseEvent = Event()  // multicast when view closes
     
@@ -41,6 +43,8 @@ class SubjectsSetViewController: NSViewController {
         // set up table manipulators
         subjectTable.dataSource = self
         subjectTable.delegate = self
+        
+        prompt = PromptLabelController(promptLabel)
         
         // append update action to selected subjects view, so that the table can be updated when selected view closes
         updateAction = Action(self.updateTable)
@@ -60,6 +64,8 @@ class SubjectsSetViewController: NSViewController {
     @IBAction func levelSelected(_ sender: Any) {
         saveChanges()
         
+        prompt?.setToDefault()
+        
         // clear all lists to avoid crash
         currentSubjects.removeAll()
         selected.removeAll()
@@ -76,14 +82,26 @@ class SubjectsSetViewController: NSViewController {
         subjectProgress.startAnimation(nil)
         
         DispatchQueue.global().async {
-            self.currentSubjects = website.getSubjects(level: self.lazySelectedLevel)  // access website to get all subjects
+            defer {
+                // unlock buttons
+                DispatchQueue.main.async {
+                    self.levelPopButton.isEnabled = true
+                    self.subjectProgress.stopAnimation(nil)
+                }
+            }
+            
+            // access website to get all subjects
+            guard let subjects = website.getSubjects(level: self.lazySelectedLevel) else {
+                DispatchQueue.main.async {
+                    self.prompt?.showError("Failed to get subjects!")
+                }
+                
+                return
+            }
+            self.currentSubjects = subjects
             
             DispatchQueue.main.async {
                 self.updateTable()
-                
-                // unlock buttons
-                self.subjectProgress.stopAnimation(nil)
-                self.levelPopButton.isEnabled = true
             }
         }
     }
@@ -92,7 +110,7 @@ class SubjectsSetViewController: NSViewController {
         saveChanges()
         
         // fetch and show sub view
-        performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "Show Selected"), sender: nil)
+        performSegue(withIdentifier: "Show Selected", sender: nil)
     }
     
     func updateTable() {  // updates table view according to quick list
@@ -106,6 +124,7 @@ class SubjectsSetViewController: NSViewController {
             let index = currentSubjects.index(of: subject["name"]!)!
             selected[index] = true
         }
+        
         subjectTable.reloadData()
     }
     
@@ -114,11 +133,8 @@ class SubjectsSetViewController: NSViewController {
             if state {  // add subject into list
                 quickList.append(["name": name, "level": lazySelectedLevel])
             }
-            else {  // remove subject from list
-                var nameLoc = 0
-                while quickList[nameLoc]["name"] != name {  // find subject
-                    nameLoc += 1
-                }
+            else {  // find and remove subject from list
+                let nameLoc = quickList.firstIndex(where: { $0["name"] == name })!
                 quickList.remove(at: nameLoc)
             }
         }
@@ -129,6 +145,7 @@ class SubjectsSetViewController: NSViewController {
 }
 
 extension SubjectsSetViewController: NSTableViewDataSource {
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return currentSubjects.count
     }
@@ -191,8 +208,11 @@ class QuickListViewController: NSViewController {
     }
     
     func drag(_ from: Int, _ to: Int) {  // swap position of to subjects
+        // swap elements in both lists at the same time
         quickList.swapAt(from, to)
         selected.swapAt(from, to)
+        
+        // refresh table
         quickListTable.reloadData()
         quickListTable.selectRowIndexes(IndexSet(integer: to), byExtendingSelection: false)
     }
