@@ -26,6 +26,8 @@ class SubjectSystem {
     let defaultItemNum = 4
     let quickListStartFromIndex = 2
     
+    var refreshAction: Action? = nil
+    
     init(
         parent: NSViewController,
         selector: NSPopUpButton,
@@ -35,23 +37,31 @@ class SubjectSystem {
         self.selector = selector
         self.callback = callback
         
+        selector.autoenablesItems = false
+        
         refresh()
+        refreshAction = Action({
+            DispatchQueue.main.async {
+                self.refresh()
+            }
+        })
+        quickListChangeEvent.addAction(refreshAction!)
+    }
+    
+    deinit {
+        quickListChangeEvent.removeAction(refreshAction!)
     }
     
     func selectorClicked() {
-        guard let selectedItem = selector.selectedItem else {
+        let selectedItem = selector.indexOfSelectedItem
+        if selectedItem < 1 {
             return
         }
         
-        // do nothing for the first item
-        if selector.indexOfSelectedItem == 0 {
-            return
-        }
+        selector.selectItem(at: 0)
         
         // last item should be 'other...', open selection menu
-        if selectedItem == selector.lastItem {
-            selector.selectItem(at: 0)
-            
+        if selectedItem == selector.numberOfItems - 1 {
             allSubjectViewController.callback = {
                 level, subject in
                 self.selector.item(at: 0)!.title = subject
@@ -61,8 +71,8 @@ class SubjectSystem {
         }
         // otherwise an ordinary item in displayed list is selected
         else {
-            let selectedIndex = selector.indexOfSelectedItem
-            let selected = quickList[selectedIndex - quickListStartFromIndex]
+            let selected = quickList[selectedItem - quickListStartFromIndex]
+            selector.item(at: 0)!.title = selected["name"]!
             callback(selected["level"]!, selected["name"]!)
         }
     }
@@ -75,7 +85,15 @@ class SubjectSystem {
         
         // add in new items
         for i in quickList.indices {
-            selector.insertItem(withTitle: quickList[i]["name"]!, at: i + quickListStartFromIndex)
+            let target = i + quickListStartFromIndex
+            var name = quickList[i]["name"]!
+            var enabled = true
+            if name.hasPrefix("*") {
+                name.removeFirst()
+                enabled = false
+            }
+            selector.insertItem(withTitle: name, at: target)
+            selector.item(at: target)!.isEnabled = enabled
         }
     }
 }
@@ -124,7 +142,7 @@ class AllSubjectsViewController: NSViewController {
         // get level name
         let selectedLevel = levelPopButton.selectedItem!.title
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInteractive).async {
             defer {
                 DispatchQueue.main.async {
                     // unlock buttons

@@ -12,9 +12,79 @@ import Cocoa
 
 class GeneralSetViewController: NSViewController {
     
+    @IBOutlet var websitePopButton: NSPopUpButton!
+    
+    @IBOutlet var showAllCheckBox: NSButton!
+    
+    @IBOutlet var askEverytimeOption: NSButton!
+    @IBOutlet var useDefaultOption: NSButton!
+    @IBOutlet var pathTextField: NSTextField!
+    @IBOutlet var browseButton: NSButton!
+    @IBOutlet var createFolderCheckBox: NSButton!
+    
+    let openPanel = NSOpenPanel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        websitePopButton.addItems(withTitles: Array(websites.keys))
+        websitePopButton.selectItem(withTitle: userDefaults.string(forKey: websiteToken)!)
+        
+        let showAll = userDefaults.bool(forKey: defaultShowAllToken)
+        showAllCheckBox.state = (showAll) ? .on : .off
+        
+        let useDefaultPath = userDefaults.bool(forKey: useDefualtPathToken)
+        let onOption = (useDefaultPath) ? useDefaultOption : askEverytimeOption
+        onOption!.state = .on
+        savePolicySelected(onOption!)
+        
+        pathTextField.stringValue = userDefaults.string(forKey: defaultPathToken)!
+        
+        openPanel.canChooseFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.treatsFilePackagesAsDirectories = true
+        
+        let createFolder = userDefaults.bool(forKey: createFolderToken)
+        createFolderCheckBox.state = (createFolder) ? .on : .off
+    }
+    
+    @IBAction func websiteSelected(_ sender: Any) {
+        userDefaults.set(websitePopButton.selectedItem?.title, forKey: websiteToken)
+        cleanSubjectsCache()
+        doCheckQuicklist(parent: self)
+    }
+    
+    @IBAction func showModeSelected(_ sender: Any) {
+        let showAll = showAllCheckBox.state == .on
+        userDefaults.set(showAll, forKey: defaultShowAllToken)
+    }
+    
+    @IBAction func savePolicySelected(_ sender: Any) {
+        let useDefaultPath = sender as? NSButton == useDefaultOption
+        ((useDefaultPath) ? askEverytimeOption : useDefaultOption)!.state = .off
+        pathTextField.isEditable = useDefaultPath
+        browseButton.isEnabled = useDefaultPath
+        
+        userDefaults.set(useDefaultPath, forKey: useDefualtPathToken)
+    }
+    
+    @IBAction func pathChanged(_ sender: Any) {
+        userDefaults.set(pathTextField.stringValue, forKey: defaultPathToken)
+    }
+    
+    @IBAction func browseClicked(_ sender: Any) {
+        openPanel.begin { result in
+            if result == .OK {
+                let path = self.openPanel.url!.path
+                self.pathTextField.stringValue = path
+                userDefaults.set(path, forKey: defaultPathToken)
+            }
+        }
+    }
+    @IBAction func createFolderOptionChanged(_ sender: Any) {
+        let createFolder = createFolderCheckBox.state == .on
+        userDefaults.set(createFolder, forKey: createFolderToken)
     }
 }
 
@@ -81,7 +151,7 @@ class SubjectsSetViewController: NSViewController {
         levelPopButton.isEnabled = false
         subjectProgress.startAnimation(nil)
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInteractive).async {
             defer {
                 // unlock buttons
                 DispatchQueue.main.async {
@@ -116,12 +186,14 @@ class SubjectsSetViewController: NSViewController {
     func updateTable() {  // updates table view according to quick list
         selected = Array(repeating: false, count: currentSubjects.count)
         for subject in quickList {
-            if subject["level"] != lazySelectedLevel {  // exclude other levels
+            if subject["level"] != lazySelectedLevel || subject["name"]!.hasPrefix("*") {  // exclude other levels
                 continue
             }
             
             // find and tick on certain subject
-            let index = currentSubjects.index(of: subject["name"]!)!
+            guard let index = currentSubjects.index(of: subject["name"]!) else {
+                continue
+            }
             selected[index] = true
         }
         
@@ -246,7 +318,12 @@ extension QuickListViewController: NSTableViewDataSource {
 extension QuickListViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
         if let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
-            newCell.title = quickList[row]["name"]!  // get the title from list
+            var name = quickList[row]["name"]!
+            if name.hasPrefix("*") {
+                name.removeFirst()
+                name += " (Disabled)"
+            }
+            newCell.title = name  // get the title from list
             return newCell
         }
         return nil

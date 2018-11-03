@@ -8,7 +8,9 @@
 
 import Cocoa
 
-class PapersViewController: NSViewController {
+class PapersViewController: NSViewController, DownloadRepresentor {
+    
+    var progressIndicator: NSProgressIndicator?
     
     // ---standard controls---
     
@@ -35,8 +37,7 @@ class PapersViewController: NSViewController {
     
     // ---custom variables---
     
-    static var nextProxy: ShowProxy? = nil
-    var showProxy: ShowProxy = PapersViewController.nextProxy!
+    var showProxy: ShowProxy = defaultShowProxy
     
     var subjectSystem: SubjectSystem?
     var refreshAction: Action?
@@ -47,6 +48,8 @@ class PapersViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        progressIndicator = downloadProgress
         
         allControls = [
             subjectPopButton,
@@ -65,34 +68,25 @@ class PapersViewController: NSViewController {
             downloadButton
         ]
         
-        // clear next proxy
-        PapersViewController.nextProxy = nil
-        
+        // initiate prompt
         viewPrompt = PromptLabelController(viewPromptLabel)
         
         // set up table manipulators
         papersTable.dataSource = self
         papersTable.delegate = self
         
-        // initiate criteria and subject display
-        setUpSurrounding()
-        
+        // set up subject system
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton, loadList)
         
-        refreshAction = Action{
-            self.subjectSystem!.refresh()
+        if userDefaults.bool(forKey: defaultShowAllToken) {
+            showAllCheckbox.state = .on
+            changedShowOption(showAllCheckbox)
         }
-        SubjectsSetViewController.viewCloseEvent.addAction(refreshAction!)
-        
-    }
-    
-    override func viewWillDisappear() {
-        SubjectsSetViewController.viewCloseEvent.removeAction(refreshAction!)
     }
     
     // ---custom functions---
     
-    var controlEnabled: Bool {  // whether to lock up the whole view
+    private var controlEnabled: Bool {  // whether to lock up the whole view
         get {
             return allControls.first!.isEnabled
         }
@@ -127,24 +121,16 @@ class PapersViewController: NSViewController {
     
     @IBAction func changedShowOption(_ sender: Any) {
         let isOn = showAllCheckbox.state == .on
+        typePopButton.isHidden = !isOn
         
-        var newShowProxy = ShowProxy()
-        if isOn {
-            viewPromptLabel.stringValue = "All files are shown."
-        }
-        else {
-            newShowProxy = PapersWithAnswer()
-            viewPromptLabel.stringValue = "Papers and answers are put together omitting any other file or paper before 2005."
-        }
-        
-        // refresh pop button
-        typePopButton.isHidden = showAllCheckbox.state == .off
+        let newShowProxy = (isOn) ? ShowProxy() : PapersWithAnswer()
+        viewPromptLabel.stringValue = (isOn) ? "All files are shown." : "Papers and answers are put together omitting any other file or paper before 2005."
         
         newShowProxy.restoreFrom(other: showProxy)
         showProxy = newShowProxy
         
         papersTable.reloadData()
-        setUpSurrounding()
+        resetCriteria()
     }
     
     @IBAction func subjectSelected(_ sender: Any) {
@@ -178,31 +164,31 @@ class PapersViewController: NSViewController {
         // start spinning
         downloadProgress.startAnimation(nil)
         
-        showProxy.downloadPapers(at: selectedIndices, exitAction: {
-            failed in
-            
-            // if all complished (might have another download mission), stop spinning
-            if softwareDownloadStack == 0 {
-                self.downloadProgress.stopAnimation(nil)
-            }
-            
-            if !failed.isEmpty {
-                self.performSegue(withIdentifier: "Show Failed", sender: nil)
-            }
-        })
+        let papers = showProxy.getPapers(at: selectedIndices)
+        download(files: papers)
     }
     
+    func pre(download files: [WebFile]) { }
+    
+    func handle(failed files: [WebFile]) {
+        self.presentAsSheet(getFailedView(failedList: files, retryAction: self.download))
+    }
+    
+    func post(download files: [WebFile]) { }
+    
     func loadList(level: String, subject: String) {
+        // set back prompt line
         viewPrompt?.setToDefault()
-        
-        // set selected subject
-        subjectPopButton.selectItem(at: 0)
         
         // lock up buttons
         controlEnabled = false
         papersProgress.startAnimation(nil)
         
-        DispatchQueue.global().async {
+        // select item
+        subjectPopButton.selectItem(at: 0)
+        subjectPopButton.item(at: 0)!.title = subject + " "
+        
+        DispatchQueue.global(qos: .userInteractive).async {
             defer {
                 // unlock buttons
                 DispatchQueue.main.async {
@@ -228,9 +214,23 @@ class PapersViewController: NSViewController {
     }
     
     func setUpSurrounding() {
+        if papersTable.numberOfRows == 0 {
+            if showProxy is PapersWithAnswer {
+                DispatchQueue.main.async {
+                    self.showAllCheckbox.state = .on
+                    self.changedShowOption(self.showAllCheckbox)
+                }
+            }
+            return
+        }
+        
         // set up subject selector
         subjectPopButton.itemArray[0].title = currentSubject + " "  // add space to avoid duplication in list
         
+        resetCriteria()
+    }
+    
+    func resetCriteria() {
         // set up criteria selector
         let summary = showProxy.criteriaSummary  // fetch all selections
         for popButton in [

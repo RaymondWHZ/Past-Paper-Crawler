@@ -30,6 +30,7 @@ class MainViewController: NSViewController {
     var accessCount = 0
     
     @IBOutlet weak var subjectPopButton: NSPopUpButton!
+    var defaultPopButtonPrompt = ""
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
     @IBOutlet var subjectPromptLabel: NSTextField!
     var subjectPrompt: PromptLabelController? = nil
@@ -49,6 +50,7 @@ class MainViewController: NSViewController {
         paperPrompt = PromptLabelController(paperPromptLabel)
         subjectPrompt = PromptLabelController(subjectPromptLabel)
         
+        defaultPopButtonPrompt = subjectPopButton.item(at: 0)!.title
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton) {
             level, subject in
             
@@ -57,7 +59,10 @@ class MainViewController: NSViewController {
             self.subjectProgress.startAnimation(nil)
             self.subjectPrompt?.setToDefault()
             
-            DispatchQueue.global().async {
+            let paperWindow = getController("Papers Window") as! NSWindowController
+            let paperView = paperWindow.contentViewController as! PapersViewController
+            
+            DispatchQueue.global(qos: .userInteractive).async {
                 defer {
                     // unlock button
                     DispatchQueue.main.async {
@@ -67,8 +72,7 @@ class MainViewController: NSViewController {
                 }
                 
                 // load current subject
-                PapersViewController.nextProxy = defaultShowProxy
-                if !PapersViewController.nextProxy!.loadFrom(level: level, subject: subject) {
+                if !paperView.showProxy.loadFrom(level: level, subject: subject) {
                     DispatchQueue.main.async {
                         self.subjectPrompt?.showError("Failed to load subject!")
                     }
@@ -78,22 +82,15 @@ class MainViewController: NSViewController {
                 DispatchQueue.main.async {
                     
                     // display paper window
-                    self.performSegue(withIdentifier: "Show Papers", sender: nil)
+                    paperView.papersTable.reloadData()
+                    paperView.setUpSurrounding()
+                    paperWindow.showWindow(nil)
                     
-                    // switch back selection
-                    self.subjectPopButton.selectItem(at: 0)
+                    // set back prompt
+                    self.subjectPopButton.item(at: 0)!.title = self.defaultPopButtonPrompt
                 }
             }
         }
-        
-        // add refresh action to setting panel
-        refreshAction = Action(subjectSystem!.refresh)
-        SubjectsSetViewController.viewCloseEvent.addAction(refreshAction!)
-    }
-    
-    override func viewWillDisappear() {
-        // remove refresh action from setting panel
-        SubjectsSetViewController.viewCloseEvent.removeAction(refreshAction!)
     }
     
     @IBAction func paperConfirmed(_ sender: Any) {
@@ -133,11 +130,11 @@ extension MainViewController: NSComboBoxDelegate {
         paperProcess.startAnimation(nil)
         
         accessCount += 1
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInteractive).async {
             defer {
                 DispatchQueue.main.async {
                     self.accessCount -= 1
-                    if self.accessCount != 0 {
+                    if self.accessCount == 0 {
                         self.paperProcess.stopAnimation(nil)
                     }
                 }

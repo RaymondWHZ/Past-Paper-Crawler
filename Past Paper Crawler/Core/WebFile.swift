@@ -11,8 +11,9 @@ import Foundation
 class WebFile {
     let name: String
     let fullUrl: URL
+    var classification: String?
     
-    init?(url: String) {
+    init?(url: String, classification: String? = nil) {
         guard let _fullUrl = URL(string: url) else {
             return nil
         }
@@ -20,9 +21,11 @@ class WebFile {
         
         let index = url.lastIndex(of: "/")!
         name = String(url[url.index(after: index)...])
+        
+        self.classification = classification
     }
     
-    func download(to path: String) -> Bool {
+    func download(to path: String, classify: Bool = false) -> Bool {
         guard let data = NSData(contentsOf: fullUrl) else {
             return false
         }
@@ -31,6 +34,13 @@ class WebFile {
         if p.last != "/" {
             p += "/"
         }
+        if classify && classification != nil {
+            p += classification! + "/"
+        }
+        if !fileManager.fileExists(atPath: p) {
+            try? fileManager.createDirectory(atPath: p, withIntermediateDirectories: true, attributes: nil)
+        }
+        
         data.write(toFile: p + name, atomically: true)
         
         return true
@@ -41,10 +51,12 @@ class WebFile {
 
 private var downloadStack = 0
 var softwareDownloadStack: Int {
-    return downloadStack
+    get {
+        return downloadStack
+    }
 }
 
-func downloadFiles(specifiedFiles: [WebFile], to path: String) -> [WebFile] {
+func downloadFiles(specifiedFiles: [WebFile], to path: String, classify: Bool = false) -> [WebFile] {
     
     var failed: [WebFile] = []
     
@@ -53,13 +65,13 @@ func downloadFiles(specifiedFiles: [WebFile], to path: String) -> [WebFile] {
     
     let group = DispatchGroup()
     for paper in specifiedFiles {
-        DispatchQueue.global().async {
-            group.enter()
+        group.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
             defer {
                 group.leave()
             }
             
-            if !paper.download(to: path) {
+            if !paper.download(to: path, classify: classify) {
                 failed.append(paper)
             }
         }

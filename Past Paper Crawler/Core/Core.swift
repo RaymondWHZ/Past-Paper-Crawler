@@ -8,43 +8,48 @@
 
 import Foundation
 
+private var dataCache: [String: Data] = [:]
 func readUrl(url: String) -> Data? {
+    if let cacheItem = dataCache[url] {
+        return cacheItem
+    }
+    
+    print("Read URL: \(url)")
+    
     let url = URL(string: url)!
     return try? Data(contentsOf: url)
 }
 
-func getContentList(url: String, nameTag: String, criteria: (String) -> Bool) -> [String]? {
+private var contentListCache: [String: [String]] = [:]
+func getContentList(url: String, XPath: String, name: String, criteria: (String) -> Bool = { _ in true }) -> [String]? {
+    if let cacheItem = contentListCache[url+XPath+name] {
+        return cacheItem.filter(criteria)
+    }
+    
     guard let data = readUrl(url: url) else {
         return nil
     }
     
-    let str = String(data: data, encoding: String.Encoding.utf8)!
-    let scanner = Scanner.init(string: str)
+    let doc = try! HTML(html: data, encoding: .utf8)
     
-    var cur: NSString?
-    var ret: [String] = []
-    while true {
-        scanner.scanUpTo(nameTag, into: nil)
-        if scanner.isAtEnd {
-            return ret
-        }
-        scanner.scanUpTo("\"", into: nil)
-        scanner.scanLocation += 1
-        scanner.scanUpTo("\"", into: &cur)
-        let s = cur! as String
-        if criteria(s) {
-            ret.append(String(s))
-        }
+    let object = doc.xpath(XPath)
+    var list: [String] = []
+    for node in object {
+        list.append(node[name]!)
     }
+    
+    contentListCache[url+XPath+name] = list
+    return list.filter(criteria)
 }
 
 let defaultDict: [Character: String] = [
     " ": "%20",
+    "&": "%26",
     "(": "%28",
     ")": "%29"
 ]
 
-func bond(_ s: String, by dict: Dictionary<Character, String> = defaultDict) -> String {
+func bond(_ s: String, by dict: [Character: String] = defaultDict) -> String {
     var final = ""
     for c in s{
         if dict.keys.contains(c) {

@@ -16,15 +16,20 @@
 		B6032100213256F500488A42 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
 		B60B0E3621356A0700DBE06E /* SettingViewsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */; };
 		B622E029216B885E00229054 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* Util.swift */; };
+		B6263C5621744C1000EC5C61 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6263C5521744C1000EC5C61 /* Kanna.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
+		B657B0BD218414BA009099BA /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B8218414BA009099BA /* CSS.swift */; };
+		B657B0BE218414BA009099BA /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B9218414BA009099BA /* Kanna.swift */; };
+		B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
+		B657B0C0218414BA009099BA /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
+		B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
+		B657B0C621855916009099BA /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0C521855915009099BA /* RenameViewController.swift */; };
 		B6790961213ADF5B00E2F233 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790960213ADF5B00E2F233 /* Settings.swift */; };
 		B6790964213B9D2800E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
-		B6790966213C245200E2F233 /* Bisect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790965213C245200E2F233 /* Bisect.swift */; };
 		B679096A213C399600E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
 		B6790976213D893200E2F233 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790975213D893200E2F233 /* main.swift */; };
 		B679097C213D897000E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
-		B679097D213D897000E2F233 /* Bisect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790965213C245200E2F233 /* Bisect.swift */; };
 		B679097E213D897000E2F233 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
 		B679097F213D897000E2F233 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B6790980213D897000E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
@@ -85,11 +90,19 @@
 		B60320FF213256F500488A42 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewsControllers.swift; sourceTree = "<group>"; };
 		B622E028216B885E00229054 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		B6263C5521744C1000EC5C61 /* Kanna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kanna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63BCC692134574700F56334 /* Past Paper Crawler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Past Paper Crawler.entitlements"; sourceTree = "<group>"; };
 		B63BCC6A2134C65800F56334 /* PPWebsites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPWebsites.swift; sourceTree = "<group>"; };
+		B657B0B8218414BA009099BA /* CSS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSS.swift; sourceTree = "<group>"; };
+		B657B0B9218414BA009099BA /* Kanna.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kanna.swift; sourceTree = "<group>"; };
+		B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlHTMLDocument.swift; sourceTree = "<group>"; };
+		B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlHTMLNode.swift; sourceTree = "<group>"; };
+		B657B0BC218414BA009099BA /* libxmlParserOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlParserOption.swift; sourceTree = "<group>"; };
+		B657B0C3218414EA009099BA /* libxml2-kanna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libxml2-kanna.h"; sourceTree = "<group>"; };
+		B657B0C4218414EA009099BA /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		B657B0C521855915009099BA /* RenameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
 		B6790960213ADF5B00E2F233 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B6790963213B9D2800E2F233 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		B6790965213C245200E2F233 /* Bisect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bisect.swift; sourceTree = "<group>"; };
 		B6790969213C399600E2F233 /* ShowProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProxy.swift; sourceTree = "<group>"; };
 		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
 		B6790973213D893100E2F233 /* Crawler Core Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Crawler Core Test"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6263C5621744C1000EC5C61 /* Kanna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +157,7 @@
 				B60320F0213254AF00488A42 /* Past Paper CrawlerUITests */,
 				B6790974213D893200E2F233 /* Crawler Core Test */,
 				B60320D1213254AD00488A42 /* Products */,
+				B6263C5421744C1000EC5C61 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,6 +209,23 @@
 			path = "Past Paper CrawlerUITests";
 			sourceTree = "<group>";
 		};
+		B6263C5421744C1000EC5C61 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6263C5521744C1000EC5C61 /* Kanna.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B657B0C2218414EA009099BA /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				B657B0C3218414EA009099BA /* libxml2-kanna.h */,
+				B657B0C4218414EA009099BA /* module.modulemap */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		B679095F213ADF4D00E2F233 /* IO */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,8 +237,13 @@
 		B6790962213B9D1A00E2F233 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				B657B0C2218414EA009099BA /* Modules */,
+				B657B0B8218414BA009099BA /* CSS.swift */,
+				B657B0B9218414BA009099BA /* Kanna.swift */,
+				B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */,
+				B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */,
+				B657B0BC218414BA009099BA /* libxmlParserOption.swift */,
 				B6790963213B9D2800E2F233 /* Event.swift */,
-				B6790965213C245200E2F233 /* Bisect.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -238,6 +275,7 @@
 				B679096B213C3A9B00E2F233 /* PapersViewController.swift */,
 				B6F988E62163B79D00F07404 /* FailedViewController.swift */,
 				B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */,
+				B657B0C521855915009099BA /* RenameViewController.swift */,
 			);
 			path = "GUI Controllers";
 			sourceTree = "<group>";
@@ -417,9 +455,12 @@
 				B6790964213B9D2800E2F233 /* Event.swift in Sources */,
 				B6032100213256F500488A42 /* Core.swift in Sources */,
 				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
-				B6790966213C245200E2F233 /* Bisect.swift in Sources */,
+				B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */,
 				B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */,
+				B657B0BE218414BA009099BA /* Kanna.swift in Sources */,
 				B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */,
+				B657B0C621855916009099BA /* RenameViewController.swift in Sources */,
+				B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */,
 				B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */,
 				B6E916482163BFDA0061F5BF /* DownloadRepresentor.swift in Sources */,
 				B679096A213C399600E2F233 /* ShowProxy.swift in Sources */,
@@ -428,7 +469,9 @@
 				B6790961213ADF5B00E2F233 /* Settings.swift in Sources */,
 				B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */,
 				B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */,
+				B657B0BD218414BA009099BA /* CSS.swift in Sources */,
 				B60320D4213254AD00488A42 /* AppDelegate.swift in Sources */,
+				B657B0C0218414BA009099BA /* libxmlHTMLNode.swift in Sources */,
 				B6F988E521636B6400F07404 /* WebFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +499,6 @@
 				B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */,
 				B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */,
 				B679097C213D897000E2F233 /* Event.swift in Sources */,
-				B679097D213D897000E2F233 /* Bisect.swift in Sources */,
 				B679097E213D897000E2F233 /* Core.swift in Sources */,
 				B679097F213D897000E2F233 /* PPWebsites.swift in Sources */,
 				B6790980213D897000E2F233 /* ShowProxy.swift in Sources */,
@@ -542,6 +584,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -596,6 +639,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -612,6 +656,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Past Paper Crawler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -620,7 +665,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Util/Modules";
 				SWIFT_VERSION = 4.2;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				SYSTEM_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -632,6 +681,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Past Paper Crawler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -640,7 +690,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Util/Modules";
 				SWIFT_VERSION = 4.2;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				SYSTEM_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -731,6 +785,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
+				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -741,6 +796,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
+				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};

@@ -11,21 +11,12 @@ import Cocoa
 protocol DownloadRepresentor {
     
     var progressIndicator: NSProgressIndicator? { get }
-}
-
-extension DownloadRepresentor {
     
-    func pre(download files: [WebFile]) {
-        
-    }
+    func pre(download files: [WebFile])
     
-    func post(download files: [WebFile]) {
-        
-    }
+    func post(download files: [WebFile])
     
-    func handle(failed files: [WebFile]) {
-        
-    }
+    func handle(failed files: [WebFile])
 }
 
 extension DownloadRepresentor {

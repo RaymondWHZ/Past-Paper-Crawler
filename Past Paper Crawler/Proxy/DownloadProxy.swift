@@ -12,23 +12,25 @@ protocol DownloadProxy {
     func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> ())
 }
 
-class FileManagerProxy: DownloadProxy {
-    // todo implement local file manager
-    
-    let website: PastPaperWebsite
-    let localPath: String
-    
-    init(website: PastPaperWebsite, localPath: String) {
-        self.website = website
-        self.localPath = localPath
-    }
+class DefaultPathProxy: DownloadProxy {
     
     func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
-        
+        DispatchQueue.global().async {
+            
+            var failed: [WebFile] = []
+            
+            let path = userDefaults.string(forKey: defaultPathToken)!
+            let createFolder = userDefaults.bool(forKey: createFolderToken)
+            failed = downloadFiles(specifiedFiles: specifiedPapers, to: path, classify: createFolder)
+            
+            DispatchQueue.main.async {
+                exitAction(failed)
+            }
+        }
     }
 }
 
-class DirectAccess: DownloadProxy {
+class AskUserProxy: DownloadProxy {
     let openPanel = NSOpenPanel()
     
     init() {
@@ -39,13 +41,15 @@ class DirectAccess: DownloadProxy {
     }
     
     func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
-        self.openPanel.begin{ result in
+        openPanel.begin{ result in
             DispatchQueue.global().async {
                 
                 var failed: [WebFile] = []
                 
-                if result == NSApplication.ModalResponse.OK {
-                    failed = downloadFiles(specifiedFiles: specifiedPapers, to: self.openPanel.url!.path)
+                if result == .OK {
+                    let path = self.openPanel.url!.path
+                    let createFolder = userDefaults.bool(forKey: createFolderToken)
+                    failed = downloadFiles(specifiedFiles: specifiedPapers, to: path, classify: createFolder)
                 }
                 
                 DispatchQueue.main.async {

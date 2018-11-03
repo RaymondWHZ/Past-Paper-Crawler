@@ -8,17 +8,27 @@
 
 import Cocoa
 
+func getFailedView(failedList: [WebFile], retryAction: @escaping ([WebFile]) -> ()) -> NSViewController {
+    let view = getController("Failed View") as! FailedViewController
+    view.setFailedList(files: failedList)
+    view.retryAction = retryAction
+    return view
+}
+
 class FailedViewController: NSViewController {
     
-    static var nextFailedList: [WebFile]? = nil
-    var failedList: [WebFile] = FailedViewController.nextFailedList!
-    
     @IBOutlet var failedTableView: NSTableView!
-    var selected: [Bool] = []
+    private var failedList: [WebFile] = []
+    private var selected: [Bool] = []
+    
+    func setFailedList(files: [WebFile]) {
+        failedList = files
+        selected = Array(repeating: true, count: files.count)
+    }
+    
+    var retryAction: ([WebFile]) -> () = {_ in}
     
     override func viewDidLoad() {
-        FailedViewController.nextFailedList = nil
-        
         failedTableView.dataSource = self
         failedTableView.delegate = self
     }
@@ -33,7 +43,7 @@ class FailedViewController: NSViewController {
             }
         }
         
-        
+        retryAction(selectedFiles)
     }
 }
 

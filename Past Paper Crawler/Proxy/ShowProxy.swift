@@ -53,7 +53,11 @@ extension String{
 func info(of paperName: String) -> [String: String]{
     let count = paperName.count
     
-    var ret: [String: String] = [year: "", season: "", paper: none, edition: editionOne, type: ""]
+    var ret: [String: String] = [year: other, season: other, paper: none, edition: editionOne, type: other]
+    
+    if count < 8 + 4 {
+        return ret
+    }
     
     let cYear: String = paperName.subString(from: 6, to: 7)
     ret[year] = yearPrefix + cYear
@@ -61,23 +65,33 @@ func info(of paperName: String) -> [String: String]{
     let cSeason: String = paperName.subString(from: 5, to: 5)
     ret[season] = seasons[cSeason] ?? other
     
+    if count < 11 + 4 {
+        return ret
+    }
+    
     let cType: String = paperName.subString(from: 9, to: 10)
     ret[type] = types[cType] ?? other
     
-    if count >= 13 + 4 {
-        let cPaper: String = paperName.subString(from: 12, to: 12)
-        ret[paper] = paperPrefix + cPaper
+    if count < 13 + 4 {
+        return ret
     }
     
-    if count >= 14 + 4 {
-        let cEdition: String = paperName.subString(from: 13, to: 13)
-        ret[edition] = editionPrefix + cEdition
+    let cPaper: String = paperName.subString(from: 12, to: 12)
+    ret[paper] = paperPrefix + cPaper
+    
+    if count < 14 + 4 {
+        return ret
     }
     
-    if count >= 15 + 4 {
-        ret[paper] = other
-        ret[edition] = editionOne
+    let cEdition: String = paperName.subString(from: 13, to: 13)
+    ret[edition] = editionPrefix + cEdition
+    
+    if count < 15 + 4 {
+        return ret
     }
+    
+    ret[paper] = other
+    ret[edition] = editionOne
     
     return ret
 }
@@ -216,12 +230,12 @@ class ShowProxy {
         return showListCache!
     }
     
-    func downloadPapers(at indices: [Int], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
+    func getPapers(at indices: [Int]) -> [WebFile] {
         var papers: [WebFile] = []
         for index in indices {
             papers.append(currentList[index])
         }
-        downloadProxy.downloadPapers(specifiedPapers: papers, exitAction: exitAction)
+        return papers
     }
 }
 
@@ -294,6 +308,10 @@ class PapersWithAnswer: ShowProxy {
                 let cfInfo = info(of: currentFile.name)
                 currentPos += 1
                 
+                if currentPos >= sortedList.count {
+                    break
+                }
+                
                 let nextFile = sortedList[currentPos]
                 
                 if cfInfo["type"] == types["qp"] {
@@ -350,13 +368,13 @@ class PapersWithAnswer: ShowProxy {
         currentCoupleListCache = nil
     }
     
-    override func downloadPapers(at indices: [Int], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
+    override func getPapers(at indices: [Int]) -> [WebFile] {
         var papers: [WebFile] = []
         for index in indices {
-            let fileCouple = wholeCoupleList[index]
+            let fileCouple = currentCoupleList[index]
             papers.append(fileCouple.questionPaper)
             papers.append(fileCouple.markScheme)
         }
-        downloadProxy.downloadPapers(specifiedPapers: papers, exitAction: exitAction)
+        return papers
     }
 }
