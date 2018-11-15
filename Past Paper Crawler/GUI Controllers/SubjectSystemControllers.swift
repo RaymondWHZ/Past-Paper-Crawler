@@ -15,7 +15,9 @@ import Cocoa
  ]
  */
 
-private let allSubjectViewController = getController("All Subjects View") as! AllSubjectsViewController
+private func getAllSubjectViewController() -> AllSubjectsViewController {
+    return getController("All Subjects View") as! AllSubjectsViewController
+}
 
 class SubjectSystem {
     
@@ -26,7 +28,7 @@ class SubjectSystem {
     let defaultItemNum = 4
     let quickListStartFromIndex = 2
     
-    var refreshAction: Action? = nil
+    var refreshAction: Action?
     
     init(
         parent: NSViewController,
@@ -36,8 +38,6 @@ class SubjectSystem {
         self.parent = parent
         self.selector = selector
         self.callback = callback
-        
-        selector.autoenablesItems = false
         
         refresh()
         refreshAction = Action({
@@ -62,12 +62,13 @@ class SubjectSystem {
         
         // last item should be 'other...', open selection menu
         if selectedItem == selector.numberOfItems - 1 {
-            allSubjectViewController.callback = {
+            let controller = getAllSubjectViewController()
+            controller.callback = {
                 level, subject in
                 self.selector.item(at: 0)!.title = subject
                 self.callback(level, subject)
             }
-            parent.presentAsSheet(allSubjectViewController)
+            parent.presentAsSheet(controller)
         }
         // otherwise an ordinary item in displayed list is selected
         else {
@@ -92,20 +93,33 @@ class SubjectSystem {
                 name.removeFirst()
                 enabled = false
             }
+            
             selector.insertItem(withTitle: name, at: target)
-            selector.item(at: target)!.isEnabled = enabled
+            let item = selector.item(at: target)!
+            item.isEnabled = enabled
+            
+            if i + 1 < 10 {
+                item.keyEquivalentModifierMask = .command
+                item.keyEquivalent = String(i + 1)
+            }
         }
     }
 }
 
 class AllSubjectsViewController: NSViewController {
     
+    @IBOutlet var searchTextField: NSSearchField!
+    @IBOutlet var searchProgress: NSProgressIndicator!
+    
     @IBOutlet weak var levelPopButton: NSPopUpButton!
     @IBOutlet weak var subjectPopButton: NSPopUpButton!
-    @IBOutlet weak var subjectProgress: NSProgressIndicator!
-    @IBOutlet weak var customProgress: NSProgressIndicator!
+    var userChangedLevel = false
+    
+    @IBOutlet weak var levelProgress: NSProgressIndicator!
     @IBOutlet var promptLabel: NSTextField!
     var prompt: PromptLabelController?
+    
+    @IBOutlet var doneButton: NSButton!
     
     var callback: (String, String) -> () = {
         _, _ in
@@ -119,25 +133,28 @@ class AllSubjectsViewController: NSViewController {
     }
     
     @IBAction func levelSelected(_ sender: Any) {
+        doneButton.isHidden = true
+        
         // clear the prompt
         prompt?.setToDefault()
         
         // remove original items in subject list
-        let topTitle = subjectPopButton.itemTitle(at: 0)
-        subjectPopButton.removeAllItems()
-        subjectPopButton.addItem(withTitle: topTitle)
+        clearSubjectPopButton()
         
         // lock up subject button since the list is either empty or in progress
         subjectPopButton.isEnabled = false
         
         // do not deal with the first item
         if levelPopButton.indexOfSelectedItem == 0 {
+            userChangedLevel = false
             return
         }
         
+        userChangedLevel = true
+        
         // lock up button
         levelPopButton.isEnabled = false
-        subjectProgress.startAnimation(nil)
+        levelProgress.startAnimation(nil)
         
         // get level name
         let selectedLevel = levelPopButton.selectedItem!.title
@@ -148,13 +165,13 @@ class AllSubjectsViewController: NSViewController {
                     // unlock buttons
                     self.levelPopButton.isEnabled = true
                     self.subjectPopButton.isEnabled = true
-                    self.subjectProgress.stopAnimation(nil)
+                    self.levelProgress.stopAnimation(nil)
                 }
             }
             
-            guard let subjects = website.getSubjects(level: selectedLevel) else {
+            guard let subjects = usingWebsite.getSubjects(level: selectedLevel) else {
                 DispatchQueue.main.async {
-                    self.prompt?.showError("Failed to get subjects!")
+                    self.prompt?.showError("Failed!")
                 }
                 
                 return
@@ -163,12 +180,23 @@ class AllSubjectsViewController: NSViewController {
             DispatchQueue.main.async {
                 // add all items into subject button
                 self.subjectPopButton.addItems(withTitles: subjects)
+                if !self.currentText.isEmpty, let searchResult = subjects.first(where: { $0.lowercased().contains(self.currentText) }) {
+                    self.subjectPopButton.selectItem(withTitle: searchResult)
+                    self.doneButton.isHidden = false
+                }
             }
         }
     }
     
+    func clearSubjectPopButton() {
+        let topTitle = subjectPopButton.itemTitle(at: 0)
+        subjectPopButton.removeAllItems()
+        subjectPopButton.addItem(withTitle: topTitle)
+    }
+    
     @IBAction func subjectSelected(_ sender: Any) {
         if subjectPopButton.indexOfSelectedItem == 0 {
+            doneButton.isHidden = true
             return
         }
         
@@ -176,5 +204,60 @@ class AllSubjectsViewController: NSViewController {
         let selectedSubject = subjectPopButton.selectedItem!.title
         self.dismiss(nil)
         self.callback(selectedLevel, selectedSubject)
+    }
+    
+    var currentText = ""
+    @IBAction func searchInputted(_ sender: Any) {
+        prompt?.setToDefault()
+        
+        let text = searchTextField.stringValue.lowercased()
+        currentText = text
+        if text.isEmpty {
+            return
+        }
+        
+        if userChangedLevel && levelPopButton.indexOfSelectedItem != 0 && subjectPopButton.isEnabled {
+            if let searchResult = subjectPopButton.itemTitles.first(where: { $0.lowercased().contains(text) }) {
+                subjectPopButton.selectItem(withTitle: searchResult)
+                doneButton.isHidden = false
+            }
+            else {
+                self.prompt?.showError("Failed / Not found!")
+            }
+            return
+        }
+        
+        searchProgress.startAnimation(nil)
+        DispatchQueue.global(qos: .userInteractive).async {
+            defer {
+                DispatchQueue.main.async {
+                    self.searchProgress.stopAnimation(nil)
+                }
+            }
+            
+            guard let finding = SubjectUtil.current.findSubject(with: text) else {
+                DispatchQueue.main.async {
+                    self.prompt?.showError("Failed / Not found!")
+                }
+                return
+            }
+            
+            if self.currentText == text {
+                DispatchQueue.main.async {
+                    self.levelPopButton.selectItem(withTitle: finding.0)
+                    
+                    self.clearSubjectPopButton()
+                    self.subjectPopButton.addItems(withTitles: usingWebsite.getSubjects(level: finding.0)!)
+                    self.subjectPopButton.isEnabled = true
+                    self.subjectPopButton.selectItem(withTitle: finding.1)
+                    
+                    self.doneButton.isHidden = false
+                }
+            }
+        }
+    }
+    
+    @IBAction func doneClicked(_ sender: Any) {
+        subjectSelected(subjectPopButton)
     }
 }

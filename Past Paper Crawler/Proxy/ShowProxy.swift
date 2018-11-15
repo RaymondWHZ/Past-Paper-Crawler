@@ -48,14 +48,14 @@ extension String{
     }
 }
 
-
-//"0478_s18_ms_11.pdf"
+let paperPattern = "[0-9]{4}_[wsmy]\\d{2}_[a-z]{2}(_[1-9][1-9]?)?.pdf"  // "0478_s18_ms_11.pdf"
+let paperRegex = try! NSRegularExpression(pattern: paperPattern, options: .caseInsensitive)
 func info(of paperName: String) -> [String: String]{
     let count = paperName.count
     
-    var ret: [String: String] = [year: other, season: other, paper: none, edition: editionOne, type: other]
+    var ret: [String: String] = [year: other, season: other, paper: none, edition: other, type: other]
     
-    if count < 8 + 4 {
+    if paperRegex.matches(in: paperName, options: .init(rawValue: 0), range: NSRange(location: 0, length: paperName.count)).isEmpty {
         return ret
     }
     
@@ -65,33 +65,19 @@ func info(of paperName: String) -> [String: String]{
     let cSeason: String = paperName.subString(from: 5, to: 5)
     ret[season] = seasons[cSeason] ?? other
     
-    if count < 11 + 4 {
-        return ret
-    }
-    
     let cType: String = paperName.subString(from: 9, to: 10)
     ret[type] = types[cType] ?? other
-    
-    if count < 13 + 4 {
-        return ret
-    }
     
     let cPaper: String = paperName.subString(from: 12, to: 12)
     ret[paper] = paperPrefix + cPaper
     
     if count < 14 + 4 {
+        ret[edition] = editionOne
         return ret
     }
     
     let cEdition: String = paperName.subString(from: 13, to: 13)
     ret[edition] = editionPrefix + cEdition
-    
-    if count < 15 + 4 {
-        return ret
-    }
-    
-    ret[paper] = other
-    ret[edition] = editionOne
     
     return ret
 }
@@ -163,7 +149,7 @@ class ShowProxy {
     }
     
     func loadFrom(level: String, subject: String) -> Bool {
-        guard let paperList = website.getPapers(level: level, subject: subject) else {
+        guard let paperList = usingWebsite.getPapers(level: level, subject: subject) else {
             return false
         }
         
@@ -231,11 +217,7 @@ class ShowProxy {
     }
     
     func getPapers(at indices: [Int]) -> [WebFile] {
-        var papers: [WebFile] = []
-        for index in indices {
-            papers.append(currentList[index])
-        }
-        return papers
+        return indices.map({ currentList[$0] })
     }
 }
 
@@ -304,13 +286,13 @@ class PapersWithAnswer: ShowProxy {
             coupleListCache = []
             var currentPos = 0
             while currentPos < sortedList.count {
-                let currentFile = sortedList[currentPos]
-                let cfInfo = info(of: currentFile.name)
+                let currentFile = sortedList[currentPos]  // fetch the file at this place
                 currentPos += 1
-                
-                if currentPos >= sortedList.count {
+                if currentPos >= sortedList.count {  // if the index has been out of bound, exit the loop
                     break
                 }
+                
+                let cfInfo = info(of: currentFile.name)
                 
                 let nextFile = sortedList[currentPos]
                 

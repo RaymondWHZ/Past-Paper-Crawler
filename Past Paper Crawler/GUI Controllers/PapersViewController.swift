@@ -8,9 +8,7 @@
 
 import Cocoa
 
-class PapersViewController: NSViewController, DownloadRepresentor {
-    
-    var progressIndicator: NSProgressIndicator?
+class PapersViewController: NSViewController {
     
     // ---standard controls---
     
@@ -43,13 +41,12 @@ class PapersViewController: NSViewController, DownloadRepresentor {
     var refreshAction: Action?
     
     var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
+    var selectedCount = 0
     
     // ---standard functions---
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        progressIndicator = downloadProgress
         
         allControls = [
             subjectPopButton,
@@ -152,30 +149,6 @@ class PapersViewController: NSViewController, DownloadRepresentor {
         papersTable.reloadData()
     }
     
-    @IBAction func downloadClicked(_ sender: Any) {
-        // collect all indeices to download
-        var selectedIndices: [Int] = []
-        for (index, state) in selected.enumerated() {
-            if state {
-                selectedIndices.append(index)
-            }
-        }
-        
-        // start spinning
-        downloadProgress.startAnimation(nil)
-        
-        let papers = showProxy.getPapers(at: selectedIndices)
-        download(files: papers)
-    }
-    
-    func pre(download files: [WebFile]) { }
-    
-    func handle(failed files: [WebFile]) {
-        self.presentAsSheet(getFailedView(failedList: files, retryAction: self.download))
-    }
-    
-    func post(download files: [WebFile]) { }
-    
     func loadList(level: String, subject: String) {
         // set back prompt line
         viewPrompt?.setToDefault()
@@ -214,6 +187,12 @@ class PapersViewController: NSViewController, DownloadRepresentor {
     }
     
     func setUpSurrounding() {
+        // set up title
+        view.window?.title = currentSubject
+        
+        // set up subject selector
+        subjectPopButton.itemArray[0].title = currentSubject + " "  // add space to avoid duplication in list
+        
         if papersTable.numberOfRows == 0 {
             if showProxy is PapersWithAnswer {
                 DispatchQueue.main.async {
@@ -223,9 +202,6 @@ class PapersViewController: NSViewController, DownloadRepresentor {
             }
             return
         }
-        
-        // set up subject selector
-        subjectPopButton.itemArray[0].title = currentSubject + " "  // add space to avoid duplication in list
         
         resetCriteria()
     }
@@ -245,22 +221,65 @@ class PapersViewController: NSViewController, DownloadRepresentor {
                 popButton!.addItems(withTitles: selections)  // push in corresponding list of choice
         }
     }
+    
+    @IBAction func downloadClicked(_ sender: Any) {
+        // collect all indeices to download
+        var selectedIndices: [Int] = []
+        for (index, state) in selected.enumerated() {
+            if state {
+                selectedIndices.append(index)
+            }
+        }
+        
+        // start spinning
+        downloadProgress.startAnimation(nil)
+        
+        let papers = showProxy.getPapers(at: selectedIndices)
+        download(files: papers)
+    }
+    
+    func download(files: [WebFile]) {
+        // start spinning
+        downloadProgress?.startAnimation(nil)
+        
+        downloadProxy.downloadPapers(specifiedPapers: files, exitAction: {
+            failed in
+            DispatchQueue.main.async {
+                // if all complished (might have another download mission), stop spinning
+                if webFileDownloadStack == 0 {
+                    self.downloadProgress?.stopAnimation(nil)
+                }
+                
+                // if any failed, show the failed view
+                if !failed.isEmpty {
+                    self.presentAsSheet(getFailedView(failedList: files, retryAction: self.download))
+                }
+            }
+        })
+    }
 }
 
 extension PapersViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        let number = currentDisplay.count
-        selected = Array(repeating: selectAllButton.state == .on, count: number)
-        return number
+        let count = currentDisplay.count
+        let selectAll = selectAllButton.state == .on
+        selected = Array(repeating: selectAll, count: count)
+        selectedCount = selectAll ? count : 0
+        return count
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        return selected[row]
+        if row < selected.count {
+            return selected[row]
+        }
+        return false
     }
     
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         let state = object as! Int == 1  // cast Any to Bool
         selected[row] = state
+        selectedCount += state ? 1 : -1
+        selectAllButton.state = (selectedCount == selected.count) ? .on : .off
     }
 }
 

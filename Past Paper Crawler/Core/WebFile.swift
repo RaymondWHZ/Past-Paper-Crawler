@@ -19,8 +19,12 @@ class WebFile {
         }
         fullUrl = _fullUrl
         
-        let index = url.lastIndex(of: "/")!
-        name = String(url[url.index(after: index)...])
+        if let index = url.lastIndex(of: "/") {
+            name = String(url[url.index(after: index)...])
+        }
+        else {
+            name = url
+        }
         
         self.classification = classification
     }
@@ -50,35 +54,37 @@ class WebFile {
 
 
 private var downloadStack = 0
-var softwareDownloadStack: Int {
+var webFileDownloadStack: Int {
     get {
         return downloadStack
     }
 }
 
-func downloadFiles(specifiedFiles: [WebFile], to path: String, classify: Bool = false) -> [WebFile] {
+extension Array where Element: WebFile {
     
-    var failed: [WebFile] = []
-    
-    let count = specifiedFiles.count
-    downloadStack += count
-    
-    let group = DispatchGroup()
-    for paper in specifiedFiles {
-        group.enter()
-        DispatchQueue.global(qos: .userInitiated).async {
-            defer {
-                group.leave()
-            }
-            
-            if !paper.download(to: path, classify: classify) {
-                failed.append(paper)
+    func download(to path: String, classify: Bool = false) -> [WebFile] {
+        var failed: [WebFile] = []
+        
+        let count = self.count
+        downloadStack += count
+        
+        let group = DispatchGroup()
+        for paper in self {
+            group.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                defer {
+                    group.leave()
+                }
+                
+                if !paper.download(to: path, classify: classify) {
+                    failed.append(paper)
+                }
             }
         }
+        group.wait()
+        
+        downloadStack -= count
+        
+        return failed
     }
-    group.wait()
-    
-    downloadStack -= count
-    
-    return failed
 }

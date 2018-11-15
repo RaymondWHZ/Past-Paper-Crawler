@@ -1,96 +1,14 @@
 //
-//  SettingViews.swift
+//  QuickListSettingViewController.swift
 //  Past Paper Crawler
 //
-//  Created by 吴浩榛 on 2018/8/28.
-//  Copyright © 2018年 吴浩榛. All rights reserved.
+//  Created by 吴浩榛 on 2018/11/10.
+//  Copyright © 2018 吴浩榛. All rights reserved.
 //
 
 import Cocoa
 
-
-
-class GeneralSetViewController: NSViewController {
-    
-    @IBOutlet var websitePopButton: NSPopUpButton!
-    
-    @IBOutlet var showAllCheckBox: NSButton!
-    
-    @IBOutlet var askEverytimeOption: NSButton!
-    @IBOutlet var useDefaultOption: NSButton!
-    @IBOutlet var pathTextField: NSTextField!
-    @IBOutlet var browseButton: NSButton!
-    @IBOutlet var createFolderCheckBox: NSButton!
-    
-    let openPanel = NSOpenPanel()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        websitePopButton.addItems(withTitles: Array(websites.keys))
-        websitePopButton.selectItem(withTitle: userDefaults.string(forKey: websiteToken)!)
-        
-        let showAll = userDefaults.bool(forKey: defaultShowAllToken)
-        showAllCheckBox.state = (showAll) ? .on : .off
-        
-        let useDefaultPath = userDefaults.bool(forKey: useDefualtPathToken)
-        let onOption = (useDefaultPath) ? useDefaultOption : askEverytimeOption
-        onOption!.state = .on
-        savePolicySelected(onOption!)
-        
-        pathTextField.stringValue = userDefaults.string(forKey: defaultPathToken)!
-        
-        openPanel.canChooseFiles = false
-        openPanel.canChooseDirectories = true
-        openPanel.canCreateDirectories = true
-        openPanel.treatsFilePackagesAsDirectories = true
-        
-        let createFolder = userDefaults.bool(forKey: createFolderToken)
-        createFolderCheckBox.state = (createFolder) ? .on : .off
-    }
-    
-    @IBAction func websiteSelected(_ sender: Any) {
-        userDefaults.set(websitePopButton.selectedItem?.title, forKey: websiteToken)
-        cleanSubjectsCache()
-        doCheckQuicklist(parent: self)
-    }
-    
-    @IBAction func showModeSelected(_ sender: Any) {
-        let showAll = showAllCheckBox.state == .on
-        userDefaults.set(showAll, forKey: defaultShowAllToken)
-    }
-    
-    @IBAction func savePolicySelected(_ sender: Any) {
-        let useDefaultPath = sender as? NSButton == useDefaultOption
-        ((useDefaultPath) ? askEverytimeOption : useDefaultOption)!.state = .off
-        pathTextField.isEditable = useDefaultPath
-        browseButton.isEnabled = useDefaultPath
-        
-        userDefaults.set(useDefaultPath, forKey: useDefualtPathToken)
-    }
-    
-    @IBAction func pathChanged(_ sender: Any) {
-        userDefaults.set(pathTextField.stringValue, forKey: defaultPathToken)
-    }
-    
-    @IBAction func browseClicked(_ sender: Any) {
-        openPanel.begin { result in
-            if result == .OK {
-                let path = self.openPanel.url!.path
-                self.pathTextField.stringValue = path
-                userDefaults.set(path, forKey: defaultPathToken)
-            }
-        }
-    }
-    @IBAction func createFolderOptionChanged(_ sender: Any) {
-        let createFolder = createFolderCheckBox.state == .on
-        userDefaults.set(createFolder, forKey: createFolderToken)
-    }
-}
-
-
-
-class SubjectsSetViewController: NSViewController {
+class QuickListViewController: NSViewController {
     
     @IBOutlet weak var levelPopButton: NSPopUpButton!
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
@@ -103,9 +21,8 @@ class SubjectsSetViewController: NSViewController {
     var changes: [(String, Bool)] = []  // record all changes made to selection (subject name, change to state)
     var lazySelectedLevel = ""  // remain previous when level button changes, used to update changes
     
-    var updateAction: Action? = nil  // action that updates table, will be sent to 'view selected', record here in case having to remove from event later
-    
-    static var viewCloseEvent = Event()  // multicast when view closes
+    var refreshAction: Action?
+    var refreshEnabled = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,24 +33,19 @@ class SubjectsSetViewController: NSViewController {
         
         prompt = PromptLabelController(promptLabel)
         
-        // append update action to selected subjects view, so that the table can be updated when selected view closes
-        updateAction = Action(self.updateTable)
-        QuickListViewController.viewCloseEvent.addAction(updateAction!)
+        refreshAction = Action {
+            if self.refreshEnabled {
+                self.updateTable(reloadData: false)
+            }
+        }
+        quickListChangeEvent.addAction(refreshAction!)
     }
     
     override func viewWillDisappear() {
-        saveChanges()
-        
-        // remove to avoid stack
-        QuickListViewController.viewCloseEvent.removeAction(updateAction!)
-        
-        // multicast close event
-        SubjectsSetViewController.viewCloseEvent.performAll()
+        quickListChangeEvent.removeAction(refreshAction!)
     }
     
     @IBAction func levelSelected(_ sender: Any) {
-        saveChanges()
-        
         prompt?.setToDefault()
         
         // clear all lists to avoid crash
@@ -161,29 +73,25 @@ class SubjectsSetViewController: NSViewController {
             }
             
             // access website to get all subjects
-            guard let subjects = website.getSubjects(level: self.lazySelectedLevel) else {
+            guard let subjects = usingWebsite.getSubjects(level: self.lazySelectedLevel) else {
                 DispatchQueue.main.async {
                     self.prompt?.showError("Failed to get subjects!")
                 }
                 
                 return
             }
-            self.currentSubjects = subjects
             
-            DispatchQueue.main.async {
-                self.updateTable()
-            }
+            self.currentSubjects = subjects
+            self.updateTable()
         }
     }
     
-    @IBAction func showSelected(_ sender: Any) {  // called when view selected button clicked
-        saveChanges()
-        
+    @IBAction func showSelectedClicked(_ sender: Any) {  // called when view selected button clicked
         // fetch and show sub view
         performSegue(withIdentifier: "Show Selected", sender: nil)
     }
     
-    func updateTable() {  // updates table view according to quick list
+    func updateTable(reloadData: Bool = true) {  // updates table view according to quick list
         selected = Array(repeating: false, count: currentSubjects.count)
         for subject in quickList {
             if subject["level"] != lazySelectedLevel || subject["name"]!.hasPrefix("*") {  // exclude other levels
@@ -191,32 +99,20 @@ class SubjectsSetViewController: NSViewController {
             }
             
             // find and tick on certain subject
-            guard let index = currentSubjects.index(of: subject["name"]!) else {
-                continue
-            }
-            selected[index] = true
-        }
-        
-        subjectTable.reloadData()
-    }
-    
-    func saveChanges() {  // called to save all changes made to table
-        for (name, state) in changes {
-            if state {  // add subject into list
-                quickList.append(["name": name, "level": lazySelectedLevel])
-            }
-            else {  // find and remove subject from list
-                let nameLoc = quickList.firstIndex(where: { $0["name"] == name })!
-                quickList.remove(at: nameLoc)
+            if let index = currentSubjects.index(of: subject["name"]!) {
+                selected[index] = true
             }
         }
         
-        // clear changes list so that they won't be applied twice
-        changes.removeAll()
+        if reloadData {
+            DispatchQueue.main.async {
+                self.subjectTable.reloadData()
+            }
+        }
     }
 }
 
-extension SubjectsSetViewController: NSTableViewDataSource {
+extension QuickListViewController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         return currentSubjects.count
@@ -229,14 +125,26 @@ extension SubjectsSetViewController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         let state = object as? Int == 1  // cast Any to Bool
         selected[row] = state
-        changes.append((currentSubjects[row], state))  // record changes
+        
+        self.refreshEnabled = false  // avoid auto refresh
+        
+        let name = self.currentSubjects[row]
+        let nameLoc = quickList.firstIndex(where: { $0["name"] == name })
+        if state && nameLoc == nil {  // add subject into list when not exist
+            quickList.append(["name": name, "level": self.lazySelectedLevel])
+        }
+        else if nameLoc != nil {  // find and remove subject from list when exist
+            quickList.remove(at: nameLoc!)
+        }
+        
+        self.refreshEnabled = true  // avoid auto refresh
     }
 }
 
-extension SubjectsSetViewController: NSTableViewDelegate {
+extension QuickListViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if let newCell = tableColumn?.dataCell as? NSButtonCell{  // fetch template cell
+        if row < currentSubjects.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
             newCell.title = currentSubjects[row]  // get the title from list
             return newCell
         }
@@ -246,7 +154,7 @@ extension SubjectsSetViewController: NSTableViewDelegate {
 
 
 
-class QuickListViewController: NSViewController {
+class SelectedViewController: NSViewController {
     
     @IBOutlet weak var quickListTable: NSTableView!
     @IBOutlet weak var upButton: NSButton!
@@ -254,8 +162,6 @@ class QuickListViewController: NSViewController {
     
     var currentSubjects: [Dictionary<String, String>] = []  // subjects that display in the table
     var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
-    
-    static var viewCloseEvent = Event()  // multicast when view closes
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -274,9 +180,6 @@ class QuickListViewController: NSViewController {
                 quickList.remove(at: index)
             }
         }
-        
-        // multicast close event
-        QuickListViewController.viewCloseEvent.performAll()
     }
     
     func drag(_ from: Int, _ to: Int) {  // swap position of to subjects
@@ -300,7 +203,7 @@ class QuickListViewController: NSViewController {
     }
 }
 
-extension QuickListViewController: NSTableViewDataSource {
+extension SelectedViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return quickList.count
     }
@@ -315,9 +218,9 @@ extension QuickListViewController: NSTableViewDataSource {
     }
 }
 
-extension QuickListViewController: NSTableViewDelegate {
+extension SelectedViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
+        if row < quickList.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
             var name = quickList[row]["name"]!
             if name.hasPrefix("*") {
                 name.removeFirst()

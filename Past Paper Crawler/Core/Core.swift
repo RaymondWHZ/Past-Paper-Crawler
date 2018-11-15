@@ -8,37 +8,38 @@
 
 import Foundation
 
-private var dataCache: [String: Data] = [:]
 func readUrl(url: String) -> Data? {
-    if let cacheItem = dataCache[url] {
-        return cacheItem
-    }
-    
     print("Read URL: \(url)")
     
-    let url = URL(string: url)!
-    return try? Data(contentsOf: url)
-}
-
-private var contentListCache: [String: [String]] = [:]
-func getContentList(url: String, XPath: String, name: String, criteria: (String) -> Bool = { _ in true }) -> [String]? {
-    if let cacheItem = contentListCache[url+XPath+name] {
-        return cacheItem.filter(criteria)
-    }
-    
-    guard let data = readUrl(url: url) else {
+    guard let url = URL(string: url) else {
         return nil
     }
     
-    let doc = try! HTML(html: data, encoding: .utf8)
+    return try? Data(contentsOf: url)
+}
+
+func getContentList(url: String, XPath: String, name: String?, criteria: (String) -> Bool = { _ in true }) -> [String]? {
+    guard let data = readUrl(url: url), let doc = try? HTML(html: data, encoding: .utf8) else {
+        return nil
+    }
     
     let object = doc.xpath(XPath)
     var list: [String] = []
-    for node in object {
-        list.append(node[name]!)
+    if name == nil {
+        for node in object {
+            if let content = node.content {
+                list.append(content)
+            }
+        }
+    }
+    else {
+        for node in object {
+            if let attibute = node[name!] {
+                list.append(attibute)
+            }
+        }
     }
     
-    contentListCache[url+XPath+name] = list
     return list.filter(criteria)
 }
 

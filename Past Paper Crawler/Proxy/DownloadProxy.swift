@@ -16,45 +16,23 @@ class DefaultPathProxy: DownloadProxy {
     
     func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
         DispatchQueue.global().async {
-            
-            var failed: [WebFile] = []
-            
-            let path = userDefaults.string(forKey: defaultPathToken)!
-            let createFolder = userDefaults.bool(forKey: createFolderToken)
-            failed = downloadFiles(specifiedFiles: specifiedPapers, to: path, classify: createFolder)
-            
-            DispatchQueue.main.async {
-                exitAction(failed)
-            }
+            let failed = specifiedPapers.download(to: defaultPath, classify: createFolder)
+            exitAction(failed)
         }
     }
 }
 
 class AskUserProxy: DownloadProxy {
-    let openPanel = NSOpenPanel()
-    
-    init() {
-        openPanel.canChooseFiles = false
-        openPanel.canChooseDirectories = true
-        openPanel.canCreateDirectories = true
-        openPanel.treatsFilePackagesAsDirectories = true
-    }
     
     func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> () = { _ in }) {
-        openPanel.begin{ result in
+        directoryOpenPanel.begin{ result in
             DispatchQueue.global().async {
-                
                 var failed: [WebFile] = []
-                
                 if result == .OK {
-                    let path = self.openPanel.url!.path
-                    let createFolder = userDefaults.bool(forKey: createFolderToken)
-                    failed = downloadFiles(specifiedFiles: specifiedPapers, to: path, classify: createFolder)
+                    let path = directoryOpenPanel.url!.path
+                    failed = specifiedPapers.download(to: defaultPath, classify: createFolder)
                 }
-                
-                DispatchQueue.main.async {
-                    exitAction(failed)
-                }
+                exitAction(failed)
             }
         }
     }

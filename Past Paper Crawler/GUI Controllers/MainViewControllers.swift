@@ -14,7 +14,7 @@ class MainViewController: NSViewController {
     @IBOutlet var paperDownloadButton: NSButton!
     @IBOutlet var paperProcess: NSProgressIndicator!
     @IBOutlet var paperPromptLabel: NSTextField!
-    var paperPrompt: PromptLabelController? = nil
+    var paperPrompt: PromptLabelController?
     var _possiblePaperList: [WebFile] = []
     var possibleFileList: [WebFile] {
         get {
@@ -33,10 +33,9 @@ class MainViewController: NSViewController {
     var defaultPopButtonPrompt = ""
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
     @IBOutlet var subjectPromptLabel: NSTextField!
-    var subjectPrompt: PromptLabelController? = nil
+    var subjectPrompt: PromptLabelController?
     
     var subjectSystem: SubjectSystem?
-    var nextShowProxy: ShowProxy? = nil
     
     var refreshAction: Action?
     
@@ -99,12 +98,13 @@ class MainViewController: NSViewController {
             paperProcess.startAnimation(nil)
             downloadProxy.downloadPapers(specifiedPapers: [selectedFile], exitAction: {
                 failed in
-                
-                if !failed.isEmpty {
-                    self.paperPrompt?.showError("Download failed!")
+                DispatchQueue.main.async {
+                    if !failed.isEmpty {
+                        self.paperPrompt?.showError("Download failed!")
+                    }
+                    
+                    self.paperProcess.stopAnimation(nil)
                 }
-                
-                self.paperProcess.stopAnimation(nil)
             })
         }
         else {
@@ -140,7 +140,7 @@ extension MainViewController: NSComboBoxDelegate {
                 }
             }
             
-            guard let res = findSubject(with: code) else {
+            guard let res = SubjectUtil.current.findSubject(with: code) else {
                 DispatchQueue.main.async {
                     self.reloadFileList(papers: [])
                     self.paperPrompt?.showError("Failed to find subject code!")
@@ -153,7 +153,7 @@ extension MainViewController: NSComboBoxDelegate {
                 return
             }
             
-            guard let files = website.getPapers(level: res.0, subject: res.1) else {
+            guard let files = usingWebsite.getPapers(level: res.0, subject: res.1) else {
                 DispatchQueue.main.async {
                     self.reloadFileList(papers: [])
                     self.paperPrompt?.showError("Failed to get paper list!")

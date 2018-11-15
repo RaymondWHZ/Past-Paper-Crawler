@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="F0b-XC-4I0">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="F0b-XC-4I0">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Window Controller-->
         <scene sceneID="QSH-AL-Z1x">
             <objects>
-                <windowController id="ezF-oh-akO" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="ezF-oh-akO" sceneMemberID="viewController">
                     <window key="window" title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Yxm-Ug-coC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -57,8 +57,8 @@
         <!--Window Controller-->
         <scene sceneID="FZM-e4-mjH">
             <objects>
-                <windowController id="KKS-ED-rfg" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="RxM-0G-tls">
+                <windowController showSeguePresentationStyle="single" id="KKS-ED-rfg" sceneMemberID="viewController">
+                    <window key="window" title="Quick List" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="RxM-0G-tls">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="163" y="208" width="480" height="270"/>
@@ -73,7 +73,7 @@
                 </windowController>
                 <customObject id="a3h-Jk-cTG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1608" y="426"/>
+            <point key="canvasLocation" x="-1608" y="538"/>
         </scene>
         <!--Rename View Controller-->
         <scene sceneID="sje-8Y-SVD">
@@ -171,7 +171,7 @@ DQ
                 </viewController>
                 <customObject id="OmP-wO-gxP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2307" y="-675"/>
+            <point key="canvasLocation" x="-2227" y="-822"/>
         </scene>
         <!--Loading List View-->
         <scene sceneID="XsD-fo-Iay">
@@ -204,9 +204,9 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vVJ-Sp-lHW">
-                                <rect key="frame" x="185" y="13" width="68" height="32"/>
+                                <rect key="frame" x="171" y="13" width="82" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Hide" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CD3-Lc-SRA">
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CD3-Lc-SRA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -214,7 +214,7 @@ Gw
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="dismissController:" target="v30-Zt-evf" id="jXz-h9-R4a"/>
+                                    <action selector="cancelClicked:" target="v30-Zt-evf" id="rXH-bf-cyO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -226,7 +226,7 @@ Gw
                 </viewController>
                 <customObject id="9J2-W6-fZq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1785.5" y="-448.5"/>
+            <point key="canvasLocation" x="-2228" y="-556"/>
         </scene>
         <!--General-->
         <scene sceneID="7gv-8N-kby">
@@ -364,12 +364,12 @@ Gw
                 </viewController>
                 <customObject id="AfS-TO-HCt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2170.5" y="-274.5"/>
+            <point key="canvasLocation" x="-2227" y="-275"/>
         </scene>
-        <!--Subjects-->
+        <!--Quick List-->
         <scene sceneID="1O8-Sp-Gy6">
             <objects>
-                <viewController title="Subjects" id="Lst-t0-iPf" customClass="SubjectsSetViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Quick List" id="Lst-t0-iPf" customClass="QuickListViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="qyF-z7-3CG">
                         <rect key="frame" x="0.0" y="0.0" width="501" height="374"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -401,7 +401,7 @@ Gw
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="levelSelected:" target="Lst-t0-iPf" id="h8K-a8-lkh"/>
+                                    <action selector="levelSelected:" target="Lst-t0-iPf" id="iuH-BI-fd6"/>
                                 </connections>
                             </popUpButton>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="m1G-4C-gF2">
@@ -468,7 +468,7 @@ Gw
                                     <font key="font" metaFont="smallSystemBold"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="showSelected:" target="Lst-t0-iPf" id="ClX-Nr-l2T"/>
+                                    <action selector="showSelectedClicked:" target="Lst-t0-iPf" id="ClX-Nr-l2T"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -485,10 +485,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="-2226" y="230"/>
         </scene>
-        <!--Quick List View Controller-->
+        <!--Selected View Controller-->
         <scene sceneID="Ah1-9e-Qgt">
             <objects>
-                <viewController id="zqA-D1-On6" customClass="QuickListViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zqA-D1-On6" customClass="SelectedViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Nd6-Qa-Tqf">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -593,7 +593,7 @@ DQ
                 </viewController>
                 <customObject id="IMW-eL-KEI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2225" y="687"/>
+            <point key="canvasLocation" x="-2227" y="690"/>
         </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">
@@ -649,22 +649,55 @@ DQ
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="File" id="MvI-S1-wDt">
+                            <menuItem title="View" id="064-us-T7B">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="File" id="4SQ-v5-jD0">
+                                <menu key="submenu" title="View" id="7hW-H5-Tqg">
+                                    <items>
+                                        <menuItem title="Show Main Window" keyEquivalent="n" id="gTe-7c-w0s">
+                                            <connections>
+                                                <segue destination="F0b-XC-4I0" kind="show" id="k5S-e6-hFJ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show Quick List Editor" keyEquivalent="l" id="JLj-PW-AEa">
+                                            <connections>
+                                                <segue destination="KKS-ED-rfg" kind="show" id="9Tr-ea-lSc"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Window" id="pCx-om-qhY">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Window" systemMenu="window" id="8bB-el-hbU">
                                     <items>
                                         <menuItem title="Close" keyEquivalent="w" id="UFT-zl-lZE">
                                             <connections>
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="5TO-p1-rbD"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save As…" keyEquivalent="s" id="09S-Gc-DPP">
+                                        <menuItem title="Minimize" keyEquivalent="m" id="PAt-XP-1ip">
                                             <connections>
-                                                <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="QgC-rR-Jx9"/>
+                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="vxi-oU-RVX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom" id="kef-pA-vEG">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="performZoom:" target="Ady-hI-5gd" id="Xwl-MS-3mW"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="C8C-Po-idy"/>
+                                        <menuItem title="Bring All to Front" id="xt6-c6-jAd">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="cSx-gY-Kf5"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
+                            </menuItem>
+                            <menuItem title="Help" id="qoi-aS-YCi">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                         </items>
                     </menu>
@@ -676,14 +709,14 @@ DQ
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-687" y="-221"/>
+            <point key="canvasLocation" x="-524" y="-185"/>
         </scene>
         <!--Subjects-->
         <scene sceneID="Zvx-uQ-n1f">
             <objects>
                 <viewController title="Subjects" storyboardIdentifier="All Subjects View" id="Lyz-ls-eyS" customClass="AllSubjectsViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ikc-CN-8dG">
-                        <rect key="frame" x="0.0" y="0.0" width="365" height="109"/>
+                        <rect key="frame" x="0.0" y="0.0" width="362" height="137"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7a-fc-hnM">
@@ -705,7 +738,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yzk-9Z-kfi">
-                                <rect key="frame" x="102" y="40" width="223" height="26"/>
+                                <rect key="frame" x="102" y="40" width="220" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ywl-yd-J0e" id="Jqk-5N-gaS">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -723,7 +756,7 @@ DQ
                                 </connections>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2pj-YQ-mmQ">
-                                <rect key="frame" x="102" y="65" width="223" height="26"/>
+                                <rect key="frame" x="102" y="65" width="220" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oxh-vi-44e" id="MI3-XE-v4Q">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -742,15 +775,15 @@ DQ
                                 </connections>
                             </popUpButton>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="FYC-6D-VRk">
-                                <rect key="frame" x="330" y="71" width="16" height="16"/>
+                                <rect key="frame" x="326" y="71" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
-                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="7hX-yo-xVW">
-                                <rect key="frame" x="330" y="46" width="16" height="16"/>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="0Xh-t0-saO">
+                                <rect key="frame" x="326" y="98" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nnf-SJ-yhQ">
-                                <rect key="frame" x="18" y="20" width="228" height="17"/>
+                                <rect key="frame" x="18" y="20" width="158" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error:" id="ia3-SY-iNM">
                                     <font key="font" metaFont="system"/>
@@ -759,8 +792,8 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HAb-fI-3mm">
-                                <rect key="frame" x="246" y="9" width="82" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="243" y="10" width="82" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KY0-DN-WiC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -772,26 +805,51 @@ Gw
                                     <action selector="dismissController:" target="Lyz-ls-eyS" id="K2I-Kc-i2D"/>
                                 </connections>
                             </button>
+                            <searchField wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzE-jZ-KTB">
+                                <rect key="frame" x="20" y="95" width="299" height="22"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="HAQ-Z9-m0o">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </searchFieldCell>
+                                <connections>
+                                    <action selector="searchInputted:" target="Lyz-ls-eyS" id="dbg-1i-g4Q"/>
+                                </connections>
+                            </searchField>
+                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pbj-FP-YMG">
+                                <rect key="frame" x="176" y="10" width="72" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BVo-4Q-io1">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="doneClicked:" target="Lyz-ls-eyS" id="Zdf-fD-S1L"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="customProgress" destination="7hX-yo-xVW" id="lhS-7k-0G8"/>
+                        <outlet property="doneButton" destination="Pbj-FP-YMG" id="6uf-Bf-55m"/>
                         <outlet property="levelPopButton" destination="2pj-YQ-mmQ" id="Zkl-nL-qMh"/>
+                        <outlet property="levelProgress" destination="FYC-6D-VRk" id="3Hy-gp-sLQ"/>
                         <outlet property="promptLabel" destination="Nnf-SJ-yhQ" id="Er4-FK-fb1"/>
+                        <outlet property="searchProgress" destination="0Xh-t0-saO" id="fga-tp-dGy"/>
+                        <outlet property="searchTextField" destination="mzE-jZ-KTB" id="XVZ-qg-wqP"/>
                         <outlet property="subjectPopButton" destination="Yzk-9Z-kfi" id="dKw-yC-9bS"/>
-                        <outlet property="subjectProgress" destination="FYC-6D-VRk" id="3Hy-gp-sLQ"/>
                     </connections>
                 </viewController>
                 <customObject id="kY0-jc-gfW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-524" y="944"/>
+            <point key="canvasLocation" x="-526" y="957.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="qKZ-ot-GtR">
             <objects>
-                <windowController id="F0b-XC-4I0" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="F0b-XC-4I0" sceneMemberID="viewController">
                     <window key="window" title="Past Paper Crawler" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="83k-Yd-6Dr">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="163" y="208" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
@@ -846,9 +904,9 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSI-Cg-zPh">
-                                <rect key="frame" x="18" y="73" width="166" height="17"/>
+                                <rect key="frame" x="18" y="73" width="240" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Browse from your subjects" id="Jh8-QW-AKA">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Batch Download (Browse from subject)" id="Jh8-QW-AKA">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -857,10 +915,10 @@ Gw
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NBp-nm-R4O">
                                 <rect key="frame" x="18" y="42" width="394" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zCt-AT-DPm" id="9gF-q3-w4I">
+                                <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="zCt-AT-DPm" id="9gF-q3-w4I">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="d6O-xs-fIQ">
+                                    <menu key="menu" autoenablesItems="NO" id="d6O-xs-fIQ">
                                         <items>
                                             <menuItem title="(choose a subject)" state="on" id="zCt-AT-DPm">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -884,17 +942,6 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fp7-P1-8JR">
-                                <rect key="frame" x="184" y="71" width="60" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="inline" title="add/edit" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="Y9F-Mu-mzH">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="smallSystemBold"/>
-                                </buttonCell>
-                                <connections>
-                                    <segue destination="KKS-ED-rfg" kind="show" id="T5v-nk-JNj"/>
-                                </connections>
-                            </button>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZTU-i2-BNO">
                                 <rect key="frame" x="20" y="136" width="392" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -916,6 +963,17 @@ Gw
                                 </buttonCell>
                                 <connections>
                                     <action selector="performClick:" target="ZTU-i2-BNO" id="GxR-qd-E4X"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fp7-P1-8JR">
+                                <rect key="frame" x="258" y="72" width="88" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title="edit quick list" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="Y9F-Mu-mzH">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="KKS-ED-rfg" kind="show" id="T5v-nk-JNj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1061,6 +1119,8 @@ Gw
                                 <buttonCell key="cell" type="check" title="Show all files" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gxq-Ky-HPV">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">s</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="changedShowOption:" target="XfG-lQ-9wD" id="V3H-di-fuI"/>
@@ -1139,10 +1199,10 @@ DQ
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3fV-xU-rMf">
                                 <rect key="frame" x="18" y="470" width="499" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="B9F-kJ-cBB" id="ryy-uT-nA5">
+                                <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="B9F-kJ-cBB" id="ryy-uT-nA5">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="Oe9-Nj-JeQ">
+                                    <menu key="menu" autoenablesItems="NO" id="Oe9-Nj-JeQ">
                                         <items>
                                             <menuItem title="(choose a subject)" state="on" id="B9F-kJ-cBB">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -1292,6 +1352,7 @@ DQ
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tyu-uG-ESr"/>
+        <segue reference="Fey-GU-wQo"/>
+        <segue reference="T5v-nk-JNj"/>
     </inferredMetricsTieBreakers>
 </document>

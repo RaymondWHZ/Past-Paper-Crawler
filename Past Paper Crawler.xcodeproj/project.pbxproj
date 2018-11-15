@@ -14,8 +14,10 @@
 		B60320E7213254AF00488A42 /* Past_Paper_CrawlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320E6213254AF00488A42 /* Past_Paper_CrawlerTests.swift */; };
 		B60320F2213254AF00488A42 /* Past_Paper_CrawlerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */; };
 		B6032100213256F500488A42 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
-		B60B0E3621356A0700DBE06E /* SettingViewsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */; };
-		B622E029216B885E00229054 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* Util.swift */; };
+		B6052CF72195D9E8003C98AC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Settings.swift */; };
+		B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
+		B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
+		B622E029216B885E00229054 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
 		B6263C5621744C1000EC5C61 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6263C5521744C1000EC5C61 /* Kanna.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B657B0BD218414BA009099BA /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B8218414BA009099BA /* CSS.swift */; };
@@ -23,8 +25,6 @@
 		B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
 		B657B0C0218414BA009099BA /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
 		B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
-		B657B0C621855916009099BA /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0C521855915009099BA /* RenameViewController.swift */; };
-		B6790961213ADF5B00E2F233 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790960213ADF5B00E2F233 /* Settings.swift */; };
 		B6790964213B9D2800E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
 		B679096A213C399600E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
@@ -38,7 +38,6 @@
 		B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
 		B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
 		B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabelControllers.swift */; };
-		B6E916482163BFDA0061F5BF /* DownloadRepresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */; };
 		B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
 		B6F988E521636B6400F07404 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
 		B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
@@ -88,8 +87,10 @@
 		B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Past_Paper_CrawlerUITests.swift; sourceTree = "<group>"; };
 		B60320F3213254AF00488A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B60320FF213256F500488A42 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
-		B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewsControllers.swift; sourceTree = "<group>"; };
-		B622E028216B885E00229054 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		B6052CF62195D9E8003C98AC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListSettingViewControllers.swift; sourceTree = "<group>"; };
+		B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingViewController.swift; sourceTree = "<group>"; };
+		B622E028216B885E00229054 /* SubjectUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectUtil.swift; sourceTree = "<group>"; };
 		B6263C5521744C1000EC5C61 /* Kanna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kanna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63BCC692134574700F56334 /* Past Paper Crawler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Past Paper Crawler.entitlements"; sourceTree = "<group>"; };
 		B63BCC6A2134C65800F56334 /* PPWebsites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPWebsites.swift; sourceTree = "<group>"; };
@@ -100,8 +101,6 @@
 		B657B0BC218414BA009099BA /* libxmlParserOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlParserOption.swift; sourceTree = "<group>"; };
 		B657B0C3218414EA009099BA /* libxml2-kanna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libxml2-kanna.h"; sourceTree = "<group>"; };
 		B657B0C4218414EA009099BA /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		B657B0C521855915009099BA /* RenameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
-		B6790960213ADF5B00E2F233 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B6790963213B9D2800E2F233 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B6790969213C399600E2F233 /* ShowProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProxy.swift; sourceTree = "<group>"; };
 		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
@@ -110,7 +109,6 @@
 		B6790981213D8B6E00E2F233 /* DownloadProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProxy.swift; sourceTree = "<group>"; };
 		B6790986213E7D9200E2F233 /* PublicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicConstants.swift; sourceTree = "<group>"; };
 		B6830D8921608EA800927B73 /* PromptLabelControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptLabelControllers.swift; path = "Past Paper Crawler/GUI Controllers/PromptLabelControllers.swift"; sourceTree = SOURCE_ROOT; };
-		B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRepresentor.swift; sourceTree = "<group>"; };
 		B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectSystemControllers.swift; sourceTree = "<group>"; };
 		B6F988E421636B6400F07404 /* WebFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFile.swift; sourceTree = "<group>"; };
 		B6F988E62163B79D00F07404 /* FailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedViewController.swift; sourceTree = "<group>"; };
@@ -175,9 +173,9 @@
 		B60320D2213254AD00488A42 /* Past Paper Crawler */ = {
 			isa = PBXGroup;
 			children = (
+				B6052CFA21966BBF003C98AC /* Util */,
 				B6790983213E73E100E2F233 /* Proxy */,
-				B6790962213B9D1A00E2F233 /* Util */,
-				B679095F213ADF4D00E2F233 /* IO */,
+				B6790962213B9D1A00E2F233 /* Kanna */,
 				B6F859BF2136CDCB00D7002C /* Core */,
 				B6F859BE2136CDAC00D7002C /* GUI Controllers */,
 				B63BCC692134574700F56334 /* Past Paper Crawler.entitlements */,
@@ -187,6 +185,7 @@
 				B60320DC213254AF00488A42 /* Info.plist */,
 				B60320DD213254AF00488A42 /* Past_Paper_Crawler.entitlements */,
 				B6790986213E7D9200E2F233 /* PublicConstants.swift */,
+				B6052CF62195D9E8003C98AC /* Settings.swift */,
 			);
 			path = "Past Paper Crawler";
 			sourceTree = "<group>";
@@ -209,6 +208,14 @@
 			path = "Past Paper CrawlerUITests";
 			sourceTree = "<group>";
 		};
+		B6052CFA21966BBF003C98AC /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B6790963213B9D2800E2F233 /* Event.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		B6263C5421744C1000EC5C61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,15 +233,7 @@
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		B679095F213ADF4D00E2F233 /* IO */ = {
-			isa = PBXGroup;
-			children = (
-				B6790960213ADF5B00E2F233 /* Settings.swift */,
-			);
-			path = IO;
-			sourceTree = "<group>";
-		};
-		B6790962213B9D1A00E2F233 /* Util */ = {
+		B6790962213B9D1A00E2F233 /* Kanna */ = {
 			isa = PBXGroup;
 			children = (
 				B657B0C2218414EA009099BA /* Modules */,
@@ -243,9 +242,8 @@
 				B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */,
 				B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */,
 				B657B0BC218414BA009099BA /* libxmlParserOption.swift */,
-				B6790963213B9D2800E2F233 /* Event.swift */,
 			);
-			path = Util;
+			path = Kanna;
 			sourceTree = "<group>";
 		};
 		B6790974213D893200E2F233 /* Crawler Core Test */ = {
@@ -270,12 +268,11 @@
 			children = (
 				B6830D8921608EA800927B73 /* PromptLabelControllers.swift */,
 				B60320D5213254AD00488A42 /* MainViewControllers.swift */,
-				B60B0E3521356A0700DBE06E /* SettingViewsControllers.swift */,
+				B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */,
 				B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */,
 				B679096B213C3A9B00E2F233 /* PapersViewController.swift */,
 				B6F988E62163B79D00F07404 /* FailedViewController.swift */,
-				B6E916472163BFDA0061F5BF /* DownloadRepresentor.swift */,
-				B657B0C521855915009099BA /* RenameViewController.swift */,
+				B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */,
 			);
 			path = "GUI Controllers";
 			sourceTree = "<group>";
@@ -286,7 +283,7 @@
 				B60320FF213256F500488A42 /* Core.swift */,
 				B63BCC6A2134C65800F56334 /* PPWebsites.swift */,
 				B6F988E421636B6400F07404 /* WebFile.swift */,
-				B622E028216B885E00229054 /* Util.swift */,
+				B622E028216B885E00229054 /* SubjectUtil.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -451,7 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */,
-				B622E029216B885E00229054 /* Util.swift in Sources */,
+				B622E029216B885E00229054 /* SubjectUtil.swift in Sources */,
 				B6790964213B9D2800E2F233 /* Event.swift in Sources */,
 				B6032100213256F500488A42 /* Core.swift in Sources */,
 				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
@@ -459,15 +456,14 @@
 				B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */,
 				B657B0BE218414BA009099BA /* Kanna.swift in Sources */,
 				B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */,
-				B657B0C621855916009099BA /* RenameViewController.swift in Sources */,
 				B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */,
 				B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */,
-				B6E916482163BFDA0061F5BF /* DownloadRepresentor.swift in Sources */,
+				B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */,
 				B679096A213C399600E2F233 /* ShowProxy.swift in Sources */,
 				B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */,
-				B60B0E3621356A0700DBE06E /* SettingViewsControllers.swift in Sources */,
-				B6790961213ADF5B00E2F233 /* Settings.swift in Sources */,
+				B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */,
 				B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */,
+				B6052CF72195D9E8003C98AC /* Settings.swift in Sources */,
 				B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */,
 				B657B0BD218414BA009099BA /* CSS.swift in Sources */,
 				B60320D4213254AD00488A42 /* AppDelegate.swift in Sources */,
@@ -665,7 +661,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Util/Modules";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
 				SWIFT_VERSION = 4.2;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				SYSTEM_HEADER_SEARCH_PATHS = "";
@@ -690,7 +686,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Util/Modules";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
 				SWIFT_VERSION = 4.2;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				SYSTEM_HEADER_SEARCH_PATHS = "";

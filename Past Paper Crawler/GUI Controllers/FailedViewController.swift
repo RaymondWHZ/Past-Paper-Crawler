@@ -22,6 +22,7 @@ class FailedViewController: NSViewController {
     private var selected: [Bool] = []
     
     func setFailedList(files: [WebFile]) {
+        // set up lists the represents failed files
         failedList = files
         selected = Array(repeating: true, count: files.count)
     }
@@ -36,6 +37,7 @@ class FailedViewController: NSViewController {
     @IBAction func retryClicked(_ sender: Any) {
         dismiss(nil)
         
+        // put every file that has a tick into an array
         var selectedFiles: [WebFile] = []
         for (index, state) in selected.enumerated() {
             if state {
@@ -49,9 +51,7 @@ class FailedViewController: NSViewController {
 
 extension FailedViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        let number = failedList.count
-        selected = Array(repeating: true, count: number)
-        return number
+        return failedList.count
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
