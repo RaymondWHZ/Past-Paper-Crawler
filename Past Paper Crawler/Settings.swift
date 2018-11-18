@@ -92,10 +92,8 @@ var quickList: [[String: String]] {
         }
     }
     set {
-        quickListWriteQueue.async {
-            userDefaults.set(newValue, forKey: quickListToken)
-            quickListChangeEvent.performAll()
-        }
+        userDefaults.set(newValue, forKey: quickListToken)
+        quickListChangeEvent.performAll()
     }
 }
 

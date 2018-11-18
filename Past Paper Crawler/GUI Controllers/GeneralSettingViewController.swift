@@ -72,32 +72,34 @@ class GeneralSetViewController: NSViewController {
             
             var operations: [(String, String)] = []
             
-            for (index, subject) in quickList.enumerated() {
-                let level = subject["level"]!
-                var name = subject["name"]!
-                var disabled = false
-                if name.hasPrefix("*") {
-                    name.removeFirst()
-                    disabled = true
-                }
-                
-                let availableSubjects = sl![level]!
-                if availableSubjects.contains(name) {
-                    if disabled {
-                        quickList[index]["name"] = name
-                        operations.append((name, "Enabled"))
+            quickListWriteQueue.sync {
+                for (index, subject) in quickList.enumerated() {
+                    let level = subject["level"]!
+                    var name = subject["name"]!
+                    var disabled = false
+                    if name.hasPrefix("*") {
+                        name.removeFirst()
+                        disabled = true
                     }
-                    continue
-                }
-                
-                let code = getSubjectCode(of: name)
-                if let finding = subjectUtil.findSubject(with: code) {
-                    quickList[index] = ["level": finding.0, "name": finding.1]
-                    operations.append((name, "Renamed to " + finding.1))
-                }
-                else {
-                    quickList[index]["name"]!.insert("*", at: name.startIndex)
-                    operations.append((name, "Disabled"))
+                    
+                    let availableSubjects = sl![level]!
+                    if availableSubjects.contains(name) {
+                        if disabled {
+                            quickList[index]["name"] = name
+                            operations.append((name, "Enabled"))
+                        }
+                        continue
+                    }
+                    
+                    let code = getSubjectCode(of: name)
+                    if let finding = subjectUtil.findSubject(with: code) {
+                        quickList[index] = ["level": finding.0, "name": finding.1]
+                        operations.append((name, "Renamed to " + finding.1))
+                    }
+                    else {
+                        quickList[index]["name"]!.insert("*", at: name.startIndex)
+                        operations.append((name, "Disabled"))
+                    }
                 }
             }
             

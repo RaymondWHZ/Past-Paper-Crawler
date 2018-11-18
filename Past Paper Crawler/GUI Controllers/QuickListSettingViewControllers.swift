@@ -129,12 +129,15 @@ extension QuickListViewController: NSTableViewDataSource {
         self.refreshEnabled = false  // avoid auto refresh
         
         let name = self.currentSubjects[row]
-        let nameLoc = quickList.firstIndex(where: { $0["name"] == name })
-        if state && nameLoc == nil {  // add subject into list when not exist
-            quickList.append(["name": name, "level": self.lazySelectedLevel])
-        }
-        else if nameLoc != nil {  // find and remove subject from list when exist
-            quickList.remove(at: nameLoc!)
+        
+        quickListWriteQueue.async {
+            let nameLoc = quickList.firstIndex(where: { $0["name"] == name })
+            if state && nameLoc == nil {  // add subject into list when not exist
+                quickList.append(["name": name, "level": self.lazySelectedLevel])
+            }
+            else if nameLoc != nil {  // find and remove subject from list when exist
+                quickList.remove(at: nameLoc!)
+            }
         }
         
         self.refreshEnabled = true  // avoid auto refresh
@@ -175,16 +178,20 @@ class SelectedViewController: NSViewController {
     }
     
     override func viewWillDisappear() {
-        for (index, state) in selected.enumerated().reversed() {  // reversed to assure consistance of position
-            if !state {  // if ticked off, remove the subject
-                quickList.remove(at: index)
+        quickListWriteQueue.async {
+            for (index, state) in self.selected.enumerated().reversed() {  // reversed to assure consistance of position
+                if !state {  // if ticked off, remove the subject
+                    quickList.remove(at: index)
+                }
             }
         }
     }
     
     func drag(_ from: Int, _ to: Int) {  // swap position of to subjects
         // swap elements in both lists at the same time
-        quickList.swapAt(from, to)
+        quickListWriteQueue.async {
+            quickList.swapAt(from, to)
+        }
         selected.swapAt(from, to)
         
         // refresh table

@@ -231,9 +231,6 @@ class PapersViewController: NSViewController {
             }
         }
         
-        // start spinning
-        downloadProgress.startAnimation(nil)
-        
         let papers = showProxy.getPapers(at: selectedIndices)
         download(files: papers)
     }
