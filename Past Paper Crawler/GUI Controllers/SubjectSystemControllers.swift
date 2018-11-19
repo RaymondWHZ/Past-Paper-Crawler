@@ -41,7 +41,7 @@ class SubjectSystem {
         
         refresh()
         refreshAction = Action({
-            DispatchQueue.main.async {
+            DispatchQueue.main.sync {
                 self.refresh()
             }
         })

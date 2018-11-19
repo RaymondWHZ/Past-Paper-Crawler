@@ -218,6 +218,7 @@ class PapersViewController: NSViewController {
             ] {
                 let identifier = popButton!.identifier!.rawValue  // get button identifier
                 let selections = Array(summary[identifier]!)  // get list of choice from summary, converting Set to Array
+                while popButton!.numberOfItems > 1 { popButton!.removeItem(at: 1) }  // remove original items
                 popButton!.addItems(withTitles: selections)  // push in corresponding list of choice
         }
     }

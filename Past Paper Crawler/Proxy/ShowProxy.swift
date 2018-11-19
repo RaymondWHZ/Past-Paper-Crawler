@@ -53,9 +53,10 @@ let paperRegex = try! NSRegularExpression(pattern: paperPattern, options: .caseI
 func info(of paperName: String) -> [String: String]{
     let count = paperName.count
     
-    var ret: [String: String] = [year: other, season: other, paper: none, edition: other, type: other]
+    var ret: [String: String] = [year: other, season: other, paper: none, edition: editionOne, type: other]
     
     if paperRegex.matches(in: paperName, options: .init(rawValue: 0), range: NSRange(location: 0, length: paperName.count)).isEmpty {
+        ret[edition] = other
         return ret
     }
     
@@ -68,11 +69,14 @@ func info(of paperName: String) -> [String: String]{
     let cType: String = paperName.subString(from: 9, to: 10)
     ret[type] = types[cType] ?? other
     
+    if count < 13 + 4 {
+        return ret
+    }
+    
     let cPaper: String = paperName.subString(from: 12, to: 12)
     ret[paper] = paperPrefix + cPaper
     
     if count < 14 + 4 {
-        ret[edition] = editionOne
         return ret
     }
     

@@ -178,7 +178,6 @@ class RenameViewController: NSViewController {
     private var newSubject: Dictionary<String, String>? = nil
     @IBOutlet var operationsTableView: NSTableView!
     var operations: [(String, String)] = []
-    var selected: [Bool] = []
     
     override func viewDidLoad() {
         operationsTableView.dataSource = self
@@ -188,23 +187,19 @@ class RenameViewController: NSViewController {
 extension RenameViewController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        let count = operations.count
-        selected = Array(repeating: true, count: count)
-        return count
+        return operations.count
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        if row >= operations.count {
+            return nil
+        }
         if tableColumn!.title == "Subject name" {
             return operations[row].0
         }
         else {
             return operations[row].1
         }
-    }
-    
-    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
-        let state = object as! Int == 1  // cast Any to Bool
-        selected[row] = state
     }
 }
 
