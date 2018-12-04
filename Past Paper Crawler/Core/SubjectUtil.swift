@@ -50,7 +50,7 @@ class SubjectUtil {
             let group = DispatchGroup()
             for level in levels {
                 group.enter()
-                DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.global(qos: .background).async {
                     defer {
                         group.leave()
                     }

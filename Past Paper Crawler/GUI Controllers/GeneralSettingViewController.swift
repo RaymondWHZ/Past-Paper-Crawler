@@ -20,6 +20,7 @@ class GeneralSetViewController: NSViewController {
     @IBOutlet var pathTextField: NSTextField!
     @IBOutlet var browseButton: NSButton!
     @IBOutlet var createFolderCheckBox: NSButton!
+    @IBOutlet var openInFinderCheckBox: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,8 @@ class GeneralSetViewController: NSViewController {
         pathTextField.stringValue = defaultPath
         
         createFolderCheckBox.state = (createFolder) ? .on : .off
+        
+        openInFinderCheckBox.state = (openInFinder) ? .on : .off
     }
     
     @IBAction func websiteSelected(_ sender: Any) {
@@ -142,8 +145,13 @@ class GeneralSetViewController: NSViewController {
             }
         }
     }
+    
     @IBAction func createFolderOptionChanged(_ sender: Any) {
         createFolder = createFolderCheckBox.state == .on
+    }
+    
+    @IBAction func openInFinderOptionChanged(_ sender: Any) {
+        openInFinder = openInFinderCheckBox.state == .on
     }
 }
 

@@ -28,6 +28,8 @@ class PapersViewController: NSViewController {
     @IBOutlet weak var showAllCheckbox: NSButton!
     @IBOutlet weak var typePopButton: NSPopUpButton!
     
+    @IBOutlet var downloadCountLabel: NSTextField!
+    var countPrompt: PromptLabelController?
     @IBOutlet weak var downloadButton: NSButton!
     @IBOutlet weak var downloadProgress: NSProgressIndicator!
     
@@ -40,8 +42,11 @@ class PapersViewController: NSViewController {
     var subjectSystem: SubjectSystem?
     var refreshAction: Action?
     
-    var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
-    var selectedCount = 0
+    var selected: [Bool] = [] {  // indicates whether subject with corresponding index is selected
+        didSet {
+            selectionUpdate()
+        }
+    }
     
     // ---standard functions---
     
@@ -60,9 +65,7 @@ class PapersViewController: NSViewController {
             selectAllButton,
             
             showAllCheckbox,
-            typePopButton,
-            
-            downloadButton
+            typePopButton
         ]
         
         // initiate prompt
@@ -79,6 +82,8 @@ class PapersViewController: NSViewController {
             showAllCheckbox.state = .on
             changedShowOption(showAllCheckbox)
         }
+        
+        countPrompt = PromptLabelController(downloadCountLabel)
     }
     
     // ---custom functions---
@@ -155,6 +160,7 @@ class PapersViewController: NSViewController {
         
         // lock up buttons
         controlEnabled = false
+        downloadButton.isEnabled = false
         papersProgress.startAnimation(nil)
         
         // select item
@@ -223,6 +229,21 @@ class PapersViewController: NSViewController {
         }
     }
     
+    func selectionUpdate() {
+        let selectedCount = selected.reduce(into: 0) { if $1 { $0 += 1 } }
+        if selectedCount == 0 {
+            selectAllButton.state = .off
+            countPrompt?.setToDefault()
+            downloadButton.isEnabled = false
+        }
+        else {
+            selectAllButton.state = (selectedCount == selected.count) ? .on : .off
+            let fileCount = (showAllCheckbox.state == .on) ? selectedCount : selectedCount * 2
+            countPrompt?.showPrompt("Selected \(fileCount) files")
+            downloadButton.isEnabled = true
+        }
+    }
+    
     @IBAction func downloadClicked(_ sender: Any) {
         // collect all indeices to download
         var selectedIndices: [Int] = []
@@ -262,7 +283,6 @@ extension PapersViewController: NSTableViewDataSource {
         let count = currentDisplay.count
         let selectAll = selectAllButton.state == .on
         selected = Array(repeating: selectAll, count: count)
-        selectedCount = selectAll ? count : 0
         return count
     }
     
@@ -276,8 +296,6 @@ extension PapersViewController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         let state = object as! Int == 1  // cast Any to Bool
         selected[row] = state
-        selectedCount += state ? 1 : -1
-        selectAllButton.state = (selectedCount == selected.count) ? .on : .off
     }
 }
 

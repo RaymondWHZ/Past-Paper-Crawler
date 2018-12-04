@@ -17,6 +17,7 @@ func getController(_ name: String) -> Any {
 let notificationCenter = NotificationCenter.default
 let userDefaults = UserDefaults.standard
 let fileManager = FileManager.default
+let workspace = NSWorkspace.shared
 
 var directoryOpenPanel: NSOpenPanel {
     let openPanel = NSOpenPanel()

@@ -29,9 +29,9 @@ class WebFile {
         self.classification = classification
     }
     
-    func download(to path: String, classify: Bool = false) -> Bool {
+    func download(to path: String, classify: Bool = false) -> String? {
         guard let data = NSData(contentsOf: fullUrl) else {
-            return false
+            return nil
         }
         
         var p = path
@@ -44,10 +44,11 @@ class WebFile {
         if !fileManager.fileExists(atPath: p) {
             try? fileManager.createDirectory(atPath: p, withIntermediateDirectories: true, attributes: nil)
         }
+        p += name
         
-        data.write(toFile: p + name, atomically: true)
+        data.write(toFile: p, atomically: true)
         
-        return true
+        return p
     }
 }
 
@@ -62,7 +63,8 @@ var webFileDownloadStack: Int {
 
 extension Array where Element: WebFile {
     
-    func download(to path: String, classify: Bool = false) -> [WebFile] {
+    func download(to path: String, classify: Bool = false, showInFinder: Bool = false) -> [WebFile] {
+        var paths: [String]? = (showInFinder) ? [] : nil
         var failed: [WebFile] = []
         
         let count = self.count
@@ -71,17 +73,24 @@ extension Array where Element: WebFile {
         let group = DispatchGroup()
         for paper in self {
             group.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 defer {
                     group.leave()
                 }
                 
-                if !paper.download(to: path, classify: classify) {
+                if let actualPath = paper.download(to: path, classify: classify) {
+                    paths?.append(actualPath)
+                }
+                else {
                     failed.append(paper)
                 }
             }
         }
         group.wait()
+        
+        if let urls = paths?.map({ URL(fileURLWithPath: $0) }) {
+            workspace.activateFileViewerSelecting(urls)
+        }
         
         downloadStack -= count
         

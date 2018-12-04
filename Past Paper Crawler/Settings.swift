@@ -64,7 +64,7 @@ var useDefaultPath: Bool {
     }
 }
 
-var defaultPathToken = "Default Path"
+let defaultPathToken = "Default Path"
 var defaultPath: String {
     get {
         if let path = userDefaults.string(forKey: defaultPathToken) {
@@ -76,6 +76,16 @@ var defaultPath: String {
     }
     set {
         userDefaults.set(newValue, forKey: defaultPathToken)
+    }
+}
+
+let openInFinderToken = "Open in Finder"
+var openInFinder: Bool {
+    get {
+        return userDefaults.bool(forKey: openInFinderToken)
+    }
+    set {
+        userDefaults.set(newValue, forKey: openInFinderToken)
     }
 }
 

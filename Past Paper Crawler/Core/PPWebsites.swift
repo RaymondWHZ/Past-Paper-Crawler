@@ -9,15 +9,19 @@
 import Cocoa
 
 var arrayLoadQueues: [String: DispatchQueue] = [:]
+let arrayLoadQueuesQueue = DispatchQueue(label: "Array Load Queues Protect")
 let arrayCache = NSCache<NSString, NSArray>()
 func getArray<T>(identifier: String, loadFunc: () -> [T]?) -> [T]? {
     var ret: [T]?
-    let loadQueue = arrayLoadQueues[identifier] ?? {
-        let queue = DispatchQueue(label: identifier + " Protect")
-        arrayLoadQueues[identifier] = queue
-        return queue
-    }()
-    loadQueue.sync {
+    var loadQueue: DispatchQueue?
+    arrayLoadQueuesQueue.sync {
+        loadQueue = arrayLoadQueues[identifier] ?? {
+            let queue = DispatchQueue(label: identifier + " Protect")
+            arrayLoadQueues[identifier] = queue
+            return queue
+        }()
+    }
+    loadQueue!.sync {
         let i = identifier as NSString
         if let array = arrayCache.object(forKey: i) {
             ret = array as? [T]
@@ -97,7 +101,7 @@ class PapaCambridge: PastPaperWebsite {
         let group = DispatchGroup()
         for season in seasons {
             group.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 defer {
                     group.leave()
                 }
@@ -205,7 +209,7 @@ class PastPaperCo: PastPaperWebsite {
         // fetch every year
         for year in years {
             group.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 defer {
                     group.leave()
                 }
