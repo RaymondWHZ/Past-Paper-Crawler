@@ -9,9 +9,9 @@
 import Cocoa
 
 let storyboard = NSStoryboard(name: "Main", bundle: nil)
-func getController(_ name: String) -> Any {
+func getController<T>(_ name: String) -> T? {
     let rawValue = storyboard.instantiateController(withIdentifier: name)
-    return rawValue
+    return rawValue as? T
 }
 
 let notificationCenter = NotificationCenter.default

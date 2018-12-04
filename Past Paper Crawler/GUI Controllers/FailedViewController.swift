@@ -9,7 +9,7 @@
 import Cocoa
 
 func getFailedView(failedList: [WebFile], retryAction: @escaping ([WebFile]) -> ()) -> NSViewController {
-    let view = getController("Failed View") as! FailedViewController
+    let view: FailedViewController = getController("Failed View")!
     view.setFailedList(files: failedList)
     view.retryAction = retryAction
     return view

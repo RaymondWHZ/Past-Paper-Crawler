@@ -58,7 +58,7 @@ class MainViewController: NSViewController {
             self.subjectProgress.startAnimation(nil)
             self.subjectPrompt?.setToDefault()
             
-            let paperWindow = getController("Papers Window") as! NSWindowController
+            let paperWindow: NSWindowController = getController("Papers Window")!
             let paperView = paperWindow.contentViewController as! PapersViewController
             
             DispatchQueue.global(qos: .userInteractive).async {

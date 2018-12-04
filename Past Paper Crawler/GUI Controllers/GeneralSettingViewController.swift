@@ -48,7 +48,7 @@ class GeneralSetViewController: NSViewController {
         
         // check quick list
         
-        let loadingView = getController("Loading List View") as! LoadingListView
+        let loadingView: LoadingListView = getController("Loading List View")!
         loadingView.cancelCallBack = {
             usingWebsiteName = self.lazyWebsiteSelection
             self.websitePopButton.selectItem(withTitle: usingWebsiteName)
@@ -110,7 +110,7 @@ class GeneralSetViewController: NSViewController {
                 loadingView.dismiss(nil)
                 
                 if !operations.isEmpty {
-                    let renameView = getController("Rename View Controller") as! RenameViewController
+                    let renameView: RenameViewController = getController("Rename View Controller")!
                     renameView.operations = operations
                     self.presentAsSheet(renameView)
                     renameView.operationsTableView.reloadData()

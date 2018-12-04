@@ -34,9 +34,7 @@ var usingWebsiteName: String {
 
 let defaultShowAllToken = "Show Mode"
 var defaultShowProxy: ShowProxy {
-    get {
-        return PapersWithAnswer()
-    }
+    return PapersWithAnswer()
 }
 var defaultShowAll: Bool {
     get {
@@ -51,9 +49,7 @@ let useDefualtPathToken = "Use Default Path"
 private let defaultPathProxy = DefaultPathProxy()
 private let askUserProxy = AskUserProxy()
 var downloadProxy: DownloadProxy {
-    get {
-        return (useDefaultPath) ? defaultPathProxy : askUserProxy
-    }
+    return (useDefaultPath) ? defaultPathProxy : askUserProxy
 }
 var useDefaultPath: Bool {
     get {

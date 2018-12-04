@@ -8,17 +8,6 @@
 
 import Cocoa
 
-/*
- [
- "level": "A-Level",
- "name": "Biology (0610)"
- ]
- */
-
-private func getAllSubjectViewController() -> AllSubjectsViewController {
-    return getController("All Subjects View") as! AllSubjectsViewController
-}
-
 class SubjectSystem {
     
     let parent: NSViewController
@@ -62,7 +51,7 @@ class SubjectSystem {
         
         // last item should be 'other...', open selection menu
         if selectedItem == selector.numberOfItems - 1 {
-            let controller = getAllSubjectViewController()
+            let controller: AllSubjectsViewController = getController("All Subjects View")!
             controller.callback = {
                 level, subject in
                 self.selector.item(at: 0)!.title = subject
