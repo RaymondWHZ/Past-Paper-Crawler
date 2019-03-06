@@ -37,13 +37,24 @@ class PapersViewController: NSViewController {
     
     // ---custom variables---
     
-    var showProxy: ShowProxy = defaultShowProxy
+    var showManager = ShowManager()
     
     var subjectSystem: SubjectSystem?
     
     var selected: [Bool] = [] {  // indicates whether subject with corresponding index is selected
         didSet {
-            selectionUpdate()
+            let selectedCount = selected.reduce(into: 0) { if $1 { $0 += 1 } }
+            if selectedCount == 0 {
+                selectAllButton.state = .off
+                countPrompt?.setToDefault()
+                downloadButton.isEnabled = false
+            }
+            else {
+                selectAllButton.state = (selectedCount == selected.count) ? .on : .off
+                let fileCount = (showAllCheckbox.state == .on) ? selectedCount : selectedCount * 2
+                countPrompt?.showPrompt("Selected \(fileCount) files")
+                downloadButton.isEnabled = true
+            }
         }
     }
     
@@ -77,7 +88,7 @@ class PapersViewController: NSViewController {
         // set up subject system
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton, loadList)
         
-        if userDefaults.bool(forKey: PFDefaultShowAllToken) {
+        if PFDefaultShowAll {
             showAllCheckbox.state = .on
             changedShowOption(showAllCheckbox)
         }
@@ -102,17 +113,17 @@ class PapersViewController: NSViewController {
     
     var currentLevel: String {
         get {
-            return showProxy.currentLevel
+            return showManager.currentLevel
         }
     }
     var currentSubject: String {
         get {
-            return showProxy.currentSubject
+            return showManager.currentSubject
         }
     }
     var currentDisplay: [String] {
         get {
-            return showProxy.currentShowList
+            return showManager.currentShowList
         }
     }
     
@@ -124,14 +135,11 @@ class PapersViewController: NSViewController {
         let isOn = showAllCheckbox.state == .on
         typePopButton.isHidden = !isOn
         
-        let newShowProxy = (isOn) ? ShowProxy() : PapersWithAnswer()
         viewPromptLabel.stringValue = (isOn) ? "All files are shown." : "Papers and answers are put together omitting any other file or paper before 2005."
         
-        newShowProxy.restoreFrom(other: showProxy)
-        showProxy = newShowProxy
-        
+        showManager.showAll = isOn
+        selectAllButton.state = .off
         papersTable.reloadData()
-        resetCriteria()
     }
     
     @IBAction func subjectSelected(_ sender: Any) {
@@ -144,11 +152,11 @@ class PapersViewController: NSViewController {
         let name = popButton.identifier!.rawValue
         let index = popButton.indexOfSelectedItem
         if index == 0 {
-            showProxy.removeCriterion(name: name)
+            showManager.removeCriterion(name: name)
         }
         else {
             let value = popButton.item(at: index)!.title
-            showProxy.setCriterion(name: name, value: value)
+            showManager.setCriterion(name: name, value: value)
         }
         papersTable.reloadData()
     }
@@ -176,7 +184,7 @@ class PapersViewController: NSViewController {
             }
             
             // access website to get all papers
-            if !self.showProxy.loadFrom(level: level, subject: subject) {
+            if !self.showManager.loadFrom(level: level, subject: subject) {
                 DispatchQueue.main.async {
                     self.viewPrompt?.showError("Failed to load subject!")
                 }
@@ -185,13 +193,14 @@ class PapersViewController: NSViewController {
             }
             
             DispatchQueue.main.async {
+                self.selectAllButton.state = .off
                 self.papersTable.reloadData()
-                self.setUpSurrounding()
+                self.resetSurrounding()
             }
         }
     }
     
-    func setUpSurrounding() {
+    func resetSurrounding() {  // only called when new subject selected
         // set up title
         view.window?.title = currentSubject
         
@@ -199,7 +208,7 @@ class PapersViewController: NSViewController {
         subjectPopButton.itemArray[0].title = currentSubject + " "  // add space to avoid duplication in list
         
         if papersTable.numberOfRows == 0 {
-            if showProxy is PapersWithAnswer {
+            if !showManager.showAll {  // auto switch to show all when no couple found
                 DispatchQueue.main.async {
                     self.showAllCheckbox.state = .on
                     self.changedShowOption(self.showAllCheckbox)
@@ -208,12 +217,13 @@ class PapersViewController: NSViewController {
             return
         }
         
+        // remove all previous criteria
         resetCriteria()
     }
     
     func resetCriteria() {
         // set up criteria selector
-        let summary = showProxy.criteriaSummary  // fetch all selections
+        let summary = showManager.criteriaSummary  // fetch all selections
         for popButton in [
             yearPopButton,
             seasonPopButton,
@@ -228,21 +238,6 @@ class PapersViewController: NSViewController {
         }
     }
     
-    func selectionUpdate() {
-        let selectedCount = selected.reduce(into: 0) { if $1 { $0 += 1 } }
-        if selectedCount == 0 {
-            selectAllButton.state = .off
-            countPrompt?.setToDefault()
-            downloadButton.isEnabled = false
-        }
-        else {
-            selectAllButton.state = (selectedCount == selected.count) ? .on : .off
-            let fileCount = (showAllCheckbox.state == .on) ? selectedCount : selectedCount * 2
-            countPrompt?.showPrompt("Selected \(fileCount) files")
-            downloadButton.isEnabled = true
-        }
-    }
-    
     @IBAction func downloadClicked(_ sender: Any) {
         // collect all indeices to download
         var selectedIndices: [Int] = []
@@ -252,7 +247,7 @@ class PapersViewController: NSViewController {
             }
         }
         
-        let papers = showProxy.getPapers(at: selectedIndices)
+        let papers = showManager.getSelectedPapers(at: selectedIndices)
         download(files: papers)
     }
     

@@ -34,12 +34,12 @@ class SubjectSystem {
         })
         */
         //quickListChangeEvent.addAction(refreshAction!)
-        notificationCenter.addObserver(self, selector: #selector(updateData), name: NSNotification.Name(rawValue: "Quick List Changed"), object: nil)
+        PFObserveQuickListChange(self, selector: #selector(updateData))
     }
     
     deinit {
         //quickListChangeEvent.removeAction(refreshAction!)
-        notificationCenter.removeObserver(self)
+        PFEndObserve(self)
     }
     
     func selectorClicked() {

@@ -35,9 +35,6 @@ var PFUsingWebsiteName: String {
 
 
 let PFDefaultShowAllToken = "Show Mode"
-var defaultShowProxy: ShowProxy {
-    return PapersWithAnswer()
-}
 var PFDefaultShowAll: Bool {
     get {
         return userDefaults.bool(forKey: PFDefaultShowAllToken)

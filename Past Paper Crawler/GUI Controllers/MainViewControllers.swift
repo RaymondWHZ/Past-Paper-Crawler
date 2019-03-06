@@ -69,7 +69,7 @@ class MainViewController: NSViewController {
                 }
                 
                 // load current subject
-                if !paperView.showProxy.loadFrom(level: level, subject: subject) {
+                if !paperView.showManager.loadFrom(level: level, subject: subject) {
                     DispatchQueue.main.async {
                         self.subjectPrompt?.showError("Failed to load subject!")
                     }
@@ -80,7 +80,7 @@ class MainViewController: NSViewController {
                     
                     // display paper window
                     paperView.papersTable.reloadData()
-                    paperView.setUpSurrounding()
+                    paperView.resetSurrounding()
                     paperWindow.showWindow(nil)
                     
                     // set back prompt
