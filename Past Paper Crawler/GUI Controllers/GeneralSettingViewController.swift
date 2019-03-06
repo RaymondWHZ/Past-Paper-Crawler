@@ -11,7 +11,7 @@ import Cocoa
 class GeneralSetViewController: NSViewController {
     
     @IBOutlet var websitePopButton: NSPopUpButton!
-    var lazyWebsiteSelection: String = usingWebsiteName
+    var lazyWebsiteSelection: String = PFUsingWebsiteName
     
     @IBOutlet var showAllCheckBox: NSButton!
     
@@ -25,33 +25,33 @@ class GeneralSetViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        websitePopButton.addItems(withTitles: Array(websites.keys))
-        websitePopButton.selectItem(withTitle: usingWebsiteName)
+        websitePopButton.addItems(withTitles: Array(PFWebsites.keys))
+        websitePopButton.selectItem(withTitle: PFUsingWebsiteName)
         
-        showAllCheckBox.state = (defaultShowAll) ? .on : .off
+        showAllCheckBox.state = (PFDefaultShowAll) ? .on : .off
         
-        let onOption = (useDefaultPath) ? useDefaultOption : askEverytimeOption
+        let onOption = (PFUseDefaultPath) ? useDefaultOption : askEverytimeOption
         onOption!.state = .on
         savePolicySelected(onOption!)
         
-        pathTextField.stringValue = defaultPath
+        pathTextField.stringValue = PFDefaultPath
         
-        createFolderCheckBox.state = (createFolder) ? .on : .off
+        createFolderCheckBox.state = (PFCreateFolder) ? .on : .off
         
-        openInFinderCheckBox.state = (openInFinder) ? .on : .off
+        openInFinderCheckBox.state = (PFOpenInFinder) ? .on : .off
     }
     
     @IBAction func websiteSelected(_ sender: Any) {
         let websiteSelection = websitePopButton.selectedItem!.title
-        let websiteSelected = websites[websiteSelection]!
+        let websiteSelected = PFWebsites[websiteSelection]!
         let subjectUtil = SubjectUtil.get(for: websiteSelected)
         
         // check quick list
         
         let loadingView: LoadingListView = getController("Loading List View")!
         loadingView.cancelCallBack = {
-            usingWebsiteName = self.lazyWebsiteSelection
-            self.websitePopButton.selectItem(withTitle: usingWebsiteName)
+            PFUsingWebsiteName = self.lazyWebsiteSelection
+            self.websitePopButton.selectItem(withTitle: PFUsingWebsiteName)
         }
         
         self.presentAsSheet(loadingView)
@@ -75,36 +75,31 @@ class GeneralSetViewController: NSViewController {
             
             var operations: [(String, String)] = []
             
-            quickListWriteQueue.sync {
+            PFModifyQuickList({ (quickList) in
                 for (index, subject) in quickList.enumerated() {
-                    let level = subject["level"]!
-                    var name = subject["name"]!
-                    var disabled = false
-                    if name.hasPrefix("*") {
-                        name.removeFirst()
-                        disabled = true
-                    }
+                    let level = subject.level
+                    let name = subject.name
                     
                     let availableSubjects = sl![level]!
-                    if availableSubjects.contains(name) {
-                        if disabled {
-                            quickList[index]["name"] = name
+                    if availableSubjects.contains(name) {  // try to get subject from name
+                        if !subject.enabled {  // special case with previously disabled subject
+                            quickList[index] = subject.copy(alterEnabled: true)
                             operations.append((name, "Enabled"))
                         }
                         continue
                     }
                     
-                    let code = getSubjectCode(of: name)
-                    if let finding = subjectUtil.findSubject(with: code) {
-                        quickList[index] = ["level": finding.0, "name": finding.1]
-                        operations.append((name, "Renamed to " + finding.1))
+                    let code = getSubjectCode(of: name)  // try to get subject from code
+                    if let subject = subjectUtil.findSubject(with: code) {
+                        quickList[index] = subject
+                        operations.append((name, "Renamed to " + subject.name))
                     }
                     else {
-                        quickList[index]["name"]!.insert("*", at: name.startIndex)
+                        quickList[index] = subject.copy(alterEnabled: false)
                         operations.append((name, "Disabled"))
                     }
                 }
-            }
+            })
             
             DispatchQueue.main.async {
                 loadingView.dismiss(nil)
@@ -116,42 +111,42 @@ class GeneralSetViewController: NSViewController {
                     renameView.operationsTableView.reloadData()
                 }
                 
-                usingWebsiteName = websiteSelection
-                self.lazyWebsiteSelection = usingWebsiteName
+                PFUsingWebsiteName = websiteSelection
+                self.lazyWebsiteSelection = PFUsingWebsiteName
             }
         }
     }
     
     @IBAction func showModeSelected(_ sender: Any) {
-        defaultShowAll = showAllCheckBox.state == .on
+        PFDefaultShowAll = showAllCheckBox.state == .on
     }
     
     @IBAction func savePolicySelected(_ sender: Any) {
-        useDefaultPath = sender as? NSButton == useDefaultOption
-        ((useDefaultPath) ? askEverytimeOption : useDefaultOption)!.state = .off
-        pathTextField.isEditable = useDefaultPath
-        browseButton.isEnabled = useDefaultPath
+        PFUseDefaultPath = sender as? NSButton == useDefaultOption
+        ((PFUseDefaultPath) ? askEverytimeOption : useDefaultOption)!.state = .off
+        pathTextField.isEditable = PFUseDefaultPath
+        browseButton.isEnabled = PFUseDefaultPath
     }
     
     @IBAction func pathChanged(_ sender: Any) {
-        defaultPath = pathTextField.stringValue
+        PFDefaultPath = pathTextField.stringValue
     }
     
     @IBAction func browseClicked(_ sender: Any) {
         directoryOpenPanel.begin { result in
             if result == .OK {
-                defaultPath = directoryOpenPanel.url!.path
-                self.pathTextField.stringValue = defaultPath
+                PFDefaultPath = directoryOpenPanel.url!.path
+                self.pathTextField.stringValue = PFDefaultPath
             }
         }
     }
     
     @IBAction func createFolderOptionChanged(_ sender: Any) {
-        createFolder = createFolderCheckBox.state == .on
+        PFCreateFolder = createFolderCheckBox.state == .on
     }
     
     @IBAction func openInFinderOptionChanged(_ sender: Any) {
-        openInFinder = openInFinderCheckBox.state == .on
+        PFOpenInFinder = openInFinderCheckBox.state == .on
     }
 }
 

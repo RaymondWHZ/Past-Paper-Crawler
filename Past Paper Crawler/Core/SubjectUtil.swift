@@ -8,11 +8,39 @@
 
 import Foundation
 
+class Subject : NSObject, NSCoding {
+    let level: String
+    let name: String
+    let enabled: Bool
+    
+    init(level: String, name: String, enabled: Bool = true) {
+        self.level = level
+        self.name = name
+        self.enabled = enabled
+    }
+    
+    func copy(alterLevel: String? = nil, alterName: String? = nil, alterEnabled: Bool? = nil) -> Subject {
+        return Subject(level: alterLevel ?? level, name: alterName ?? name, enabled: alterEnabled ?? enabled)
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(level, forKey: "Level")
+        coder.encode(name, forKey: "Name")
+        coder.encode(enabled, forKey: "Enabled")
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        level = decoder.decodeObject(forKey: "Level") as? String ?? ""
+        name = decoder.decodeObject(forKey: "Name") as? String ?? ""
+        enabled = decoder.decodeBool(forKey: "Enabled")
+    }
+}
+
 private var subjectUtils: [String: SubjectUtil] = [:]
 class SubjectUtil {
     
     static var current: SubjectUtil {
-        return SubjectUtil.get(for: usingWebsite)
+        return SubjectUtil.get(for: PFUsingWebsite)
     }
     
     let website: PastPaperWebsite
@@ -70,14 +98,14 @@ class SubjectUtil {
         return ret
     }
     
-    func findSubject(with str: String) -> (String, String)? {
+    func findSubject(with str: String) -> Subject? {
         guard let subjectLists = self.subjectLists else {
             return nil
         }
         
         for level in subjectLists.keys {
             if let subject = findSubject(in: level, with: str) {
-                return (level, subject)
+                return Subject(level: level, name: subject)
             }
         }
         

@@ -16,7 +16,7 @@ class DefaultPathProxy: DownloadProxy {
     
     func downloadPapers(specifiedPapers: [WebFile], exitAction: @escaping ([WebFile]) -> ()) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let failed = specifiedPapers.download(to: defaultPath, classify: createFolder, showInFinder: openInFinder)
+            let failed = specifiedPapers.download(to: PFDefaultPath, classify: PFCreateFolder, showInFinder: PFOpenInFinder)
             exitAction(failed)
         }
     }
@@ -30,7 +30,7 @@ class AskUserProxy: DownloadProxy {
                 var failed: [WebFile] = []
                 if result == .OK, let path = directoryOpenPanel.url?.path {
                     DispatchQueue.global(qos: .userInitiated).sync {
-                        failed.append(contentsOf: specifiedPapers.download(to: path, classify: createFolder, showInFinder: openInFinder))
+                        failed.append(contentsOf: specifiedPapers.download(to: path, classify: PFCreateFolder, showInFinder: PFOpenInFinder))
                     }
                 }
                 exitAction(failed)

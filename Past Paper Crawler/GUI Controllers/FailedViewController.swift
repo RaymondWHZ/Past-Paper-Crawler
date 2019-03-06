@@ -16,15 +16,19 @@ func getFailedView(failedList: [WebFile], retryAction: @escaping ([WebFile]) -> 
 }
 
 class FailedViewController: NSViewController {
-    
     @IBOutlet var failedTableView: NSTableView!
+    @IBOutlet var retryButton: NSButton!
+    
     private var failedList: [WebFile] = []
     private var selected: [Bool] = []
+    private var selectedCount = 0
     
     func setFailedList(files: [WebFile]) {
         // set up lists the represents failed files
+        let count = files.count
         failedList = files
-        selected = Array(repeating: true, count: files.count)
+        selected = Array(repeating: true, count: count)
+        selectedCount = count
     }
     
     var retryAction: ([WebFile]) -> () = {_ in}
@@ -61,6 +65,14 @@ extension FailedViewController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         let state = object as! Int == 1  // cast Any to Bool
         selected[row] = state
+        selectedCount += state ? 1 : -1
+        print(state)
+        if state {
+            retryButton.isEnabled = true
+        }
+        else if selectedCount == 0 {
+            retryButton.isEnabled = false
+        }
     }
 }
 

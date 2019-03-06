@@ -37,8 +37,6 @@ class MainViewController: NSViewController {
     
     var subjectSystem: SubjectSystem?
     
-    var refreshAction: Action?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,7 +94,7 @@ class MainViewController: NSViewController {
         let text = paperComboBox.stringValue
         if let selectedFile = possibleFileList.first(where: { $0.name == text }) {
             paperProcess.startAnimation(nil)
-            downloadProxy.downloadPapers(specifiedPapers: [selectedFile], exitAction: {
+            PFDownloadProxy.downloadPapers(specifiedPapers: [selectedFile], exitAction: {
                 failed in
                 DispatchQueue.main.async {
                     if !failed.isEmpty {
@@ -140,7 +138,7 @@ extension MainViewController: NSComboBoxDelegate {
                 }
             }
             
-            guard let res = SubjectUtil.current.findSubject(with: code) else {
+            guard let subject = SubjectUtil.current.findSubject(with: code) else {
                 DispatchQueue.main.async {
                     self.reloadFileList(papers: [])
                     self.paperPrompt?.showError("Failed to find subject code!")
@@ -153,7 +151,7 @@ extension MainViewController: NSComboBoxDelegate {
                 return
             }
             
-            guard let files = usingWebsite.getPapers(level: res.0, subject: res.1) else {
+            guard let files = PFUsingWebsite.getPapers(level: subject.level, subject: subject.name) else {
                 DispatchQueue.main.async {
                     self.reloadFileList(papers: [])
                     self.paperPrompt?.showError("Failed to get paper list!")

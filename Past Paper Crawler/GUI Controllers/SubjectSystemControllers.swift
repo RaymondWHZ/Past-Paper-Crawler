@@ -17,8 +17,6 @@ class SubjectSystem {
     let defaultItemNum = 4
     let quickListStartFromIndex = 2
     
-    var refreshAction: Action?
-    
     init(
         parent: NSViewController,
         selector: NSPopUpButton,
@@ -27,18 +25,21 @@ class SubjectSystem {
         self.parent = parent
         self.selector = selector
         self.callback = callback
-        
         refresh()
+        /*
         refreshAction = Action({
             DispatchQueue.main.sync {
                 self.refresh()
             }
         })
-        quickListChangeEvent.addAction(refreshAction!)
+        */
+        //quickListChangeEvent.addAction(refreshAction!)
+        notificationCenter.addObserver(self, selector: #selector(updateData), name: NSNotification.Name(rawValue: "Quick List Changed"), object: nil)
     }
     
     deinit {
-        quickListChangeEvent.removeAction(refreshAction!)
+        //quickListChangeEvent.removeAction(refreshAction!)
+        notificationCenter.removeObserver(self)
     }
     
     func selectorClicked() {
@@ -61,35 +62,40 @@ class SubjectSystem {
         }
         // otherwise an ordinary item in displayed list is selected
         else {
-            let selected = quickList[selectedItem - quickListStartFromIndex]
-            selector.item(at: 0)!.title = selected["name"]!
-            callback(selected["level"]!, selected["name"]!)
+            var selected: Subject? = nil
+            PFUseQuickList { (quickList) in
+                selected = quickList[selectedItem - quickListStartFromIndex]
+            }
+            selector.item(at: 0)!.title = selected!.name
+            callback(selected!.level, selected!.name)
+        }
+    }
+    
+    @objc func updateData() {
+        DispatchQueue.main.sync {
+            self.refresh()
         }
     }
     
     func refresh() {
         // remove original items in the displayed list
-        for _ in defaultItemNum..<selector.numberOfItems {
-            selector.removeItem(at: quickListStartFromIndex)
+        for _ in self.defaultItemNum..<self.selector.numberOfItems {
+            self.selector.removeItem(at: self.quickListStartFromIndex)
         }
         
         // add in new items
-        for i in quickList.indices {
-            let target = i + quickListStartFromIndex
-            var name = quickList[i]["name"]!
-            var enabled = true
-            if name.hasPrefix("*") {
-                name.removeFirst()
-                enabled = false
-            }
-            
-            selector.insertItem(withTitle: name, at: target)
-            let item = selector.item(at: target)!
-            item.isEnabled = enabled
-            
-            if i + 1 < 10 {
-                item.keyEquivalentModifierMask = .command
-                item.keyEquivalent = String(i + 1)
+        PFUseQuickList { quickList in
+            for (index, subject) in quickList.enumerated() {
+                let target = index + self.quickListStartFromIndex
+                
+                self.selector.insertItem(withTitle: subject.name, at: target)
+                let item = self.selector.item(at: target)!
+                item.isEnabled = subject.enabled
+                
+                if index + 1 < 10 {
+                    item.keyEquivalentModifierMask = .command
+                    item.keyEquivalent = String(index + 1)
+                }
             }
         }
     }
@@ -158,7 +164,7 @@ class AllSubjectsViewController: NSViewController {
                 }
             }
             
-            guard let subjects = usingWebsite.getSubjects(level: selectedLevel) else {
+            guard let subjects = PFUsingWebsite.getSubjects(level: selectedLevel) else {
                 DispatchQueue.main.async {
                     self.prompt?.showError("Failed!")
                 }
@@ -224,7 +230,7 @@ class AllSubjectsViewController: NSViewController {
                 }
             }
             
-            guard let finding = SubjectUtil.current.findSubject(with: text) else {
+            guard let subject = SubjectUtil.current.findSubject(with: text) else {
                 DispatchQueue.main.async {
                     self.prompt?.showError("Failed / Not found!")
                 }
@@ -233,12 +239,12 @@ class AllSubjectsViewController: NSViewController {
             
             if self.currentText == text {
                 DispatchQueue.main.async {
-                    self.levelPopButton.selectItem(withTitle: finding.0)
+                    self.levelPopButton.selectItem(withTitle: subject.level)
                     
                     self.clearSubjectPopButton()
-                    self.subjectPopButton.addItems(withTitles: usingWebsite.getSubjects(level: finding.0)!)
+                    self.subjectPopButton.addItems(withTitles: PFUsingWebsite.getSubjects(level: subject.level)!)
                     self.subjectPopButton.isEnabled = true
-                    self.subjectPopButton.selectItem(withTitle: finding.1)
+                    self.subjectPopButton.selectItem(withTitle: subject.name)
                     
                     self.doneButton.isHidden = false
                 }

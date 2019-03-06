@@ -1368,6 +1368,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="failedTableView" destination="QOB-qK-d7L" id="TEf-sZ-a2u"/>
+                        <outlet property="retryButton" destination="tyT-0z-9Gf" id="trU-NV-UdI"/>
                     </connections>
                 </viewController>
                 <customObject id="Cn8-TS-btG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

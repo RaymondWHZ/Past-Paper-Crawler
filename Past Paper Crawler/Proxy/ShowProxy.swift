@@ -153,7 +153,7 @@ class ShowProxy {
     }
     
     func loadFrom(level: String, subject: String) -> Bool {
-        guard let paperList = usingWebsite.getPapers(level: level, subject: subject) else {
+        guard let paperList = PFUsingWebsite.getPapers(level: level, subject: subject) else {
             return false
         }
         

@@ -14,7 +14,7 @@
 		B60320E7213254AF00488A42 /* Past_Paper_CrawlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320E6213254AF00488A42 /* Past_Paper_CrawlerTests.swift */; };
 		B60320F2213254AF00488A42 /* Past_Paper_CrawlerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */; };
 		B6032100213256F500488A42 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
-		B6052CF72195D9E8003C98AC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Settings.swift */; };
+		B6052CF72195D9E8003C98AC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Preferences.swift */; };
 		B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
 		B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
 		B622E029216B885E00229054 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
@@ -25,11 +25,9 @@
 		B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
 		B657B0C0218414BA009099BA /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
 		B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
-		B6790964213B9D2800E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
 		B679096A213C399600E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
 		B6790976213D893200E2F233 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790975213D893200E2F233 /* main.swift */; };
-		B679097C213D897000E2F233 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790963213B9D2800E2F233 /* Event.swift */; };
 		B679097E213D897000E2F233 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
 		B679097F213D897000E2F233 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B6790980213D897000E2F233 /* ShowProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowProxy.swift */; };
@@ -87,7 +85,7 @@
 		B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Past_Paper_CrawlerUITests.swift; sourceTree = "<group>"; };
 		B60320F3213254AF00488A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B60320FF213256F500488A42 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
-		B6052CF62195D9E8003C98AC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B6052CF62195D9E8003C98AC /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListSettingViewControllers.swift; sourceTree = "<group>"; };
 		B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingViewController.swift; sourceTree = "<group>"; };
 		B622E028216B885E00229054 /* SubjectUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectUtil.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 		B657B0BC218414BA009099BA /* libxmlParserOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlParserOption.swift; sourceTree = "<group>"; };
 		B657B0C3218414EA009099BA /* libxml2-kanna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libxml2-kanna.h"; sourceTree = "<group>"; };
 		B657B0C4218414EA009099BA /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		B6790963213B9D2800E2F233 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B6790969213C399600E2F233 /* ShowProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProxy.swift; sourceTree = "<group>"; };
 		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
 		B6790973213D893100E2F233 /* Crawler Core Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Crawler Core Test"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,7 +170,6 @@
 		B60320D2213254AD00488A42 /* Past Paper Crawler */ = {
 			isa = PBXGroup;
 			children = (
-				B6052CFA21966BBF003C98AC /* Util */,
 				B6790983213E73E100E2F233 /* Proxy */,
 				B6790962213B9D1A00E2F233 /* Kanna */,
 				B6F859BF2136CDCB00D7002C /* Core */,
@@ -185,7 +181,7 @@
 				B60320DC213254AF00488A42 /* Info.plist */,
 				B60320DD213254AF00488A42 /* Past_Paper_Crawler.entitlements */,
 				B6790986213E7D9200E2F233 /* PublicConstants.swift */,
-				B6052CF62195D9E8003C98AC /* Settings.swift */,
+				B6052CF62195D9E8003C98AC /* Preferences.swift */,
 			);
 			path = "Past Paper Crawler";
 			sourceTree = "<group>";
@@ -206,14 +202,6 @@
 				B60320F3213254AF00488A42 /* Info.plist */,
 			);
 			path = "Past Paper CrawlerUITests";
-			sourceTree = "<group>";
-		};
-		B6052CFA21966BBF003C98AC /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				B6790963213B9D2800E2F233 /* Event.swift */,
-			);
-			path = Util;
 			sourceTree = "<group>";
 		};
 		B6263C5421744C1000EC5C61 /* Frameworks */ = {
@@ -449,7 +437,6 @@
 			files = (
 				B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */,
 				B622E029216B885E00229054 /* SubjectUtil.swift in Sources */,
-				B6790964213B9D2800E2F233 /* Event.swift in Sources */,
 				B6032100213256F500488A42 /* Core.swift in Sources */,
 				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
 				B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */,
@@ -463,7 +450,7 @@
 				B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */,
 				B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */,
 				B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */,
-				B6052CF72195D9E8003C98AC /* Settings.swift in Sources */,
+				B6052CF72195D9E8003C98AC /* Preferences.swift in Sources */,
 				B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */,
 				B657B0BD218414BA009099BA /* CSS.swift in Sources */,
 				B60320D4213254AD00488A42 /* AppDelegate.swift in Sources */,
@@ -494,7 +481,6 @@
 			files = (
 				B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */,
 				B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */,
-				B679097C213D897000E2F233 /* Event.swift in Sources */,
 				B679097E213D897000E2F233 /* Core.swift in Sources */,
 				B679097F213D897000E2F233 /* PPWebsites.swift in Sources */,
 				B6790980213D897000E2F233 /* ShowProxy.swift in Sources */,
@@ -658,7 +644,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -684,7 +670,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

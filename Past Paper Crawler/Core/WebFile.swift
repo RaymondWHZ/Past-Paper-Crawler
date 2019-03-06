@@ -88,7 +88,7 @@ extension Array where Element: WebFile {
         }
         group.wait()
         
-        if let urls = paths?.map({ URL(fileURLWithPath: $0) }) {
+        if let urls = paths?.map({ URL(fileURLWithPath: $0) }), !urls.isEmpty {
             workspace.activateFileViewerSelecting(urls)
         }
         

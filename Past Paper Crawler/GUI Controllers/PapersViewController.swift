@@ -40,7 +40,6 @@ class PapersViewController: NSViewController {
     var showProxy: ShowProxy = defaultShowProxy
     
     var subjectSystem: SubjectSystem?
-    var refreshAction: Action?
     
     var selected: [Bool] = [] {  // indicates whether subject with corresponding index is selected
         didSet {
@@ -78,7 +77,7 @@ class PapersViewController: NSViewController {
         // set up subject system
         subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton, loadList)
         
-        if userDefaults.bool(forKey: defaultShowAllToken) {
+        if userDefaults.bool(forKey: PFDefaultShowAllToken) {
             showAllCheckbox.state = .on
             changedShowOption(showAllCheckbox)
         }
@@ -261,7 +260,7 @@ class PapersViewController: NSViewController {
         // start spinning
         downloadProgress?.startAnimation(nil)
         
-        downloadProxy.downloadPapers(specifiedPapers: files, exitAction: {
+        PFDownloadProxy.downloadPapers(specifiedPapers: files, exitAction: {
             failed in
             DispatchQueue.main.async {
                 // if all complished (might have another download mission), stop spinning
