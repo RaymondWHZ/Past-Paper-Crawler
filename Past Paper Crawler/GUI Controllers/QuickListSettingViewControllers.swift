@@ -191,6 +191,7 @@ class SelectedViewController: NSViewController {
         super.viewDidLoad()
         
         PFUseQuickList { self.subjects = $0 }
+        selected = Array(repeating: true, count: subjects.count)
         
         // set up table manipulators
         quickListTable.dataSource = self
@@ -206,7 +207,7 @@ class SelectedViewController: NSViewController {
     func drag(_ from: Int, _ to: Int) {  // swap position of to subjects
         modifyOn {
             // swap elements in both lists at the same time
-            if self.selected[from] {
+            if self.selected[from] && self.selected[to] {
                 PFModifyQuickList { $0.swapAt(from, to) }
             }
             self.subjects.swapAt(from, to)
@@ -242,7 +243,6 @@ class SelectedViewController: NSViewController {
 
 extension SelectedViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        selected = Array(repeating: true, count: subjects.count)
         return subjects.count
     }
     

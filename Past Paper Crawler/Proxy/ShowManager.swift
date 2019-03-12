@@ -9,10 +9,22 @@
 import Foundation
 
 private let year = "year"
+private let yearRange = 6...7
 private let season = "season"
+private let seasonRange = 5
 private let paper = "paper"
+private let paperRange = 12
 private let edition = "edition"
+private let editionRange = 13
 private let type = "type"
+private let typeRange = 9...10
+
+private let withPaperLength = 13 + 4
+private let withEditionLength = 14 + 4
+
+private let criteriaKeys = [year, season, paper, edition, type]
+
+typealias Criteria = [String : String]
 
 private let yearPrefix = "20"
 private let editionOne = "Edition \(1)"
@@ -39,143 +51,172 @@ private let editionPrefix = "Edition "
 
 
 extension String{
-    func subString(from: Int, to: Int) -> String {
-        
-        let startIndex = self.index(self.startIndex, offsetBy: from)
-        let endIndex = self.index(self.startIndex, offsetBy: to)
-        
+    
+    subscript(intIndex: Int) -> String {
+        let index = self.index(self.startIndex, offsetBy: intIndex)
+        return String(self[index])
+    }
+    
+    subscript(range: ClosedRange<Int>) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: range.lowerBound)
+        let endIndex = self.index(self.startIndex, offsetBy: range.upperBound)
         return String(self[startIndex...endIndex])
     }
 }
 
-let paperPattern = "[0-9]{4}_[wsmy]\\d{2}_[a-z]{2}(_[1-9][1-9]?)?.pdf"  // "0478_s18_ms_11.pdf"
-let paperRegex = try! NSRegularExpression(pattern: paperPattern, options: .caseInsensitive)
-func info(of paperName: String) -> [String: String]{
+let regularFilePattern = "[0-9]{4}_[wsmy][0-9]{2}_[a-z]{2}(_[1-9][1-9]?)?.pdf"  // "0478_s18_ms_11.pdf" or "0478_s18_er.pdf"
+let regularFileRegex = try! NSRegularExpression(pattern: regularFilePattern, options: .caseInsensitive)
+func info(of paperName: String) -> Criteria {
     let count = paperName.count
     
-    var ret: [String: String] = [year: other, season: other, paper: none, edition: editionOne, type: other]
+    var ret: Criteria = [year: other, season: other, paper: other, edition: other, type: other]
     
-    if paperRegex.matches(in: paperName, options: .init(rawValue: 0), range: NSRange(location: 0, length: paperName.count)).isEmpty {
-        ret[edition] = other
+    if regularFileRegex.firstMatch(in: paperName, range: NSRange(location: 0, length: paperName.count)) == nil {
         return ret
     }
     
-    let cYear: String = paperName.subString(from: 6, to: 7)
+    let cYear: String = paperName[yearRange]
     ret[year] = yearPrefix + cYear
     
-    let cSeason: String = paperName.subString(from: 5, to: 5)
+    let cSeason: String = paperName[seasonRange]
     ret[season] = seasons[cSeason] ?? other
     
-    let cType: String = paperName.subString(from: 9, to: 10)
+    let cType: String = paperName[typeRange]
     ret[type] = types[cType] ?? other
     
-    if count < 13 + 4 {
+    if count < withPaperLength {
         return ret
     }
     
-    let cPaper: String = paperName.subString(from: 12, to: 12)
+    let cPaper: String = paperName[paperRange]
     ret[paper] = paperPrefix + cPaper
     
-    if count < 14 + 4 {
+    if count < withEditionLength {
+        ret[edition] = editionOne
         return ret
     }
     
-    let cEdition: String = paperName.subString(from: 13, to: 13)
+    let cEdition: String = paperName[editionRange]
     ret[edition] = editionPrefix + cEdition
     
     return ret
 }
 
-func infoStrWithoutType(file: WebFile) -> String {
-    let fInfo = info(of: file.name)
+let paperPattern = "[0-9]{4}_[wsmy][0-9]{2}_(qp|ms)_[1-9][1-9]?.pdf"  // only "0478_s18_ms_11.pdf"
+let paperRegex = try! NSRegularExpression(pattern: paperPattern, options: .caseInsensitive)
+func isPaper(_ name: String) -> Bool {
+    return paperRegex.firstMatch(in: name, range: NSRange(location: 0, length: name.count)) != nil
+}
+
+func paperLocator(of name: String) -> String? {
+    if !isPaper(name) { return nil }
+    return name[seasonRange...yearRange.upperBound] + name[paperRange...editionRange]
+}
+
+func paperDescription(of name: String) -> String? {
+    if !isPaper(name) { return nil }
+    let fInfo = info(of: name)
     return "\(fInfo[year]!) \(fInfo[season]!) \(fInfo[paper]!) \(fInfo[edition]!)"
 }
 
 
 class PaperAnswerCouple {
     
+    let name: String
     let questionPaper: WebFile
     let markScheme: WebFile
-    
-    let fInfo: [String: String]
-    
-    private var desc: String
+    let fInfo: Criteria
     
     init?(qp: WebFile, ms: WebFile) {
-        var qpInfo = info(of: qp.name)
-        let msInfo = info(of: ms.name)
+        let qpName = qp.name
+        let msName = ms.name
+        if qpName[typeRange] != "qp" || msName[typeRange] != "ms" { return nil }
         
-        if qpInfo[type] != types["qp"] || msInfo[type] != types["ms"] {
-            return nil
-            //fatalError("Wrong file type!")
-        }
-        
-        if infoStrWithoutType(file: qp) != infoStrWithoutType(file: ms) {
-            return nil
-            //fatalError("Question paper and mark scheme not match!")
-        }
+        guard
+            let qpLocator = paperLocator(of: qpName),
+            let msLocator = paperLocator(of: msName)
+        else { return nil }
+        if qpLocator != msLocator { return nil }
         
         questionPaper = qp
         markScheme = ms
         
-        qpInfo.removeValue(forKey: type)
-        fInfo = qpInfo
+        name = paperDescription(of: qpName)!
         
-        desc = infoStrWithoutType(file: qp)
-    }
-    
-    var description: String {
-        return desc
+        fInfo = info(of: qpName).filter { $0.key != type }
     }
 }
 
 func makeCoupleArray(from papers: [WebFile]) -> [PaperAnswerCouple] {
     // filter out files that are not qp or ms and those before 2005
-    let filtered = papers.filter { (f) -> Bool in
-        let fInfo = info(of: f.name)
-        if fInfo["type"] == types["ms"] || fInfo["type"] == types["qp"] {
-            return fInfo["year"]!.compare("2004") == ComparisonResult.orderedDescending
+    var filtered: [(WebFile, String)] = []
+    papers.forEach { (f) in
+        let name = f.name
+        if name.count < 13 + 4 { return }
+        let type = name[typeRange]
+        if (type == "ms" || type == "qp") {
+            let year = name[yearRange]
+            if year.compare("04") == ComparisonResult.orderedDescending {
+                if let locator = paperLocator(of: name) {
+                    filtered.append((f, locator + type[0]))
+                }
+            }
         }
-        return false
     }
+    
     // sort the files to put same qp and ms together (faster than random search, nlogn < n^2)
-    let sortedList = filtered.sorted { (f1, f2) -> Bool in
-        let f1InfoStr = infoStrWithoutType(file: f1)
-        let f2InfoStr = infoStrWithoutType(file: f2)
-        return f1InfoStr.compare(f2InfoStr) == ComparisonResult.orderedAscending
-    }
+    let sortedList = filtered.sorted { $0.1 < $1.1 }
     
     // find all couples and put them into array
     var coupleArray: [PaperAnswerCouple] = []
     var currentPos = 0
-    while currentPos < sortedList.count {
-        let currentFile = sortedList[currentPos]  // fetch the file at this place
+    while currentPos < sortedList.count - 1 {
+        let file1 = sortedList[currentPos].0
+        let file2 = sortedList[currentPos + 1].0
+        if let couple = PaperAnswerCouple(qp: file2, ms: file1) {
+            coupleArray.append(couple)
+            currentPos += 1
+        }
         currentPos += 1
-        if currentPos >= sortedList.count {  // if the index has been out of bound, exit the loop
-            break
-        }
-        
-        let cfInfo = info(of: currentFile.name)
-        
-        let nextFile = sortedList[currentPos]
-        
-        if cfInfo["type"] == types["qp"] {
-            if let fileCouple = PaperAnswerCouple(qp: currentFile, ms: nextFile) {
-                coupleArray.append(fileCouple)
-                currentPos += 1
-            }
-        }
-        else {
-            if let fileCouple = PaperAnswerCouple(qp: nextFile, ms: currentFile) {
-                coupleArray.append(fileCouple)
-                currentPos += 1
-            }
-        }
     }
     
     return coupleArray
 }
 
+
+typealias CriteriaSummary = [String : [String]]
+
+func summarizeCriteria(for papers: [WebFile]) -> CriteriaSummary {
+    // set is able to exclude duplicated items automatically
+    var setSummary: [String: Set<String>] = [:]
+    for key in criteriaKeys {
+        setSummary[key] = Set()
+    }
+    
+    // get all paper infos and put them together into set
+    for rawPaper in papers {
+        let paperInfo = info(of: rawPaper.name)
+        for key in criteriaKeys {
+            setSummary[key]!.insert(paperInfo[key]!)
+        }
+    }
+    
+    // sort the elements in each set and put them into final summary
+    var criteriaSummary: CriteriaSummary = [:]
+    for key in criteriaKeys {
+        let unsorted = setSummary[key]!
+        
+        if unsorted.count == 1 {
+            criteriaSummary[key] = []
+            continue
+        }
+        
+        let sorted = unsorted.sorted()
+        criteriaSummary[key] = sorted
+    }
+    
+    return criteriaSummary
+}
 
 
 class ShowManager {
@@ -186,8 +227,10 @@ class ShowManager {
     var currentSubject: String = ""
     
     private var wholeList: [WebFile] = []
+    private var wholeCoupleList: [PaperAnswerCouple] = []
+    var criteriaSummary: CriteriaSummary = [:]
     
-    // ---- user interface part ----
+    // ---- access part ----
     
     func loadFrom(level: String, subject: String) -> Bool {
         guard let paperList = PFUsingWebsite.getPapers(level: level, subject: subject) else {
@@ -197,9 +240,12 @@ class ShowManager {
         currentLevel = level
         currentSubject = subject
         wholeList = paperList
+        wholeCoupleList = makeCoupleArray(from: paperList)
+        criteriaSummary = summarizeCriteria(for: paperList)
+        currentCriteria = [:]
         
         // all cache must be reloaded
-        cleanAllCache()
+        cleanCache()
         
         return true
     }
@@ -234,56 +280,20 @@ class ShowManager {
     let authoritizedKeys = [year, season, paper, edition, type]
     
     // e.g. [year: "2018", season: "s"]
-    private var currentCriteria: Dictionary<String, String> = [:]
-    
-    private var criteriaSummaryCache: Dictionary<String, [String]>?
-    // uses 'wholeList' to generate summary
-    var criteriaSummary: Dictionary<String, [String]> {
-        if criteriaSummaryCache == nil {
-            // set is able to exclude duplicated items automatically
-            var setSummary: [String: Set<String>] = [:]
-            for key in authoritizedKeys {
-                setSummary[key] = Set()
-            }
-            
-            // get all paper infos and put them together into set
-            for rawPaper in wholeList{
-                let paperInfo = info(of: rawPaper.name)
-                for key in authoritizedKeys {
-                    setSummary[key]!.insert(paperInfo[key]!)
-                }
-            }
-            
-            // sort the elements in each set and put them into final summary
-            criteriaSummaryCache = [:]
-            for key in authoritizedKeys {
-                let unsorted = setSummary[key]!
-                
-                if unsorted.count == 1 {
-                    criteriaSummaryCache![key] = []
-                    continue
-                }
-                
-                let sorted = unsorted.sorted()
-                criteriaSummaryCache![key] = sorted
-            }
-        }
-        
-        return criteriaSummaryCache!
-    }
+    private var currentCriteria: Criteria = [:]
     
     func setCriterion(name: String, value: String) {
         currentCriteria[name] = value
         
         // show lists must be reloaded
-        cleanShowListCache()
+        cleanCache()
     }
     
     func removeCriterion(name: String) {
         currentCriteria.removeValue(forKey: name)
         
         // show lists must be reloaded
-        cleanShowListCache()
+        cleanCache()
     }
     
     // ---- all part ----
@@ -321,15 +331,6 @@ class ShowManager {
     
     // ---- couple part ----
     
-    private var wholeCoupleListCache: [PaperAnswerCouple]? = nil
-    var wholeCoupleList: [PaperAnswerCouple] {
-        if wholeCoupleListCache == nil {
-            wholeCoupleListCache = makeCoupleArray(from: wholeList)
-        }
-        
-        return wholeCoupleListCache!
-    }
-    
     private var currentCoupleListCache: [PaperAnswerCouple]? = nil
     var currentCoupleList: [PaperAnswerCouple] {
         // filtered list acording to criteria
@@ -354,7 +355,7 @@ class ShowManager {
     var showCoupleListCache: [String]? = nil
     var showCoupleList: [String] {
         if showCoupleListCache == nil {
-            showCoupleListCache = currentCoupleList.map { $0.description }
+            showCoupleListCache = currentCoupleList.map { $0.name }
         }
         
         return showCoupleListCache!
@@ -362,19 +363,10 @@ class ShowManager {
     
     // ---- clean part ----
     
-    func cleanShowListCache() {
+    func cleanCache() {
         currentAllListCache = nil
         showAllListCache = nil
         currentCoupleListCache = nil
         showCoupleListCache = nil
-    }
-    
-    func cleanAllCache() {
-        currentCriteria = [:]
-        criteriaSummaryCache = nil
-        wholeCoupleListCache = nil
-        
-        // clean show lists as well
-        cleanShowListCache()
     }
 }

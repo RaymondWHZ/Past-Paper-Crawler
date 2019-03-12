@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/SubjectSystemControllers.swift"
-            timestampString = "573609229.356828"
+            timestampString = "573716568.844676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "80"
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/PPWebsites.swift"
-            timestampString = "565589627.8852431"
+            timestampString = "573716568.844774"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "getPapers0(level:subject:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/SubjectSystemControllers.swift"
-            timestampString = "573609229.357108"
+            timestampString = "573716568.8448631"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
@@ -118,7 +118,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/WebFile.swift"
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "573609229.35748"
+            timestampString = "573716568.845031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "137"
@@ -202,7 +202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "573609229.35754"
+            timestampString = "573716568.84542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
@@ -218,7 +218,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "573609229.357594"
+            timestampString = "573716568.845839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
@@ -266,7 +266,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "573609229.358121"
+            timestampString = "573716568.84622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -305,6 +305,166 @@
                   offsetFromSymbolStart = "28">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/Proxy/ShowManager.swift"
+            timestampString = "574058656.347011"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "makeCoupleArray(from:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/Proxy/ShowManager.swift"
+            timestampString = "574058656.3470761"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "makeCoupleArray(from:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Past_Paper_Crawler.makeCoupleArray(from: Swift.Array&lt;Past_Paper_Crawler.WebFile&gt;) -&gt; Swift.Array&lt;Past_Paper_Crawler.PaperAnswerCouple&gt;"
+                  moduleName = "Past Paper Crawler"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/Proxy/ShowManager.swift"
+                  timestampString = "573670143.440088"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "495">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 ((Past_Paper_Crawler.WebFile, Swift.String), (Past_Paper_Crawler.WebFile, Swift.String)) -&gt; Swift.Bool in Past_Paper_Crawler.makeCoupleArray(from: Swift.Array&lt;Past_Paper_Crawler.WebFile&gt;) -&gt; Swift.Array&lt;Past_Paper_Crawler.PaperAnswerCouple&gt;"
+                  moduleName = "Past Paper Crawler"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/Proxy/ShowManager.swift"
+                  timestampString = "573670143.442431"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/Proxy/ShowManager.swift"
+            timestampString = "574058656.347123"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "makeCoupleArray(from:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Past_Paper_Crawler.makeCoupleArray(from: Swift.Array&lt;Past_Paper_Crawler.WebFile&gt;) -&gt; Swift.Array&lt;Past_Paper_Crawler.PaperAnswerCouple&gt;"
+                  moduleName = "Past Paper Crawler"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/Proxy/ShowManager.swift"
+                  timestampString = "573670145.909021"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "495">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 ((Past_Paper_Crawler.WebFile, Swift.String), (Past_Paper_Crawler.WebFile, Swift.String)) -&gt; Swift.Bool in Past_Paper_Crawler.makeCoupleArray(from: Swift.Array&lt;Past_Paper_Crawler.WebFile&gt;) -&gt; Swift.Array&lt;Past_Paper_Crawler.PaperAnswerCouple&gt;"
+                  moduleName = "Past Paper Crawler"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/Proxy/ShowManager.swift"
+                  timestampString = "573670145.911567"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/Proxy/ShowManager.swift"
+            timestampString = "574058656.347164"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "makeCoupleArray(from:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
+            timestampString = "573716568.847147"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "drag(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/Core/PPWebsites.swift"
+            timestampString = "573716568.847617"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "getPapers0(level:subject:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

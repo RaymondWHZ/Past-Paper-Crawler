@@ -11,14 +11,11 @@
 		B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D5213254AD00488A42 /* MainViewControllers.swift */; };
 		B60320D8213254AF00488A42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60320D7213254AF00488A42 /* Assets.xcassets */; };
 		B60320DB213254AF00488A42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60320D9213254AF00488A42 /* Main.storyboard */; };
-		B60320E7213254AF00488A42 /* Past_Paper_CrawlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320E6213254AF00488A42 /* Past_Paper_CrawlerTests.swift */; };
-		B60320F2213254AF00488A42 /* Past_Paper_CrawlerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */; };
 		B6032100213256F500488A42 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
 		B6052CF72195D9E8003C98AC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Preferences.swift */; };
 		B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
 		B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
 		B622E029216B885E00229054 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
-		B6263C5621744C1000EC5C61 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6263C5521744C1000EC5C61 /* Kanna.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B657B0BD218414BA009099BA /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B8218414BA009099BA /* CSS.swift */; };
 		B657B0BE218414BA009099BA /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B9218414BA009099BA /* Kanna.swift */; };
@@ -27,48 +24,36 @@
 		B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
 		B679096A213C399600E2F233 /* ShowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowManager.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
-		B6790976213D893200E2F233 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790975213D893200E2F233 /* main.swift */; };
-		B679097E213D897000E2F233 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
-		B679097F213D897000E2F233 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
-		B6790980213D897000E2F233 /* ShowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowManager.swift */; };
 		B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
-		B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
 		B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
-		B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
 		B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabelControllers.swift */; };
+		B6B2165F223769D1002C3689 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
+		B6B21660223769D1002C3689 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
+		B6B21661223769D1002C3689 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
+		B6B21662223769D1002C3689 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
+		B6B21663223769D1002C3689 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
+		B6B21664223769D1002C3689 /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
+		B6B21665223769D1002C3689 /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B9218414BA009099BA /* Kanna.swift */; };
+		B6B21666223769D1002C3689 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
+		B6B21667223769D1002C3689 /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
+		B6B21668223769D1002C3689 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
+		B6B21669223769D1002C3689 /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
+		B6B2166A223769D1002C3689 /* ShowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowManager.swift */; };
+		B6B2166B223769D1002C3689 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
+		B6B2166C223769D1002C3689 /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
+		B6B2166D223769D1002C3689 /* MainViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D5213254AD00488A42 /* MainViewControllers.swift */; };
+		B6B2166E223769D1002C3689 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Preferences.swift */; };
+		B6B2166F223769D1002C3689 /* PromptLabelControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabelControllers.swift */; };
+		B6B21670223769D1002C3689 /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B8218414BA009099BA /* CSS.swift */; };
+		B6B21671223769D1002C3689 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D3213254AD00488A42 /* AppDelegate.swift */; };
+		B6B21672223769D1002C3689 /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
+		B6B21673223769D1002C3689 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
+		B6B21676223769D1002C3689 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60320D7213254AF00488A42 /* Assets.xcassets */; };
+		B6B21677223769D1002C3689 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60320D9213254AF00488A42 /* Main.storyboard */; };
 		B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
 		B6F988E521636B6400F07404 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
 		B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B60320E3213254AF00488A42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B60320C8213254AD00488A42 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B60320CF213254AD00488A42;
-			remoteInfo = "Past Paper Crawler";
-		};
-		B60320EE213254AF00488A42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B60320C8213254AD00488A42 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B60320CF213254AD00488A42;
-			remoteInfo = "Past Paper Crawler";
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B6790971213D893100E2F233 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B60320D0213254AD00488A42 /* Past Paper Crawler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Past Paper Crawler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,12 +63,6 @@
 		B60320DA213254AF00488A42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B60320DC213254AF00488A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B60320DD213254AF00488A42 /* Past_Paper_Crawler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Past_Paper_Crawler.entitlements; sourceTree = "<group>"; };
-		B60320E2213254AF00488A42 /* Past Paper CrawlerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Past Paper CrawlerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B60320E6213254AF00488A42 /* Past_Paper_CrawlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Past_Paper_CrawlerTests.swift; sourceTree = "<group>"; };
-		B60320E8213254AF00488A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B60320ED213254AF00488A42 /* Past Paper CrawlerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Past Paper CrawlerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Past_Paper_CrawlerUITests.swift; sourceTree = "<group>"; };
-		B60320F3213254AF00488A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B60320FF213256F500488A42 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		B6052CF62195D9E8003C98AC /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListSettingViewControllers.swift; sourceTree = "<group>"; };
@@ -101,11 +80,11 @@
 		B657B0C4218414EA009099BA /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		B6790969213C399600E2F233 /* ShowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowManager.swift; sourceTree = "<group>"; };
 		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
-		B6790973213D893100E2F233 /* Crawler Core Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Crawler Core Test"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6790975213D893200E2F233 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B6790981213D8B6E00E2F233 /* DownloadProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProxy.swift; sourceTree = "<group>"; };
 		B6790986213E7D9200E2F233 /* PublicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicConstants.swift; sourceTree = "<group>"; };
 		B6830D8921608EA800927B73 /* PromptLabelControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptLabelControllers.swift; path = "Past Paper Crawler/GUI Controllers/PromptLabelControllers.swift"; sourceTree = SOURCE_ROOT; };
+		B6B2167B223769D1002C3689 /* Past Paper Crawler Yoyo Special Edition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Past Paper Crawler Yoyo Special Edition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6B2167C223769D2002C3689 /* Past Paper Crawler copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Past Paper Crawler copy-Info.plist"; path = "/Users/wuhaozhen/Developer/Xcode/Past Paper Crawler/Past Paper Crawler copy-Info.plist"; sourceTree = "<absolute>"; };
 		B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectSystemControllers.swift; sourceTree = "<group>"; };
 		B6F988E421636B6400F07404 /* WebFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFile.swift; sourceTree = "<group>"; };
 		B6F988E62163B79D00F07404 /* FailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedViewController.swift; sourceTree = "<group>"; };
@@ -119,25 +98,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B60320DF213254AF00488A42 /* Frameworks */ = {
+		B6B21674223769D1002C3689 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B60320EA213254AF00488A42 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6790970213D893100E2F233 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B6263C5621744C1000EC5C61 /* Kanna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,11 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				B60320D2213254AD00488A42 /* Past Paper Crawler */,
-				B60320E5213254AF00488A42 /* Past Paper CrawlerTests */,
-				B60320F0213254AF00488A42 /* Past Paper CrawlerUITests */,
-				B6790974213D893200E2F233 /* Crawler Core Test */,
 				B60320D1213254AD00488A42 /* Products */,
 				B6263C5421744C1000EC5C61 /* Frameworks */,
+				B6B2167C223769D2002C3689 /* Past Paper Crawler copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,9 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				B60320D0213254AD00488A42 /* Past Paper Crawler.app */,
-				B60320E2213254AF00488A42 /* Past Paper CrawlerTests.xctest */,
-				B60320ED213254AF00488A42 /* Past Paper CrawlerUITests.xctest */,
-				B6790973213D893100E2F233 /* Crawler Core Test */,
+				B6B2167B223769D1002C3689 /* Past Paper Crawler Yoyo Special Edition.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,24 +144,6 @@
 				B6052CF62195D9E8003C98AC /* Preferences.swift */,
 			);
 			path = "Past Paper Crawler";
-			sourceTree = "<group>";
-		};
-		B60320E5213254AF00488A42 /* Past Paper CrawlerTests */ = {
-			isa = PBXGroup;
-			children = (
-				B60320E6213254AF00488A42 /* Past_Paper_CrawlerTests.swift */,
-				B60320E8213254AF00488A42 /* Info.plist */,
-			);
-			path = "Past Paper CrawlerTests";
-			sourceTree = "<group>";
-		};
-		B60320F0213254AF00488A42 /* Past Paper CrawlerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B60320F1213254AF00488A42 /* Past_Paper_CrawlerUITests.swift */,
-				B60320F3213254AF00488A42 /* Info.plist */,
-			);
-			path = "Past Paper CrawlerUITests";
 			sourceTree = "<group>";
 		};
 		B6263C5421744C1000EC5C61 /* Frameworks */ = {
@@ -232,14 +174,6 @@
 				B657B0BC218414BA009099BA /* libxmlParserOption.swift */,
 			);
 			path = Kanna;
-			sourceTree = "<group>";
-		};
-		B6790974213D893200E2F233 /* Crawler Core Test */ = {
-			isa = PBXGroup;
-			children = (
-				B6790975213D893200E2F233 /* main.swift */,
-			);
-			path = "Crawler Core Test";
 			sourceTree = "<group>";
 		};
 		B6790983213E73E100E2F233 /* Proxy */ = {
@@ -296,58 +230,22 @@
 			productReference = B60320D0213254AD00488A42 /* Past Paper Crawler.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B60320E1213254AF00488A42 /* Past Paper CrawlerTests */ = {
+		B6B2165D223769D1002C3689 /* Past Paper Crawler Yoyo Special Edition */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B60320F9213254AF00488A42 /* Build configuration list for PBXNativeTarget "Past Paper CrawlerTests" */;
+			buildConfigurationList = B6B21678223769D1002C3689 /* Build configuration list for PBXNativeTarget "Past Paper Crawler Yoyo Special Edition" */;
 			buildPhases = (
-				B60320DE213254AF00488A42 /* Sources */,
-				B60320DF213254AF00488A42 /* Frameworks */,
-				B60320E0213254AF00488A42 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B60320E4213254AF00488A42 /* PBXTargetDependency */,
-			);
-			name = "Past Paper CrawlerTests";
-			productName = "Past Paper CrawlerTests";
-			productReference = B60320E2213254AF00488A42 /* Past Paper CrawlerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B60320EC213254AF00488A42 /* Past Paper CrawlerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B60320FC213254AF00488A42 /* Build configuration list for PBXNativeTarget "Past Paper CrawlerUITests" */;
-			buildPhases = (
-				B60320E9213254AF00488A42 /* Sources */,
-				B60320EA213254AF00488A42 /* Frameworks */,
-				B60320EB213254AF00488A42 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B60320EF213254AF00488A42 /* PBXTargetDependency */,
-			);
-			name = "Past Paper CrawlerUITests";
-			productName = "Past Paper CrawlerUITests";
-			productReference = B60320ED213254AF00488A42 /* Past Paper CrawlerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		B6790972213D893100E2F233 /* Crawler Core Test */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B6790977213D893200E2F233 /* Build configuration list for PBXNativeTarget "Crawler Core Test" */;
-			buildPhases = (
-				B679096F213D893100E2F233 /* Sources */,
-				B6790970213D893100E2F233 /* Frameworks */,
-				B6790971213D893100E2F233 /* CopyFiles */,
+				B6B2165E223769D1002C3689 /* Sources */,
+				B6B21674223769D1002C3689 /* Frameworks */,
+				B6B21675223769D1002C3689 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Crawler Core Test";
-			productName = "Crawler Core Test";
-			productReference = B6790973213D893100E2F233 /* Crawler Core Test */;
-			productType = "com.apple.product-type.tool";
+			name = "Past Paper Crawler Yoyo Special Edition";
+			productName = "Past Paper Crawler";
+			productReference = B6B2167B223769D1002C3689 /* Past Paper Crawler Yoyo Special Edition.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -368,19 +266,6 @@
 							};
 						};
 					};
-					B60320E1213254AF00488A42 = {
-						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
-						TestTargetID = B60320CF213254AD00488A42;
-					};
-					B60320EC213254AF00488A42 = {
-						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
-						TestTargetID = B60320CF213254AD00488A42;
-					};
-					B6790972213D893100E2F233 = {
-						CreatedOnToolsVersion = 9.4.1;
-					};
 				};
 			};
 			buildConfigurationList = B60320CB213254AD00488A42 /* Build configuration list for PBXProject "Past Paper Crawler" */;
@@ -397,9 +282,7 @@
 			projectRoot = "";
 			targets = (
 				B60320CF213254AD00488A42 /* Past Paper Crawler */,
-				B60320E1213254AF00488A42 /* Past Paper CrawlerTests */,
-				B60320EC213254AF00488A42 /* Past Paper CrawlerUITests */,
-				B6790972213D893100E2F233 /* Crawler Core Test */,
+				B6B2165D223769D1002C3689 /* Past Paper Crawler Yoyo Special Edition */,
 			);
 		};
 /* End PBXProject section */
@@ -414,17 +297,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B60320E0213254AF00488A42 /* Resources */ = {
+		B6B21675223769D1002C3689 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B60320EB213254AF00488A42 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				B6B21676223769D1002C3689 /* Assets.xcassets in Resources */,
+				B6B21677223769D1002C3689 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,49 +337,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B60320DE213254AF00488A42 /* Sources */ = {
+		B6B2165E223769D1002C3689 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B60320E7213254AF00488A42 /* Past_Paper_CrawlerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B60320E9213254AF00488A42 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B60320F2213254AF00488A42 /* Past_Paper_CrawlerUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B679096F213D893100E2F233 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B6790988213E7DB000E2F233 /* PublicConstants.swift in Sources */,
-				B6790985213E7D6300E2F233 /* DownloadProxy.swift in Sources */,
-				B679097E213D897000E2F233 /* Core.swift in Sources */,
-				B679097F213D897000E2F233 /* PPWebsites.swift in Sources */,
-				B6790980213D897000E2F233 /* ShowManager.swift in Sources */,
-				B6790976213D893200E2F233 /* main.swift in Sources */,
+				B6B2165F223769D1002C3689 /* PublicConstants.swift in Sources */,
+				B6B21660223769D1002C3689 /* SubjectUtil.swift in Sources */,
+				B6B21661223769D1002C3689 /* Core.swift in Sources */,
+				B6B21662223769D1002C3689 /* PapersViewController.swift in Sources */,
+				B6B21663223769D1002C3689 /* libxmlParserOption.swift in Sources */,
+				B6B21664223769D1002C3689 /* SubjectSystemControllers.swift in Sources */,
+				B6B21665223769D1002C3689 /* Kanna.swift in Sources */,
+				B6B21666223769D1002C3689 /* DownloadProxy.swift in Sources */,
+				B6B21667223769D1002C3689 /* libxmlHTMLDocument.swift in Sources */,
+				B6B21668223769D1002C3689 /* PPWebsites.swift in Sources */,
+				B6B21669223769D1002C3689 /* QuickListSettingViewControllers.swift in Sources */,
+				B6B2166A223769D1002C3689 /* ShowManager.swift in Sources */,
+				B6B2166B223769D1002C3689 /* FailedViewController.swift in Sources */,
+				B6B2166C223769D1002C3689 /* GeneralSettingViewController.swift in Sources */,
+				B6B2166D223769D1002C3689 /* MainViewControllers.swift in Sources */,
+				B6B2166E223769D1002C3689 /* Preferences.swift in Sources */,
+				B6B2166F223769D1002C3689 /* PromptLabelControllers.swift in Sources */,
+				B6B21670223769D1002C3689 /* CSS.swift in Sources */,
+				B6B21671223769D1002C3689 /* AppDelegate.swift in Sources */,
+				B6B21672223769D1002C3689 /* libxmlHTMLNode.swift in Sources */,
+				B6B21673223769D1002C3689 /* WebFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B60320E4213254AF00488A42 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B60320CF213254AD00488A42 /* Past Paper Crawler */;
-			targetProxy = B60320E3213254AF00488A42 /* PBXContainerItemProxy */;
-		};
-		B60320EF213254AF00488A42 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B60320CF213254AD00488A42 /* Past Paper Crawler */;
-			targetProxy = B60320EE213254AF00488A42 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B60320D9213254AF00488A42 /* Main.storyboard */ = {
@@ -682,107 +546,55 @@
 			};
 			name = Release;
 		};
-		B60320FA213254AF00488A42 /* Debug */ = {
+		B6B21679223769D1002C3689 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Pink";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
-				INFOPLIST_FILE = "Past Paper CrawlerTests/Info.plist";
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = "Past Paper Crawler copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerTests";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler-Yoyo-Special-Edition";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
 				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Past Paper Crawler.app/Contents/MacOS/Past Paper Crawler";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				SYSTEM_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
-		B60320FB213254AF00488A42 /* Release */ = {
+		B6B2167A223769D1002C3689 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Pink";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
-				INFOPLIST_FILE = "Past Paper CrawlerTests/Info.plist";
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = "Past Paper Crawler copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerTests";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-Crawler-Yoyo-Special-Edition";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
 				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Past Paper Crawler.app/Contents/MacOS/Past Paper Crawler";
-			};
-			name = Release;
-		};
-		B60320FD213254AF00488A42 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 9MVLP78N36;
-				INFOPLIST_FILE = "Past Paper CrawlerUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TEST_TARGET_NAME = "Past Paper Crawler";
-			};
-			name = Debug;
-		};
-		B60320FE213254AF00488A42 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 9MVLP78N36;
-				INFOPLIST_FILE = "Past Paper CrawlerUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Raywork.Past-Paper-CrawlerUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TEST_TARGET_NAME = "Past Paper Crawler";
-			};
-			name = Release;
-		};
-		B6790978213D893200E2F233 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9MVLP78N36;
-				HEADER_SEARCH_PATHS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		B6790979213D893200E2F233 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9MVLP78N36;
-				HEADER_SEARCH_PATHS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				SYSTEM_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -807,29 +619,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B60320F9213254AF00488A42 /* Build configuration list for PBXNativeTarget "Past Paper CrawlerTests" */ = {
+		B6B21678223769D1002C3689 /* Build configuration list for PBXNativeTarget "Past Paper Crawler Yoyo Special Edition" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B60320FA213254AF00488A42 /* Debug */,
-				B60320FB213254AF00488A42 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B60320FC213254AF00488A42 /* Build configuration list for PBXNativeTarget "Past Paper CrawlerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B60320FD213254AF00488A42 /* Debug */,
-				B60320FE213254AF00488A42 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B6790977213D893200E2F233 /* Build configuration list for PBXNativeTarget "Crawler Core Test" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B6790978213D893200E2F233 /* Debug */,
-				B6790979213D893200E2F233 /* Release */,
+				B6B21679223769D1002C3689 /* Debug */,
+				B6B2167A223769D1002C3689 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

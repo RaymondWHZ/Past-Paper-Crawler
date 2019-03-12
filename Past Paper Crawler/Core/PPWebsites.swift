@@ -8,10 +8,10 @@
 
 import Cocoa
 
-var arrayLoadQueues: [String: DispatchQueue] = [:]
-let arrayLoadQueuesQueue = DispatchQueue(label: "Array Load Queues Protect")
-let arrayCache = NSCache<NSString, NSArray>()
-func getArray<T>(identifier: String, loadFunc: () -> [T]?) -> [T]? {
+private var arrayLoadQueues: [String: DispatchQueue] = [:]
+private let arrayLoadQueuesQueue = DispatchQueue(label: "Array Load Queues Protect")
+private let arrayCache = NSCache<NSString, NSArray>()
+private func getArray<T>(identifier: String, loadFunc: () -> [T]?) -> [T]? {
     var ret: [T]?
     var loadQueue: DispatchQueue?
     arrayLoadQueuesQueue.sync {
@@ -86,12 +86,16 @@ class PapaCambridge: PastPaperWebsite {
     }
     
     override fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? {
-        let seasonsUrl = root + levelSites[level]! + bond(subject) + "/"
+        guard let levelSite = levelSites[level] else {
+            return nil
+        }
+        
+        let seasonsUrl = root + levelSite + bond(subject) + "/"
         guard let seasons = getContentList(url: seasonsUrl, XPath: "//*[@id=\"directory-listing\"]/li", name: "data-name", criteria: { $0 != ".." }) else {
             return nil
         }
         
-        let fileSeasonsUrl = fileRoot + levelSites[level]! + bond(subject, by: [" ": "%20"]) + "/"
+        let fileSeasonsUrl = fileRoot + levelSite + bond(subject, by: [" ": "%20"]) + "/"
         
         var allPapers: [WebFile] = []
         let arrayProtect = DispatchQueue(label: "Array Protection")
@@ -107,13 +111,18 @@ class PapaCambridge: PastPaperWebsite {
                 }
                 
                 let papersUrl = seasonsUrl + bond(season) + "/"
-                guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"directory-listing\"]/li", name: "data-name", criteria: { name in name.contains(".pdf") }) else {
+                guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"directory-listing\"]/li", name: "data-name", criteria: { $0.hasSuffix(".pdf") }) else {
                     exception = true
                     return
                 }
                 
                 let filePapersUrl = fileSeasonsUrl + bond(season, by: [" ": "%20"]) + "/"
-                let newFiles = papers.map({ WebFile(url: filePapersUrl + $0, classification: subject)! })
+                var newFiles: [WebFile] = []
+                papers.forEach({ name in
+                    if let webFile = WebFile(url: filePapersUrl + name, classification: subject) {
+                        newFiles.append(webFile)
+                    }
+                })
                 arrayProtect.sync {
                     allPapers.append(contentsOf: newFiles)
                 }
@@ -152,7 +161,7 @@ class GCEGuide: PastPaperWebsite {
     
     override fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? {
         let papersUrl = root + levelSites[level]! + bond(subject, by: [" ": "%20"]) + "/"
-        guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"ggTable\"]/tbody/tr/td/a", name: "href", criteria: { $0.hasSuffix("pdf") }) else {
+        guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"ggTable\"]/tbody/tr/td/a", name: "href", criteria: { $0.hasSuffix(".pdf") }) else {
             return nil
         }
         return papers.map({ WebFile(url: papersUrl + bond($0, by: [" ": "%20"]), classification: subject)! })
@@ -230,17 +239,20 @@ class PastPaperCo: PastPaperWebsite {
                         }
                         
                         let papersUrl = self.root + season
-                        guard let papers = getContentList(url: papersUrl, XPath: "/html/body/div[5]/div[3]/div/div/table/tbody/tr/td/a", name: "href") else {
+                        guard let papers = getContentList(url: papersUrl, XPath: "/html/body/div[5]/div[3]/div/div/table/tbody/tr/td/a", name: "href", criteria: { $0.hasSuffix(".pdf") }) else {
                             exception = true
                             return
                         }
                         
-                        let newFiles = papers.map({ (s) -> WebFile in
+                        var newFiles: [WebFile] = []
+                        papers.forEach({ s in
                             let equalIndex = s.firstIndex(of: "=")!
                             let startIndex = s.index(equalIndex, offsetBy: 1)
                             let urlPart = String(s[startIndex...])
                             let bonded = bond(urlPart)
-                            return WebFile(url: self.root + bonded, classification: subject)!
+                            if let webFile = WebFile(url: self.root + bonded, classification: subject) {
+                                newFiles.append(webFile)
+                            }
                         })
                         arrayProtect.sync {
                             allPapers.append(contentsOf: newFiles)
