@@ -13,8 +13,7 @@ class QuickListViewController: NSViewController {
     @IBOutlet weak var levelPopButton: NSPopUpButton!
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
     @IBOutlet weak var subjectTable: NSTableView!
-    @IBOutlet var promptLabel: NSTextField!
-    var prompt: PromptLabelController?
+    @IBOutlet var promptLabel: PromptLabel!
     
     var currentSubjects: [String] = []  // subjects that display in the table
     var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
@@ -39,8 +38,6 @@ class QuickListViewController: NSViewController {
         subjectTable.dataSource = self
         subjectTable.delegate = self
         
-        prompt = PromptLabelController(promptLabel)
-        
         PFObserveQuickListChange(self, selector: #selector(updateData))
     }
     
@@ -49,7 +46,7 @@ class QuickListViewController: NSViewController {
     }
     
     @IBAction func levelSelected(_ sender: Any) {
-        prompt?.setToDefault()
+        promptLabel.setToDefault()
         
         // clear all lists to avoid crash
         currentSubjects.removeAll()
@@ -78,7 +75,7 @@ class QuickListViewController: NSViewController {
             // access website to get all subjects
             guard let subjects = PFUsingWebsite.getSubjects(level: self.lazySelectedLevel) else {
                 DispatchQueue.main.async {
-                    self.prompt?.showError("Failed to get subjects!")
+                    self.promptLabel.showError("Failed to get subjects!")
                 }
                 
                 return
@@ -255,12 +252,12 @@ extension SelectedViewController: NSTableViewDataSource {
         selected[row] = state
         modifyOn {  // performance measure: subthread update
             PFModifyQuickList { quickList in
+                let position = self.selected[0..<row].reduce(into: 0, { $0 += $1 ? 1 : 0 })
                 if state {
-                    let position = self.selected[0..<row].reduce(into: 0, { $0 += $1 ? 1 : 0 })
                     quickList.insert(self.subjects[row], at: position)
                 }
                 else {
-                    quickList.remove(at: row)
+                    quickList.remove(at: position)
                 }
             }
         }

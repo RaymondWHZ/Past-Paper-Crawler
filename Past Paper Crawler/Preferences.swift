@@ -46,11 +46,6 @@ var PFDefaultShowAll: Bool {
 
 
 let PFUseDefualtPathToken = "Use Default Path"
-private let defaultPathProxy = DefaultPathProxy()
-private let askUserProxy = AskUserProxy()
-var PFDownloadProxy: DownloadProxy {
-    return (PFUseDefaultPath) ? defaultPathProxy : askUserProxy
-}
 var PFUseDefaultPath: Bool {
     get {
         return userDefaults.bool(forKey: PFUseDefualtPathToken)
@@ -138,4 +133,15 @@ var PFCreateFolder: Bool {
     set {
         userDefaults.set(newValue, forKey: PFCreateFolderToken)
     }
+}
+
+enum SettingTab: Int {
+    case General = 0
+    case QuickList = 1
+}
+func showSettingWindow(tab: SettingTab = .General) {
+    let preferenceWindowController: NSWindowController = getController("Settings")!
+    let preferenceViewController = preferenceWindowController.contentViewController as! NSTabViewController
+    preferenceViewController.selectedTabViewItemIndex = tab.rawValue
+    preferenceWindowController.showWindow(nil)
 }

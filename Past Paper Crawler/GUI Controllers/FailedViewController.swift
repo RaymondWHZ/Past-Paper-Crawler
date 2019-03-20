@@ -79,7 +79,7 @@ extension FailedViewController: NSTableViewDataSource {
 extension FailedViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
+        if row < failedList.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
             newCell.title = failedList[row].name  // get the title from list
             return newCell
         }

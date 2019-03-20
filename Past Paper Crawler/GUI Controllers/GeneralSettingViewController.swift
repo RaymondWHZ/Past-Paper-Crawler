@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Automator
 
 class GeneralSetViewController: NSViewController {
     
@@ -17,7 +18,7 @@ class GeneralSetViewController: NSViewController {
     
     @IBOutlet var askEverytimeOption: NSButton!
     @IBOutlet var useDefaultOption: NSButton!
-    @IBOutlet var pathTextField: NSTextField!
+    @IBOutlet var pathControl: NSPathControl!
     @IBOutlet var browseButton: NSButton!
     @IBOutlet var createFolderCheckBox: NSButton!
     @IBOutlet var openInFinderCheckBox: NSButton!
@@ -34,7 +35,7 @@ class GeneralSetViewController: NSViewController {
         onOption!.state = .on
         savePolicySelected(onOption!)
         
-        pathTextField.stringValue = PFDefaultPath
+        pathControl.url = URL(fileURLWithPath: PFDefaultPath)
         
         createFolderCheckBox.state = (PFCreateFolder) ? .on : .off
         
@@ -122,21 +123,25 @@ class GeneralSetViewController: NSViewController {
     }
     
     @IBAction func savePolicySelected(_ sender: Any) {
-        PFUseDefaultPath = sender as? NSButton == useDefaultOption
-        ((PFUseDefaultPath) ? askEverytimeOption : useDefaultOption)!.state = .off
-        pathTextField.isEditable = PFUseDefaultPath
-        browseButton.isEnabled = PFUseDefaultPath
-    }
-    
-    @IBAction func pathChanged(_ sender: Any) {
-        PFDefaultPath = pathTextField.stringValue
+        if sender as? NSButton == useDefaultOption {
+            PFUseDefaultPath = true
+            askEverytimeOption.state = .off
+            pathControl.isEnabled = true
+            browseButton.isEnabled = true
+        }
+        else {
+            PFUseDefaultPath = false
+            useDefaultOption.state = .off
+            pathControl.isEnabled = false
+            browseButton.isEnabled = false
+        }
     }
     
     @IBAction func browseClicked(_ sender: Any) {
         directoryOpenPanel.begin { result in
-            if result == .OK {
-                PFDefaultPath = directoryOpenPanel.url!.path
-                self.pathTextField.stringValue = PFDefaultPath
+            if result == .OK, let url = directoryOpenPanel.url {
+                self.pathControl.url = url
+                PFDefaultPath = url.path
             }
         }
     }

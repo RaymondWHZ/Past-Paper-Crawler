@@ -12,7 +12,7 @@ class PapersViewController: NSViewController {
     
     // ---standard controls---
     
-    @IBOutlet weak var subjectPopButton: NSPopUpButton!
+    @IBOutlet var subjectPopButton: QuickListPopUpButton!
     @IBOutlet weak var papersProgress: NSProgressIndicator!
     
     @IBOutlet weak var yearPopButton: NSPopUpButton!
@@ -23,13 +23,11 @@ class PapersViewController: NSViewController {
     @IBOutlet weak var papersTable: NSTableView!
     @IBOutlet weak var selectAllButton: NSButton!
     
-    @IBOutlet var viewPromptLabel: NSTextField!
-    var viewPrompt: PromptLabelController?
+    @IBOutlet var viewPromptLabel: PromptLabel!
     @IBOutlet weak var showAllCheckbox: NSButton!
     @IBOutlet weak var typePopButton: NSPopUpButton!
     
-    @IBOutlet var downloadCountLabel: NSTextField!
-    var countPrompt: PromptLabelController?
+    @IBOutlet var downloadCountLabel: PromptLabel!
     @IBOutlet weak var downloadButton: NSButton!
     @IBOutlet weak var downloadProgress: NSProgressIndicator!
     
@@ -37,22 +35,20 @@ class PapersViewController: NSViewController {
     
     // ---custom variables---
     
-    var showManager = ShowManager()
-    
-    var subjectSystem: SubjectSystem?
+    var showManager = ADShowManager()
     
     var selected: [Bool] = [] {  // indicates whether subject with corresponding index is selected
         didSet {
             let selectedCount = selected.reduce(into: 0) { if $1 { $0 += 1 } }
             if selectedCount == 0 {
                 selectAllButton.state = .off
-                countPrompt?.setToDefault()
+                downloadCountLabel.setToDefault()
                 downloadButton.isEnabled = false
             }
             else {
                 selectAllButton.state = (selectedCount == selected.count) ? .on : .off
                 let fileCount = (showAllCheckbox.state == .on) ? selectedCount : selectedCount * 2
-                countPrompt?.showPrompt("Selected \(fileCount) files")
+                downloadCountLabel.showPrompt("Selected \(fileCount) files")
                 downloadButton.isEnabled = true
             }
         }
@@ -78,22 +74,14 @@ class PapersViewController: NSViewController {
             typePopButton
         ]
         
-        // initiate prompt
-        viewPrompt = PromptLabelController(viewPromptLabel)
-        
         // set up table manipulators
         papersTable.dataSource = self
         papersTable.delegate = self
-        
-        // set up subject system
-        subjectSystem = SubjectSystem(parent: self, selector: subjectPopButton, loadList)
         
         if PFDefaultShowAll {
             showAllCheckbox.state = .on
             changedShowOption(showAllCheckbox)
         }
-        
-        countPrompt = PromptLabelController(downloadCountLabel)
     }
     
     // ---custom functions---
@@ -135,7 +123,7 @@ class PapersViewController: NSViewController {
         let isOn = showAllCheckbox.state == .on
         typePopButton.isHidden = !isOn
         
-        viewPromptLabel.stringValue = (isOn) ? "All files are shown." : "Papers and answers are put together omitting any other file or paper before 2005."
+        viewPromptLabel.defaultText = (isOn) ? "All files are shown." : "Papers and answers are put together omitting any other file or paper before 2005."
         
         showManager.showAll = isOn
         selectAllButton.state = .off
@@ -143,8 +131,45 @@ class PapersViewController: NSViewController {
     }
     
     @IBAction func subjectSelected(_ sender: Any) {
-        // redirect action
-        subjectSystem!.selectorClicked()
+        guard let subject = subjectPopButton.selectedSubject else {
+            return
+        }
+        
+        viewPromptLabel.setToDefault()
+        
+        // lock up buttons
+        controlEnabled = false
+        downloadButton.isEnabled = false
+        papersProgress.startAnimation(nil)
+        
+        // select item
+        subjectPopButton.selectItem(at: 0)
+        subjectPopButton.item(at: 0)!.title = subject.name + " "
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            defer {
+                // unlock buttons
+                DispatchQueue.main.async {
+                    self.controlEnabled = true
+                    self.papersProgress.stopAnimation(nil)
+                }
+            }
+            
+            // access website to get all papers
+            if !self.showManager.loadFrom(subject: subject) {
+                DispatchQueue.main.async {
+                    self.viewPromptLabel.showError("Failed to load subject!")
+                }
+                
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.selectAllButton.state = .off
+                self.papersTable.reloadData()
+                self.resetSurrounding()
+            }
+        }
     }
     
     @IBAction func criteriaSelected(_ sender: Any) {
@@ -159,45 +184,6 @@ class PapersViewController: NSViewController {
             showManager.setCriterion(name: name, value: value)
         }
         papersTable.reloadData()
-    }
-    
-    func loadList(level: String, subject: String) {
-        // set back prompt line
-        viewPrompt?.setToDefault()
-        
-        // lock up buttons
-        controlEnabled = false
-        downloadButton.isEnabled = false
-        papersProgress.startAnimation(nil)
-        
-        // select item
-        subjectPopButton.selectItem(at: 0)
-        subjectPopButton.item(at: 0)!.title = subject + " "
-        
-        DispatchQueue.global(qos: .userInteractive).async {
-            defer {
-                // unlock buttons
-                DispatchQueue.main.async {
-                    self.controlEnabled = true
-                    self.papersProgress.stopAnimation(nil)
-                }
-            }
-            
-            // access website to get all papers
-            if !self.showManager.loadFrom(level: level, subject: subject) {
-                DispatchQueue.main.async {
-                    self.viewPrompt?.showError("Failed to load subject!")
-                }
-                
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.selectAllButton.state = .off
-                self.papersTable.reloadData()
-                self.resetSurrounding()
-            }
-        }
     }
     
     func resetSurrounding() {  // only called when new subject selected
@@ -247,16 +233,15 @@ class PapersViewController: NSViewController {
             }
         }
         
-        let papers = showManager.getSelectedPapers(at: selectedIndices)
-        download(files: papers)
+        download(papers: showManager.getSelectedPapers(at: selectedIndices))
     }
     
-    func download(files: [WebFile]) {
+    func download(papers: [WebFile], to path: String? = nil) {
         // start spinning
         downloadProgress?.startAnimation(nil)
         
-        PFDownloadProxy.downloadPapers(specifiedPapers: files, exitAction: {
-            failed in
+        ADDownload(papers: papers, to: path) {
+            path, failed in
             DispatchQueue.main.async {
                 // if all complished (might have another download mission), stop spinning
                 if webFileDownloadStack == 0 {
@@ -265,10 +250,14 @@ class PapersViewController: NSViewController {
                 
                 // if any failed, show the failed view
                 if !failed.isEmpty {
-                    self.presentAsSheet(getFailedView(failedList: files, retryAction: self.download))
+                    self.presentAsSheet(
+                        getFailedView(failedList: failed, retryAction: {
+                            self.download(papers: $0, to: path)
+                        })
+                    )
                 }
             }
-        })
+        }
     }
 }
 
@@ -295,11 +284,9 @@ extension PapersViewController: NSTableViewDataSource {
 
 extension PapersViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
-            if row < currentDisplay.count {
-                newCell.title = currentDisplay[row]  // get the title from list
-                return newCell
-            }
+        if row < currentDisplay.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
+            newCell.title = currentDisplay[row]  // get the title from list
+            return newCell
         }
         return nil
     }

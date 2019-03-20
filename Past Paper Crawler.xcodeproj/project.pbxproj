@@ -22,35 +22,38 @@
 		B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
 		B657B0C0218414BA009099BA /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
 		B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
-		B679096A213C399600E2F233 /* ShowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowManager.swift */; };
+		B66E543D223AA93600875533 /* Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B2168122380268002C3689 /* Substring.swift */; };
+		B66E543E223AA93600875533 /* ShowAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowAdaptor.swift */; };
+		B66E543F223AA93600875533 /* DownloadAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadAdaptor.swift */; };
+		B66E5442223AA93600875533 /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B8218414BA009099BA /* CSS.swift */; };
+		B66E5443223AA93600875533 /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B9218414BA009099BA /* Kanna.swift */; };
+		B66E5444223AA93600875533 /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
+		B66E5445223AA93600875533 /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
+		B66E5446223AA93600875533 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
+		B66E5447223AA93600875533 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
+		B66E5448223AA93600875533 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
+		B66E5449223AA93600875533 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
+		B66E544A223AA93600875533 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
+		B66E544B223AA93600875533 /* PromptLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabel.swift */; };
+		B66E544C223AA93600875533 /* MainViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D5213254AD00488A42 /* MainViewControllers.swift */; };
+		B66E544D223AA93600875533 /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
+		B66E544E223AA93600875533 /* QuickListPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* QuickListPopUpButton.swift */; };
+		B66E544F223AA93600875533 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
+		B66E5450223AA93600875533 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
+		B66E5451223AA93600875533 /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
+		B66E5452223AA93600875533 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D3213254AD00488A42 /* AppDelegate.swift */; };
+		B66E5453223AA93600875533 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
+		B66E5454223AA93600875533 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Preferences.swift */; };
+		B66E5455223AA94D00875533 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6B2167E2237EEAC002C3689 /* Info.plist */; };
+		B66E5456223AA94D00875533 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60320D7213254AF00488A42 /* Assets.xcassets */; };
+		B66E5457223AA94D00875533 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60320D9213254AF00488A42 /* Main.storyboard */; };
+		B679096A213C399600E2F233 /* ShowAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowAdaptor.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
-		B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
+		B6790982213D8B6E00E2F233 /* DownloadAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadAdaptor.swift */; };
 		B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
-		B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabelControllers.swift */; };
-		B6B2165F223769D1002C3689 /* PublicConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790986213E7D9200E2F233 /* PublicConstants.swift */; };
-		B6B21660223769D1002C3689 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
-		B6B21661223769D1002C3689 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
-		B6B21662223769D1002C3689 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
-		B6B21663223769D1002C3689 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
-		B6B21664223769D1002C3689 /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
-		B6B21665223769D1002C3689 /* Kanna.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B9218414BA009099BA /* Kanna.swift */; };
-		B6B21666223769D1002C3689 /* DownloadProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadProxy.swift */; };
-		B6B21667223769D1002C3689 /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
-		B6B21668223769D1002C3689 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
-		B6B21669223769D1002C3689 /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
-		B6B2166A223769D1002C3689 /* ShowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowManager.swift */; };
-		B6B2166B223769D1002C3689 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
-		B6B2166C223769D1002C3689 /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
-		B6B2166D223769D1002C3689 /* MainViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D5213254AD00488A42 /* MainViewControllers.swift */; };
-		B6B2166E223769D1002C3689 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Preferences.swift */; };
-		B6B2166F223769D1002C3689 /* PromptLabelControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabelControllers.swift */; };
-		B6B21670223769D1002C3689 /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0B8218414BA009099BA /* CSS.swift */; };
-		B6B21671223769D1002C3689 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320D3213254AD00488A42 /* AppDelegate.swift */; };
-		B6B21672223769D1002C3689 /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
-		B6B21673223769D1002C3689 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
-		B6B21676223769D1002C3689 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60320D7213254AF00488A42 /* Assets.xcassets */; };
-		B6B21677223769D1002C3689 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60320D9213254AF00488A42 /* Main.storyboard */; };
-		B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */; };
+		B6830D8A21608EA800927B73 /* PromptLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6830D8921608EA800927B73 /* PromptLabel.swift */; };
+		B6B2168222380268002C3689 /* Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B2168122380268002C3689 /* Substring.swift */; };
+		B6F859BD2136CD8700D7002C /* QuickListPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F859BC2136CD8700D7002C /* QuickListPopUpButton.swift */; };
 		B6F988E521636B6400F07404 /* WebFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E421636B6400F07404 /* WebFile.swift */; };
 		B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F988E62163B79D00F07404 /* FailedViewController.swift */; };
 /* End PBXBuildFile section */
@@ -78,14 +81,16 @@
 		B657B0BC218414BA009099BA /* libxmlParserOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = libxmlParserOption.swift; sourceTree = "<group>"; };
 		B657B0C3218414EA009099BA /* libxml2-kanna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libxml2-kanna.h"; sourceTree = "<group>"; };
 		B657B0C4218414EA009099BA /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		B6790969213C399600E2F233 /* ShowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowManager.swift; sourceTree = "<group>"; };
+		B66E5438223A96BE00875533 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
+		B6790969213C399600E2F233 /* ShowAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAdaptor.swift; sourceTree = "<group>"; };
 		B679096B213C3A9B00E2F233 /* PapersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapersViewController.swift; sourceTree = "<group>"; };
-		B6790981213D8B6E00E2F233 /* DownloadProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProxy.swift; sourceTree = "<group>"; };
+		B6790981213D8B6E00E2F233 /* DownloadAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAdaptor.swift; sourceTree = "<group>"; };
 		B6790986213E7D9200E2F233 /* PublicConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicConstants.swift; sourceTree = "<group>"; };
-		B6830D8921608EA800927B73 /* PromptLabelControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptLabelControllers.swift; path = "Past Paper Crawler/GUI Controllers/PromptLabelControllers.swift"; sourceTree = SOURCE_ROOT; };
+		B6830D8921608EA800927B73 /* PromptLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptLabel.swift; path = "Past Paper Crawler/GUI Controllers/PromptLabel.swift"; sourceTree = SOURCE_ROOT; };
 		B6B2167B223769D1002C3689 /* Past Paper Crawler Yoyo Special Edition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Past Paper Crawler Yoyo Special Edition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6B2167C223769D2002C3689 /* Past Paper Crawler copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Past Paper Crawler copy-Info.plist"; path = "/Users/wuhaozhen/Developer/Xcode/Past Paper Crawler/Past Paper Crawler copy-Info.plist"; sourceTree = "<absolute>"; };
-		B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectSystemControllers.swift; sourceTree = "<group>"; };
+		B6B2167E2237EEAC002C3689 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6B2168122380268002C3689 /* Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Substring.swift; sourceTree = "<group>"; };
+		B6F859BC2136CD8700D7002C /* QuickListPopUpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListPopUpButton.swift; sourceTree = "<group>"; };
 		B6F988E421636B6400F07404 /* WebFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFile.swift; sourceTree = "<group>"; };
 		B6F988E62163B79D00F07404 /* FailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,10 +116,10 @@
 		B60320C7213254AD00488A42 = {
 			isa = PBXGroup;
 			children = (
+				B6B2167D2237EDD9002C3689 /* Past Paper Crawler Yoyo Special Edition */,
 				B60320D2213254AD00488A42 /* Past Paper Crawler */,
 				B60320D1213254AD00488A42 /* Products */,
 				B6263C5421744C1000EC5C61 /* Frameworks */,
-				B6B2167C223769D2002C3689 /* Past Paper Crawler copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,7 +135,8 @@
 		B60320D2213254AD00488A42 /* Past Paper Crawler */ = {
 			isa = PBXGroup;
 			children = (
-				B6790983213E73E100E2F233 /* Proxy */,
+				B6B2168022380258002C3689 /* Util */,
+				B6790983213E73E100E2F233 /* Adaptors */,
 				B6790962213B9D1A00E2F233 /* Kanna */,
 				B6F859BF2136CDCB00D7002C /* Core */,
 				B6F859BE2136CDAC00D7002C /* GUI Controllers */,
@@ -149,6 +155,7 @@
 		B6263C5421744C1000EC5C61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B66E5438223A96BE00875533 /* Automator.framework */,
 				B6263C5521744C1000EC5C61 /* Kanna.framework */,
 			);
 			name = Frameworks;
@@ -176,22 +183,38 @@
 			path = Kanna;
 			sourceTree = "<group>";
 		};
-		B6790983213E73E100E2F233 /* Proxy */ = {
+		B6790983213E73E100E2F233 /* Adaptors */ = {
 			isa = PBXGroup;
 			children = (
-				B6790969213C399600E2F233 /* ShowManager.swift */,
-				B6790981213D8B6E00E2F233 /* DownloadProxy.swift */,
+				B6790969213C399600E2F233 /* ShowAdaptor.swift */,
+				B6790981213D8B6E00E2F233 /* DownloadAdaptor.swift */,
 			);
-			path = Proxy;
+			path = Adaptors;
+			sourceTree = "<group>";
+		};
+		B6B2167D2237EDD9002C3689 /* Past Paper Crawler Yoyo Special Edition */ = {
+			isa = PBXGroup;
+			children = (
+				B6B2167E2237EEAC002C3689 /* Info.plist */,
+			);
+			path = "Past Paper Crawler Yoyo Special Edition";
+			sourceTree = "<group>";
+		};
+		B6B2168022380258002C3689 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B6B2168122380268002C3689 /* Substring.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		B6F859BE2136CDAC00D7002C /* GUI Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B6830D8921608EA800927B73 /* PromptLabelControllers.swift */,
+				B6830D8921608EA800927B73 /* PromptLabel.swift */,
 				B60320D5213254AD00488A42 /* MainViewControllers.swift */,
 				B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */,
-				B6F859BC2136CD8700D7002C /* SubjectSystemControllers.swift */,
+				B6F859BC2136CD8700D7002C /* QuickListPopUpButton.swift */,
 				B679096B213C3A9B00E2F233 /* PapersViewController.swift */,
 				B6F988E62163B79D00F07404 /* FailedViewController.swift */,
 				B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */,
@@ -301,8 +324,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6B21676223769D1002C3689 /* Assets.xcassets in Resources */,
-				B6B21677223769D1002C3689 /* Main.storyboard in Resources */,
+				B66E5455223AA94D00875533 /* Info.plist in Resources */,
+				B66E5456223AA94D00875533 /* Assets.xcassets in Resources */,
+				B66E5457223AA94D00875533 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,18 +342,19 @@
 				B6032100213256F500488A42 /* Core.swift in Sources */,
 				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
 				B657B0C1218414BA009099BA /* libxmlParserOption.swift in Sources */,
-				B6F859BD2136CD8700D7002C /* SubjectSystemControllers.swift in Sources */,
+				B6F859BD2136CD8700D7002C /* QuickListPopUpButton.swift in Sources */,
 				B657B0BE218414BA009099BA /* Kanna.swift in Sources */,
-				B6790982213D8B6E00E2F233 /* DownloadProxy.swift in Sources */,
+				B6B2168222380268002C3689 /* Substring.swift in Sources */,
+				B6790982213D8B6E00E2F233 /* DownloadAdaptor.swift in Sources */,
 				B657B0BF218414BA009099BA /* libxmlHTMLDocument.swift in Sources */,
 				B63BCC6B2134C65800F56334 /* PPWebsites.swift in Sources */,
 				B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */,
-				B679096A213C399600E2F233 /* ShowManager.swift in Sources */,
+				B679096A213C399600E2F233 /* ShowAdaptor.swift in Sources */,
 				B6F988E72163B79D00F07404 /* FailedViewController.swift in Sources */,
 				B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */,
 				B60320D6213254AD00488A42 /* MainViewControllers.swift in Sources */,
 				B6052CF72195D9E8003C98AC /* Preferences.swift in Sources */,
-				B6830D8A21608EA800927B73 /* PromptLabelControllers.swift in Sources */,
+				B6830D8A21608EA800927B73 /* PromptLabel.swift in Sources */,
 				B657B0BD218414BA009099BA /* CSS.swift in Sources */,
 				B60320D4213254AD00488A42 /* AppDelegate.swift in Sources */,
 				B657B0C0218414BA009099BA /* libxmlHTMLNode.swift in Sources */,
@@ -341,27 +366,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6B2165F223769D1002C3689 /* PublicConstants.swift in Sources */,
-				B6B21660223769D1002C3689 /* SubjectUtil.swift in Sources */,
-				B6B21661223769D1002C3689 /* Core.swift in Sources */,
-				B6B21662223769D1002C3689 /* PapersViewController.swift in Sources */,
-				B6B21663223769D1002C3689 /* libxmlParserOption.swift in Sources */,
-				B6B21664223769D1002C3689 /* SubjectSystemControllers.swift in Sources */,
-				B6B21665223769D1002C3689 /* Kanna.swift in Sources */,
-				B6B21666223769D1002C3689 /* DownloadProxy.swift in Sources */,
-				B6B21667223769D1002C3689 /* libxmlHTMLDocument.swift in Sources */,
-				B6B21668223769D1002C3689 /* PPWebsites.swift in Sources */,
-				B6B21669223769D1002C3689 /* QuickListSettingViewControllers.swift in Sources */,
-				B6B2166A223769D1002C3689 /* ShowManager.swift in Sources */,
-				B6B2166B223769D1002C3689 /* FailedViewController.swift in Sources */,
-				B6B2166C223769D1002C3689 /* GeneralSettingViewController.swift in Sources */,
-				B6B2166D223769D1002C3689 /* MainViewControllers.swift in Sources */,
-				B6B2166E223769D1002C3689 /* Preferences.swift in Sources */,
-				B6B2166F223769D1002C3689 /* PromptLabelControllers.swift in Sources */,
-				B6B21670223769D1002C3689 /* CSS.swift in Sources */,
-				B6B21671223769D1002C3689 /* AppDelegate.swift in Sources */,
-				B6B21672223769D1002C3689 /* libxmlHTMLNode.swift in Sources */,
-				B6B21673223769D1002C3689 /* WebFile.swift in Sources */,
+				B66E543D223AA93600875533 /* Substring.swift in Sources */,
+				B66E543E223AA93600875533 /* ShowAdaptor.swift in Sources */,
+				B66E543F223AA93600875533 /* DownloadAdaptor.swift in Sources */,
+				B66E5442223AA93600875533 /* CSS.swift in Sources */,
+				B66E5443223AA93600875533 /* Kanna.swift in Sources */,
+				B66E5444223AA93600875533 /* libxmlHTMLDocument.swift in Sources */,
+				B66E5445223AA93600875533 /* libxmlHTMLNode.swift in Sources */,
+				B66E5446223AA93600875533 /* libxmlParserOption.swift in Sources */,
+				B66E5447223AA93600875533 /* Core.swift in Sources */,
+				B66E5448223AA93600875533 /* PPWebsites.swift in Sources */,
+				B66E5449223AA93600875533 /* WebFile.swift in Sources */,
+				B66E544A223AA93600875533 /* SubjectUtil.swift in Sources */,
+				B66E544B223AA93600875533 /* PromptLabel.swift in Sources */,
+				B66E544C223AA93600875533 /* MainViewControllers.swift in Sources */,
+				B66E544D223AA93600875533 /* GeneralSettingViewController.swift in Sources */,
+				B66E544E223AA93600875533 /* QuickListPopUpButton.swift in Sources */,
+				B66E544F223AA93600875533 /* PapersViewController.swift in Sources */,
+				B66E5450223AA93600875533 /* FailedViewController.swift in Sources */,
+				B66E5451223AA93600875533 /* QuickListSettingViewControllers.swift in Sources */,
+				B66E5452223AA93600875533 /* AppDelegate.swift in Sources */,
+				B66E5453223AA93600875533 /* PublicConstants.swift in Sources */,
+				B66E5454223AA93600875533 /* Preferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,7 +581,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "Past Paper Crawler copy-Info.plist";
+				INFOPLIST_FILE = "Past Paper Crawler Yoyo Special Edition/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -581,7 +607,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "Past Paper Crawler copy-Info.plist";
+				INFOPLIST_FILE = "Past Paper Crawler Yoyo Special Edition/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

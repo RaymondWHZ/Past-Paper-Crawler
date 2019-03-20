@@ -46,9 +46,11 @@ class WebFile {
         }
         p += name
         
-        data.write(toFile: p, atomically: true)
+        if data.write(toFile: p, atomically: true) {
+            return p
+        }
         
-        return p
+        return nil
     }
 }
 

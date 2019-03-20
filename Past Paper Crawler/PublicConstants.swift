@@ -19,11 +19,11 @@ let userDefaults = UserDefaults.standard
 let fileManager = FileManager.default
 let workspace = NSWorkspace.shared
 
-var directoryOpenPanel: NSOpenPanel {
+let directoryOpenPanel: NSOpenPanel = {
     let openPanel = NSOpenPanel()
     openPanel.canChooseFiles = false
     openPanel.canChooseDirectories = true
     openPanel.canCreateDirectories = true
     openPanel.treatsFilePackagesAsDirectories = true
     return openPanel
-}
+}()

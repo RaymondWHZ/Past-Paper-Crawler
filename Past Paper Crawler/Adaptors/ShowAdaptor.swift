@@ -24,7 +24,7 @@ private let withEditionLength = 14 + 4
 
 private let criteriaKeys = [year, season, paper, edition, type]
 
-typealias Criteria = [String : String]
+typealias ADCriteria = [String : String]
 
 private let yearPrefix = "20"
 private let editionOne = "Edition \(1)"
@@ -38,7 +38,7 @@ private let seasons = [
     "y": none
 ]
 
-let types = [
+private let types = [
     "ms": "Mark Scheme",
     "qp": "Question Paper",
     "er": "Examiner Report",
@@ -49,27 +49,12 @@ private let paperPrefix = "Paper "
 private let editionPrefix = "Edition "
 
 
-
-extension String{
-    
-    subscript(intIndex: Int) -> String {
-        let index = self.index(self.startIndex, offsetBy: intIndex)
-        return String(self[index])
-    }
-    
-    subscript(range: ClosedRange<Int>) -> String {
-        let startIndex = self.index(self.startIndex, offsetBy: range.lowerBound)
-        let endIndex = self.index(self.startIndex, offsetBy: range.upperBound)
-        return String(self[startIndex...endIndex])
-    }
-}
-
-let regularFilePattern = "[0-9]{4}_[wsmy][0-9]{2}_[a-z]{2}(_[1-9][1-9]?)?.pdf"  // "0478_s18_ms_11.pdf" or "0478_s18_er.pdf"
-let regularFileRegex = try! NSRegularExpression(pattern: regularFilePattern, options: .caseInsensitive)
-func info(of paperName: String) -> Criteria {
+private let regularFilePattern = "[0-9]{4}_[wsmy][0-9]{2}_[a-z]{2}(_[1-9][1-9]?)?.pdf"  // "0478_s18_ms_11.pdf" or "0478_s18_er.pdf"
+private let regularFileRegex = try! NSRegularExpression(pattern: regularFilePattern, options: .caseInsensitive)
+private func info(of paperName: String) -> ADCriteria {
     let count = paperName.count
     
-    var ret: Criteria = [year: other, season: other, paper: other, edition: other, type: other]
+    var ret: ADCriteria = [year: other, season: other, paper: other, edition: other, type: other]
     
     if regularFileRegex.firstMatch(in: paperName, range: NSRange(location: 0, length: paperName.count)) == nil {
         return ret
@@ -102,30 +87,30 @@ func info(of paperName: String) -> Criteria {
     return ret
 }
 
-let paperPattern = "[0-9]{4}_[wsmy][0-9]{2}_(qp|ms)_[1-9][1-9]?.pdf"  // only "0478_s18_ms_11.pdf"
-let paperRegex = try! NSRegularExpression(pattern: paperPattern, options: .caseInsensitive)
-func isPaper(_ name: String) -> Bool {
+private let paperPattern = "[0-9]{4}_[wsmy][0-9]{2}_(qp|ms)_[1-9][1-9]?.pdf"  // only "0478_s18_ms_11.pdf"
+private let paperRegex = try! NSRegularExpression(pattern: paperPattern, options: .caseInsensitive)
+private func isPaper(_ name: String) -> Bool {
     return paperRegex.firstMatch(in: name, range: NSRange(location: 0, length: name.count)) != nil
 }
 
-func paperLocator(of name: String) -> String? {
+private func paperLocator(of name: String) -> String? {
     if !isPaper(name) { return nil }
     return name[seasonRange...yearRange.upperBound] + name[paperRange...editionRange]
 }
 
-func paperDescription(of name: String) -> String? {
+private func paperDescription(of name: String) -> String? {
     if !isPaper(name) { return nil }
     let fInfo = info(of: name)
     return "\(fInfo[year]!) \(fInfo[season]!) \(fInfo[paper]!) \(fInfo[edition]!)"
 }
 
 
-class PaperAnswerCouple {
+class ADPaperAnswerCouple {
     
     let name: String
     let questionPaper: WebFile
     let markScheme: WebFile
-    let fInfo: Criteria
+    let fInfo: ADCriteria
     
     init?(qp: WebFile, ms: WebFile) {
         let qpName = qp.name
@@ -147,7 +132,7 @@ class PaperAnswerCouple {
     }
 }
 
-func makeCoupleArray(from papers: [WebFile]) -> [PaperAnswerCouple] {
+private func makeCoupleArray(from papers: [WebFile]) -> [ADPaperAnswerCouple] {
     // filter out files that are not qp or ms and those before 2005
     var filtered: [(WebFile, String)] = []
     papers.forEach { (f) in
@@ -168,12 +153,12 @@ func makeCoupleArray(from papers: [WebFile]) -> [PaperAnswerCouple] {
     let sortedList = filtered.sorted { $0.1 < $1.1 }
     
     // find all couples and put them into array
-    var coupleArray: [PaperAnswerCouple] = []
+    var coupleArray: [ADPaperAnswerCouple] = []
     var currentPos = 0
     while currentPos < sortedList.count - 1 {
         let file1 = sortedList[currentPos].0
         let file2 = sortedList[currentPos + 1].0
-        if let couple = PaperAnswerCouple(qp: file2, ms: file1) {
+        if let couple = ADPaperAnswerCouple(qp: file2, ms: file1) {
             coupleArray.append(couple)
             currentPos += 1
         }
@@ -184,9 +169,9 @@ func makeCoupleArray(from papers: [WebFile]) -> [PaperAnswerCouple] {
 }
 
 
-typealias CriteriaSummary = [String : [String]]
+typealias ADCriteriaSummary = [String : [String]]
 
-func summarizeCriteria(for papers: [WebFile]) -> CriteriaSummary {
+private func summarizeCriteria(for papers: [WebFile]) -> ADCriteriaSummary {
     // set is able to exclude duplicated items automatically
     var setSummary: [String: Set<String>] = [:]
     for key in criteriaKeys {
@@ -202,7 +187,7 @@ func summarizeCriteria(for papers: [WebFile]) -> CriteriaSummary {
     }
     
     // sort the elements in each set and put them into final summary
-    var criteriaSummary: CriteriaSummary = [:]
+    var criteriaSummary: ADCriteriaSummary = [:]
     for key in criteriaKeys {
         let unsorted = setSummary[key]!
         
@@ -219,7 +204,7 @@ func summarizeCriteria(for papers: [WebFile]) -> CriteriaSummary {
 }
 
 
-class ShowManager {
+class ADShowManager {
     
     var showAll: Bool = PFDefaultShowAll
     
@@ -227,18 +212,20 @@ class ShowManager {
     var currentSubject: String = ""
     
     private var wholeList: [WebFile] = []
-    private var wholeCoupleList: [PaperAnswerCouple] = []
-    var criteriaSummary: CriteriaSummary = [:]
+    private var wholeCoupleList: [ADPaperAnswerCouple] = []
+    var criteriaSummary: ADCriteriaSummary = [:]
     
     // ---- access part ----
     
-    func loadFrom(level: String, subject: String) -> Bool {
-        guard let paperList = PFUsingWebsite.getPapers(level: level, subject: subject) else {
+    func loadFrom(subject: Subject) -> Bool {
+        let level = subject.level
+        let name = subject.name
+        guard let paperList = PFUsingWebsite.getPapers(level: level, subject: name) else {
             return false
         }
         
         currentLevel = level
-        currentSubject = subject
+        currentSubject = name
         wholeList = paperList
         wholeCoupleList = makeCoupleArray(from: paperList)
         criteriaSummary = summarizeCriteria(for: paperList)
@@ -280,7 +267,7 @@ class ShowManager {
     let authoritizedKeys = [year, season, paper, edition, type]
     
     // e.g. [year: "2018", season: "s"]
-    private var currentCriteria: Criteria = [:]
+    private var currentCriteria: ADCriteria = [:]
     
     func setCriterion(name: String, value: String) {
         currentCriteria[name] = value
@@ -331,8 +318,8 @@ class ShowManager {
     
     // ---- couple part ----
     
-    private var currentCoupleListCache: [PaperAnswerCouple]? = nil
-    var currentCoupleList: [PaperAnswerCouple] {
+    private var currentCoupleListCache: [ADPaperAnswerCouple]? = nil
+    var currentCoupleList: [ADPaperAnswerCouple] {
         // filtered list acording to criteria
         if currentCoupleListCache == nil {
             currentCoupleListCache = wholeCoupleList.filter{

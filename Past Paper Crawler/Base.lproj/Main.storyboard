@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="F0b-XC-4I0">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -8,7 +9,7 @@
         <!--Window Controller-->
         <scene sceneID="QSH-AL-Z1x">
             <objects>
-                <windowController showSeguePresentationStyle="single" id="ezF-oh-akO" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="Settings" showSeguePresentationStyle="single" id="ezF-oh-akO" sceneMemberID="viewController">
                     <window key="window" title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Yxm-Ug-coC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -52,27 +53,6 @@
                 <customObject id="A2y-Hj-74U" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1623" y="-27"/>
-        </scene>
-        <!--Window Controller-->
-        <scene sceneID="FZM-e4-mjH">
-            <objects>
-                <windowController showSeguePresentationStyle="single" id="KKS-ED-rfg" sceneMemberID="viewController">
-                    <window key="window" title="Quick List" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="RxM-0G-tls">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="163" y="208" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
-                        <connections>
-                            <outlet property="delegate" destination="KKS-ED-rfg" id="2J3-Fh-QBL"/>
-                        </connections>
-                    </window>
-                    <connections>
-                        <segue destination="Lst-t0-iPf" kind="relationship" relationship="window.shadowedContentViewController" id="tyu-uG-ESr"/>
-                    </connections>
-                </windowController>
-                <customObject id="a3h-Jk-cTG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1608" y="538"/>
         </scene>
         <!--Rename View Controller-->
         <scene sceneID="sje-8Y-SVD">
@@ -261,39 +241,16 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y9M-Ia-ZaT">
-                                <rect key="frame" x="18" y="195" width="77" height="17"/>
+                                <rect key="frame" x="18" y="190" width="99" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Save policy:" id="FyZ-mP-0Qk">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Download path:" id="FyZ-mP-0Qk">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fF0-yI-3UQ">
-                                <rect key="frame" x="20" y="119" width="300" height="22"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="xga-Cc-ShO">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <action selector="pathChanged:" target="NhA-1H-zyV" id="PUV-tm-hcE"/>
-                                </connections>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyx-FT-Gfj">
-                                <rect key="frame" x="322" y="112" width="85" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Browse" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vNe-c8-BCp">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="browseClicked:" target="NhA-1H-zyV" id="cbr-o1-2K7"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nXn-3t-Ztt">
-                                <rect key="frame" x="18" y="95" width="312" height="18"/>
+                                <rect key="frame" x="19" y="96" width="312" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Create subject folder (e.g. Mathematics (0580))" bezelStyle="regularSquare" imagePosition="left" inset="2" id="XPm-sC-1Dv">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -304,7 +261,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Afz-tM-faC">
-                                <rect key="frame" x="18" y="264" width="165" height="18"/>
+                                <rect key="frame" x="19" y="264" width="165" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Show all files by default" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Rhd-Kt-WIb">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -317,7 +274,7 @@ Gw
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXk-J8-AQl">
                                 <rect key="frame" x="18" y="224" width="385" height="34"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" title="Showing panel automatically switches to show all mode when no paper &amp; answer pairs found " id="sar-n4-Txs">
+                                <textFieldCell key="cell" title="Showing panel automatically switches to show all mode when no paper &amp; answer pairs found " id="sar-n4-Txs">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -328,7 +285,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQY-pX-Ky4">
-                                <rect key="frame" x="19" y="170" width="106" height="18"/>
+                                <rect key="frame" x="19" y="165" width="106" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="radio" title="Ask evey time" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2kG-kA-FMS">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -339,9 +296,9 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QO-vm-1RY">
-                                <rect key="frame" x="19" y="148" width="96" height="18"/>
+                                <rect key="frame" x="19" y="143" width="123" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="radio" title="Use default:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="vLS-le-0as">
+                                <buttonCell key="cell" type="radio" title="Use default path" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="vLS-le-0as">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -350,9 +307,9 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1O-NY-VdS">
-                                <rect key="frame" x="18" y="75" width="279" height="18"/>
+                                <rect key="frame" x="19" y="65" width="317" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Show in Finder after finishing downloading" bezelStyle="regularSquare" imagePosition="left" inset="2" id="90b-Wt-Ulo">
+                                <buttonCell key="cell" type="check" title="Show file(s) in Finder after finishing downloading" bezelStyle="regularSquare" imagePosition="left" inset="2" id="90b-Wt-Ulo">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -360,14 +317,37 @@ Gw
                                     <action selector="openInFinderOptionChanged:" target="NhA-1H-zyV" id="sZf-O2-Nyx"/>
                                 </connections>
                             </button>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ksU-YF-25q">
+                                <rect key="frame" x="20" y="87" width="381" height="5"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            </box>
+                            <pathControl focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hXQ-sQ-Qhf">
+                                <rect key="frame" x="32" y="117" width="369" height="22"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <pathCell key="cell" selectable="YES" focusRingType="none" alignment="left" id="3bI-pK-ekZ">
+                                    <font key="font" metaFont="system"/>
+                                    <url key="url" string="file:///"/>
+                                </pathCell>
+                            </pathControl>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bt4-8d-HEp">
+                                <rect key="frame" x="144" y="142" width="53" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title="change" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="IRJ-de-X0l">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="browseClicked:" target="NhA-1H-zyV" id="tPM-0H-R5s"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="askEverytimeOption" destination="aQY-pX-Ky4" id="Db0-gD-duA"/>
-                        <outlet property="browseButton" destination="nyx-FT-Gfj" id="ZaQ-hD-vkb"/>
+                        <outlet property="browseButton" destination="bt4-8d-HEp" id="IXm-U2-Fn1"/>
                         <outlet property="createFolderCheckBox" destination="nXn-3t-Ztt" id="ERz-rv-bvY"/>
                         <outlet property="openInFinderCheckBox" destination="o1O-NY-VdS" id="iGN-4v-65U"/>
-                        <outlet property="pathTextField" destination="fF0-yI-3UQ" id="h6t-KS-ZIv"/>
+                        <outlet property="pathControl" destination="hXQ-sQ-Qhf" id="6lk-dT-vmn"/>
                         <outlet property="showAllCheckBox" destination="Afz-tM-faC" id="J5g-ze-KwB"/>
                         <outlet property="useDefaultOption" destination="0QO-vm-1RY" id="h4w-NA-Vj5"/>
                         <outlet property="websitePopButton" destination="NsG-j3-zJQ" id="6me-xw-gfj"/>
@@ -375,7 +355,7 @@ Gw
                 </viewController>
                 <customObject id="AfS-TO-HCt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2229" y="-254"/>
+            <point key="canvasLocation" x="-2229.5" y="-254.5"/>
         </scene>
         <!--Quick List-->
         <scene sceneID="1O8-Sp-Gy6">
@@ -462,7 +442,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7fm-AG-mhC">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7fm-AG-mhC" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="18" y="20" width="373" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select your subjects so that they can appear in the quick list." id="xIW-sJ-EJj">
@@ -671,7 +651,7 @@ DQ
                                         </menuItem>
                                         <menuItem title="Show Quick List Editor" keyEquivalent="l" id="JLj-PW-AEa">
                                             <connections>
-                                                <segue destination="KKS-ED-rfg" kind="show" id="9Tr-ea-lSc"/>
+                                                <action selector="showQuickListSettingClicked:" target="Voe-Tx-rLC" id="3Ya-jo-swn"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -793,7 +773,7 @@ DQ
                                 <rect key="frame" x="326" y="98" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nnf-SJ-yhQ">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nnf-SJ-yhQ" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="18" y="20" width="158" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error:" id="ia3-SY-iNM">
@@ -884,20 +864,11 @@ DQ
             <objects>
                 <viewController id="6S3-cq-2dv" customClass="MainViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="sNp-df-tNQ">
-                        <rect key="frame" x="0.0" y="0.0" width="457" height="206"/>
+                        <rect key="frame" x="0.0" y="0.0" width="457" height="244"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nh6-Bc-ElM">
-                                <rect key="frame" x="18" y="169" width="265" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Direct Download (e.g. 0455_s14_qp_12.pdf)" id="IlY-cE-Vs6">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="qRk-hZ-9MR">
-                                <rect key="frame" x="422" y="142" width="16" height="16"/>
+                                <rect key="frame" x="421" y="181" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="4Ef-Z0-nqc">
@@ -908,8 +879,8 @@ DQ
                                 <rect key="frame" x="0.0" y="98" width="457" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dy-Te-E90">
-                                <rect key="frame" x="18" y="114" width="393" height="17"/>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dy-Te-E90" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
+                                <rect key="frame" x="18" y="114" width="341" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Prompt" id="5ei-Zz-aQv">
                                     <font key="font" metaFont="system"/>
@@ -918,15 +889,15 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSI-Cg-zPh">
-                                <rect key="frame" x="18" y="73" width="240" height="17"/>
+                                <rect key="frame" x="18" y="73" width="133" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Batch Download (Browse from subject)" id="Jh8-QW-AKA">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Browse from subject:" id="Jh8-QW-AKA">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NBp-nm-R4O">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NBp-nm-R4O" customClass="QuickListPopUpButton" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="18" y="42" width="394" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="zCt-AT-DPm" id="9gF-q3-w4I">
@@ -937,17 +908,14 @@ DQ
                                             <menuItem title="(choose a subject)" state="on" id="zCt-AT-DPm">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
-                                            <menuItem isSeparatorItem="YES" id="4Wm-t3-df3"/>
-                                            <menuItem isSeparatorItem="YES" id="FBJ-8G-4ri"/>
-                                            <menuItem title="Other..." keyEquivalent="f" id="xy6-2T-DHu"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="subjectSelected:" target="6S3-cq-2dv" id="dnF-Qp-rYb"/>
+                                    <action selector="subjectClicked:" target="6S3-cq-2dv" id="zh5-ge-3Z9"/>
                                 </connections>
                             </popUpButton>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OGv-F0-9pD">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OGv-F0-9pD" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="18" y="20" width="393" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error:" id="IVz-Nw-sXk">
@@ -957,7 +925,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZTU-i2-BNO">
-                                <rect key="frame" x="20" y="136" width="392" height="26"/>
+                                <rect key="frame" x="20" y="175" width="392" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="61w-Mh-o1b">
                                     <font key="font" metaFont="system"/>
@@ -965,39 +933,58 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </comboBoxCell>
                                 <connections>
-                                    <action selector="paperConfirmed:" target="6S3-cq-2dv" id="TOG-xk-p1a"/>
+                                    <action selector="operationConfirmed:" target="6S3-cq-2dv" id="UuE-H5-uqs"/>
                                 </connections>
                             </comboBox>
                             <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VFn-Rc-n9h">
-                                <rect key="frame" x="321" y="141" width="67" height="17"/>
+                                <rect key="frame" x="322" y="180" width="66" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="inline" title="download" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="H1W-FT-jCE">
+                                <buttonCell key="cell" type="inline" title="operation" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="H1W-FT-jCE">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystemBold"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="performClick:" target="ZTU-i2-BNO" id="GxR-qd-E4X"/>
+                                    <action selector="performClick:" target="ZTU-i2-BNO" id="o6m-ij-NVA"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fp7-P1-8JR">
-                                <rect key="frame" x="258" y="72" width="88" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3x-gK-WCC">
+                                <rect key="frame" x="18" y="207" width="107" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="inline" title="edit quick list" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="Y9F-Mu-mzH">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Quick Operation:" id="fj8-Kk-IDx">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pEZ-EL-A1J">
+                                <rect key="frame" x="365" y="112" width="44" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="roundRect" title="Retry" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PGs-5F-Ow8">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="smallSystemBold"/>
+                                    <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
                                 <connections>
-                                    <segue destination="KKS-ED-rfg" kind="show" id="T5v-nk-JNj"/>
+                                    <action selector="retryClicked:" target="6S3-cq-2dv" id="zNU-o5-EiB"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLb-RC-qB8">
+                                <rect key="frame" x="18" y="137" width="390" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" title="• Input a subject name in quick list to open (e.g. mathematics)   • Input a paper to download (e.g. 0455_s14_qp_12.pdf)" id="WhL-c5-Tgl">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="paperComboBox" destination="ZTU-i2-BNO" id="TkT-gb-1fB"/>
-                        <outlet property="paperDownloadButton" destination="VFn-Rc-n9h" id="32D-v8-i4t"/>
-                        <outlet property="paperProcess" destination="qRk-hZ-9MR" id="Utq-nt-MGr"/>
-                        <outlet property="paperPromptLabel" destination="7dy-Te-E90" id="exq-5i-N20"/>
-                        <outlet property="subjectPopButton" destination="NBp-nm-R4O" id="Arm-mx-Vrg"/>
+                        <outlet property="quickOpComboBox" destination="ZTU-i2-BNO" id="TkT-gb-1fB"/>
+                        <outlet property="quickOpPerformButton" destination="VFn-Rc-n9h" id="32D-v8-i4t"/>
+                        <outlet property="quickOpProcess" destination="qRk-hZ-9MR" id="Utq-nt-MGr"/>
+                        <outlet property="quickOpPromptLabel" destination="7dy-Te-E90" id="exq-5i-N20"/>
+                        <outlet property="quickOpRetryButton" destination="pEZ-EL-A1J" id="2uk-uC-eFR"/>
+                        <outlet property="subjectPopButton" destination="NBp-nm-R4O" id="k0q-8u-ZEe"/>
                         <outlet property="subjectProgress" destination="4Ef-Z0-nqc" id="yZS-JQ-30A"/>
                         <outlet property="subjectPromptLabel" destination="OGv-F0-9pD" id="uFV-tZ-3Sd"/>
                         <segue destination="B8D-0N-5wS" kind="show" identifier="Show Papers" id="zLS-dW-f0G"/>
@@ -1005,7 +992,7 @@ DQ
                 </viewController>
                 <customObject id="tNu-xP-1gO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-524.5" y="643"/>
+            <point key="canvasLocation" x="-524.5" y="662"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -1210,7 +1197,7 @@ DQ
                                     <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="Wh7-xh-xEf"/>
                                 </connections>
                             </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3fV-xU-rMf">
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3fV-xU-rMf" customClass="QuickListPopUpButton" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="18" y="470" width="499" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="B9F-kJ-cBB" id="ryy-uT-nA5">
@@ -1221,9 +1208,6 @@ DQ
                                             <menuItem title="(choose a subject)" state="on" id="B9F-kJ-cBB">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
-                                            <menuItem isSeparatorItem="YES" id="p6e-gK-zft"/>
-                                            <menuItem isSeparatorItem="YES" id="7CT-L6-RUU"/>
-                                            <menuItem title="Other..." keyEquivalent="f" id="ix5-rl-sre"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
@@ -1235,7 +1219,7 @@ DQ
                                 <rect key="frame" x="522" y="23" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </progressIndicator>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEa-Oi-fwH">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEa-Oi-fwH" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="18" y="50" width="500" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Papers and answers are put together omitting any other file or paper before 2005." id="l7H-Yr-ZBW">
@@ -1244,7 +1228,7 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OXL-Ds-w2f">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OXL-Ds-w2f" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                 <rect key="frame" x="220" y="23" width="182" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="(count prompt)" id="EgF-Fg-uVo">
@@ -1266,7 +1250,7 @@ DQ
                         <outlet property="seasonPopButton" destination="X73-oQ-9Md" id="UkT-85-9Lw"/>
                         <outlet property="selectAllButton" destination="Gc7-e2-hXv" id="jyi-sM-Dv3"/>
                         <outlet property="showAllCheckbox" destination="wvb-gV-RhV" id="w2H-yL-TVz"/>
-                        <outlet property="subjectPopButton" destination="3fV-xU-rMf" id="07c-Z2-Zr5"/>
+                        <outlet property="subjectPopButton" destination="3fV-xU-rMf" id="Aet-hs-mcJ"/>
                         <outlet property="typePopButton" destination="hEU-3c-2Lw" id="8jn-Et-0RO"/>
                         <outlet property="viewPromptLabel" destination="cEa-Oi-fwH" id="c4Q-Ge-SBk"/>
                         <outlet property="yearPopButton" destination="kbS-r3-VU1" id="Qzd-QD-MKf"/>
@@ -1376,8 +1360,4 @@ DQ
             <point key="canvasLocation" x="229" y="1341"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Fey-GU-wQo"/>
-        <segue reference="T5v-nk-JNj"/>
-    </inferredMetricsTieBreakers>
 </document>
