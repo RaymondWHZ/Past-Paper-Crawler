@@ -63,6 +63,12 @@ class PastPaperWebsite {
     fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? { return nil }
 }
 
+let allPastPaperWebsites: [String: PastPaperWebsite] = [
+    "GCE Guide": GCEGuide(),
+    "Papa Cambridge": PapaCambridge(),
+    "Past Paper.Co": PastPaperCo()
+]
+
 class PapaCambridge: PastPaperWebsite {
     
     init() {
@@ -82,7 +88,7 @@ class PapaCambridge: PastPaperWebsite {
     
     override fileprivate func getSubjects0(level: String) -> [String]? {
         let specifiedUrl = root + levelSites[level]!
-        return getContentList(url: specifiedUrl, XPath: "//*[@id=\"directory-listing\"]/li", name: "data-name", criteria: { $0 != ".." })
+        return getContentList(url: specifiedUrl, XPath: "/html/body/section[2]/div/div/div[1]/div/table/tbody/tr/td/a", name: "data-name", criteria: { $0 != ".." })
     }
     
     override fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? {
@@ -156,12 +162,12 @@ class GCEGuide: PastPaperWebsite {
     
     override fileprivate func getSubjects0(level: String) -> [String]? {
         let specifiedUrl = root + levelSites[level]!
-        return getContentList(url: specifiedUrl, XPath: "//*[@id=\"ggTable\"]/tbody/tr/td/a", name: "href", criteria: { $0 != "error_log" })
+        return getContentList(url: specifiedUrl, XPath: "//*[@id=\"ggTable\"]/tbody/tr/td[1]/a", name: "href", criteria: { $0 != "error_log" })
     }
     
     override fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? {
         let papersUrl = root + levelSites[level]! + bond(subject, by: [" ": "%20"]) + "/"
-        guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"ggTable\"]/tbody/tr/td/a", name: "href", criteria: { $0.hasSuffix(".pdf") }) else {
+        guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"ggTable\"]/tbody/tr/td[1]/a", name: "href", criteria: { $0.hasSuffix(".pdf") }) else {
             return nil
         }
         return papers.map({ WebFile(url: papersUrl + bond($0, by: [" ": "%20"]), classification: subject)! })
@@ -268,6 +274,6 @@ class PastPaperCo: PastPaperWebsite {
             return nil
         }
         
-        return allPapers.sorted(by: { $0.name.compare($1.name) == ComparisonResult.orderedAscending })
+        return allPapers.sorted(by: { $0.name < $1.name })
     }
 }

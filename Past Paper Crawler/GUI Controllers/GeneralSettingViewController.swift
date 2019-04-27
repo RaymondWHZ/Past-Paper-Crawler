@@ -14,7 +14,7 @@ class GeneralSetViewController: NSViewController {
     @IBOutlet var websitePopButton: NSPopUpButton!
     var lazyWebsiteSelection: String = PFUsingWebsiteName
     
-    @IBOutlet var showAllCheckBox: NSButton!
+    @IBOutlet var selectModePopButton: NSPopUpButton!
     
     @IBOutlet var askEverytimeOption: NSButton!
     @IBOutlet var useDefaultOption: NSButton!
@@ -26,10 +26,10 @@ class GeneralSetViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        websitePopButton.addItems(withTitles: Array(PFWebsites.keys))
+        websitePopButton.addItems(withTitles: Array(allPastPaperWebsites.keys))
         websitePopButton.selectItem(withTitle: PFUsingWebsiteName)
         
-        showAllCheckBox.state = (PFDefaultShowAll) ? .on : .off
+        selectModePopButton.selectItem(at: (PFDefaultShowAll) ? 1 : 0)
         
         let onOption = (PFUseDefaultPath) ? useDefaultOption : askEverytimeOption
         onOption!.state = .on
@@ -44,7 +44,7 @@ class GeneralSetViewController: NSViewController {
     
     @IBAction func websiteSelected(_ sender: Any) {
         let websiteSelection = websitePopButton.selectedItem!.title
-        let websiteSelected = PFWebsites[websiteSelection]!
+        let websiteSelected = allPastPaperWebsites[websiteSelection]!
         let subjectUtil = SubjectUtil.get(for: websiteSelected)
         
         // check quick list
@@ -76,7 +76,7 @@ class GeneralSetViewController: NSViewController {
             
             var operations: [(String, String)] = []
             
-            PFModifyQuickList({ (quickList) in
+            PFModifyQuickList { quickList in
                 for (index, subject) in quickList.enumerated() {
                     let level = subject.level
                     let name = subject.name
@@ -100,7 +100,7 @@ class GeneralSetViewController: NSViewController {
                         operations.append((name, "Disabled"))
                     }
                 }
-            })
+            }
             
             DispatchQueue.main.async {
                 loadingView.dismiss(nil)
@@ -118,8 +118,8 @@ class GeneralSetViewController: NSViewController {
         }
     }
     
-    @IBAction func showModeSelected(_ sender: Any) {
-        PFDefaultShowAll = showAllCheckBox.state == .on
+    @IBAction func selectModeSelected(_ sender: Any) {
+        PFDefaultShowAll = selectModePopButton.indexOfSelectedItem == 1
     }
     
     @IBAction func savePolicySelected(_ sender: Any) {
@@ -180,10 +180,10 @@ class LoadingListView: NSViewController {
     }
 }
 
+
+
 class RenameViewController: NSViewController {
     
-    private var subject: UnsafeMutablePointer<Dictionary<String, String>>? = nil
-    private var newSubject: Dictionary<String, String>? = nil
     @IBOutlet var operationsTableView: NSTableView!
     var operations: [(String, String)] = []
     

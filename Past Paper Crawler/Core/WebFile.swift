@@ -6,7 +6,7 @@
 //  Copyright © 2018 吴浩榛. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 class WebFile {
     let name: String
@@ -56,21 +56,11 @@ class WebFile {
 
 
 
-private var downloadStack = 0
-var webFileDownloadStack: Int {
-    get {
-        return downloadStack
-    }
-}
-
 extension Array where Element: WebFile {
     
     func download(to path: String, classify: Bool = false, showInFinder: Bool = false) -> [WebFile] {
         var paths: [String]? = (showInFinder) ? [] : nil
         var failed: [WebFile] = []
-        
-        let count = self.count
-        downloadStack += count
         
         let group = DispatchGroup()
         for paper in self {
@@ -93,8 +83,6 @@ extension Array where Element: WebFile {
         if let urls = paths?.map({ URL(fileURLWithPath: $0) }), !urls.isEmpty {
             workspace.activateFileViewerSelecting(urls)
         }
-        
-        downloadStack -= count
         
         return failed
     }

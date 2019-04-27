@@ -19,7 +19,7 @@ func readUrl(url: String) -> Data? {
 }
 
 func getContentList(url: String, XPath: String, name: String?, criteria: (String) -> Bool = { _ in true }) -> [String]? {
-    guard let data = readUrl(url: url), let doc = try? HTML(html: data, encoding: .utf8) else {
+    guard let url_t = URL(string: url), let doc = try? HTML(url: url_t, encoding: .utf8) else {
         return nil
     }
     

@@ -14,7 +14,6 @@ private var defaultItemNum = 5
 class QuickListPopUpButton : NSPopUpButton {
     
     private var parentController: NSViewController?
-    private var settedUp = false
     
     private var lazySelectedItem: Int = 0
     
@@ -29,31 +28,28 @@ class QuickListPopUpButton : NSPopUpButton {
         }
     }
     
-    private var _selectedSubject: Subject? {
+    var selectedSubject: Subject? {
         didSet {
             updateTitle()
         }
     }
-    var selectedSubject: Subject? {
-        return _selectedSubject
-    }
+    
     func discardSelectedSubject() {
-        _selectedSubject = nil
+        selectedSubject = nil
     }
     
     private func updateTitle() {
-        if _selectedSubject == nil {
-            item(at: 0)!.title = _title
+        if selectedSubject == nil {
+            item(at: 0)!.title = _title + " "
         }
         else {
-            item(at: 0)!.title = _selectedSubject!.name
+            item(at: 0)!.title = selectedSubject!.name + " "
         }
     }
     
+    private var settedUp = false
     override func viewDidMoveToWindow() {
-        if settedUp {
-            return
-        }
+        if settedUp { return }
         settedUp = true
         
         guard let parent = window?.windowController?.contentViewController else {
@@ -99,13 +95,14 @@ class QuickListPopUpButton : NSPopUpButton {
                 let controller: AllSubjectsViewController = getController("All Subjects View")!
                 controller.callback = {
                     subject in
-                    self._selectedSubject = subject
+                    self.selectedSubject = subject
+                    self.performConfirmSelection()
                 }
                 parentController!.presentAsSheet(controller)
             }
             // third last item should be 'Setup...', open quick list setting
             else if selectedItem == numberOfItems - 3 {
-                showSettingWindow(tab: .QuickList)
+                showQuickListSettingWindow()
             }
             // otherwise an ordinary item in displayed list is selected
             else {
@@ -113,7 +110,7 @@ class QuickListPopUpButton : NSPopUpButton {
                 PFUseQuickList { (quickList) in
                     selected = quickList[selectedItem - quickListStartFromIndex]
                 }
-                _selectedSubject = selected!
+                selectedSubject = selected!
             }
         }
         
@@ -175,6 +172,8 @@ class AllSubjectsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        levelSelected(levelPopButton)
     }
     
     @IBAction func levelSelected(_ sender: Any) {
@@ -184,16 +183,10 @@ class AllSubjectsViewController: NSViewController {
         promptLabel.setToDefault()
         
         // remove original items in subject list
-        clearSubjectPopButton()
+        subjectPopButton.removeAllItems()
         
         // lock up subject button since the list is either empty or in progress
         subjectPopButton.isEnabled = false
-        
-        // do not deal with the first item
-        if levelPopButton.indexOfSelectedItem == 0 {
-            userChangedLevel = false
-            return
-        }
         
         userChangedLevel = true
         
@@ -225,26 +218,20 @@ class AllSubjectsViewController: NSViewController {
             DispatchQueue.main.async {
                 // add all items into subject button
                 self.subjectPopButton.addItems(withTitles: subjects)
-                if !self.currentText.isEmpty, let searchResult = subjects.first(where: { $0.lowercased().contains(self.currentText) }) {
-                    self.subjectPopButton.selectItem(withTitle: searchResult)
-                    self.doneButton.isHidden = false
+                self.doneButton.isHidden = false
+                if !self.currentText.isEmpty {
+                    if let searchResult = subjects.first(where: { $0.lowercased().contains(self.currentText) }) {
+                        self.subjectPopButton.selectItem(withTitle: searchResult)
+                    }
+                    else {
+                        self.promptLabel.showError("Failed / Not found!")
+                    }
                 }
             }
         }
     }
     
-    func clearSubjectPopButton() {
-        let topTitle = subjectPopButton.itemTitle(at: 0)
-        subjectPopButton.removeAllItems()
-        subjectPopButton.addItem(withTitle: topTitle)
-    }
-    
     @IBAction func subjectSelected(_ sender: Any) {
-        if subjectPopButton.indexOfSelectedItem == 0 {
-            doneButton.isHidden = true
-            return
-        }
-        
         let selectedLevel = levelPopButton.selectedItem!.title
         let selectedSubject = subjectPopButton.selectedItem!.title
         self.dismiss(nil)
@@ -291,7 +278,7 @@ class AllSubjectsViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.levelPopButton.selectItem(withTitle: subject.level)
                     
-                    self.clearSubjectPopButton()
+                    self.subjectPopButton.removeAllItems()
                     self.subjectPopButton.addItems(withTitles: PFUsingWebsite.getSubjects(level: subject.level)!)
                     self.subjectPopButton.isEnabled = true
                     self.subjectPopButton.selectItem(withTitle: subject.name)

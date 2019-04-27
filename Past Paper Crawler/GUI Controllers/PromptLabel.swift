@@ -30,9 +30,7 @@ class PromptLabel: NSTextField {
     }
     
     override func viewDidMoveToWindow() {
-        if settedUp {
-            return
-        }
+        if settedUp { return }
         settedUp = true
         
         defaultIsHidden = isHidden

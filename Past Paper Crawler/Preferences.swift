@@ -8,16 +8,12 @@
 
 import Cocoa
 
+// Website part
 
 let PFWebsiteToken = "Website"
 private let defaultWebsite = "GCE Guide"
-let PFWebsites: [String: PastPaperWebsite] = [
-    "GCE Guide": GCEGuide(),
-    "Papa Cambridge": PapaCambridge(),
-    "Past Paper.Co": PastPaperCo()
-]
 var PFUsingWebsite: PastPaperWebsite {
-    return PFWebsites[PFUsingWebsiteName]!
+    return allPastPaperWebsites[PFUsingWebsiteName]!
 }
 var PFUsingWebsiteName: String {
     get {
@@ -33,6 +29,7 @@ var PFUsingWebsiteName: String {
     }
 }
 
+// Show mode part
 
 let PFDefaultShowAllToken = "Show Mode"
 var PFDefaultShowAll: Bool {
@@ -44,6 +41,7 @@ var PFDefaultShowAll: Bool {
     }
 }
 
+// Default path part
 
 let PFUseDefualtPathToken = "Use Default Path"
 var PFUseDefaultPath: Bool {
@@ -54,7 +52,6 @@ var PFUseDefaultPath: Bool {
         userDefaults.set(newValue, forKey: PFUseDefualtPathToken)
     }
 }
-
 
 let PFDefaultPathToken = "Default Path"
 var PFDefaultPath: String {
@@ -71,6 +68,7 @@ var PFDefaultPath: String {
     }
 }
 
+// Open in Finder part
 
 let PFOpenInFinderToken = "Open in Finder"
 var PFOpenInFinder: Bool {
@@ -82,6 +80,7 @@ var PFOpenInFinder: Bool {
     }
 }
 
+// Quick list part. Design note: Direct access to quick list object is forbiden. It can only be accessed through PFUseQuickList and PFModifyQuickList
 
 typealias QuickList = [Subject]
 
@@ -111,7 +110,8 @@ private let quickListChangedName = NSNotification.Name(rawValue: "Quick List Cha
 func PFModifyQuickList(_ action: (inout QuickList) -> ()) {
     quickListQueue.sync {
         action(&quickList)
-        userDefaults.set(quickList.map({ NSKeyedArchiver.archivedData(withRootObject: $0) }), forKey: PFQuickListToken)
+        let rawArray = quickList.map({ NSKeyedArchiver.archivedData(withRootObject: $0) })
+        userDefaults.set(rawArray, forKey: PFQuickListToken)
     }
     notificationCenter.post(name: quickListChangedName, object: nil)
 }
@@ -124,6 +124,7 @@ func PFEndObserve(_ observer: Any) {
     notificationCenter.removeObserver(observer)
 }
 
+// Create subfolder part
 
 let PFCreateFolderToken = "Create Folder"
 var PFCreateFolder: Bool {
@@ -133,15 +134,4 @@ var PFCreateFolder: Bool {
     set {
         userDefaults.set(newValue, forKey: PFCreateFolderToken)
     }
-}
-
-enum SettingTab: Int {
-    case General = 0
-    case QuickList = 1
-}
-func showSettingWindow(tab: SettingTab = .General) {
-    let preferenceWindowController: NSWindowController = getController("Settings")!
-    let preferenceViewController = preferenceWindowController.contentViewController as! NSTabViewController
-    preferenceViewController.selectedTabViewItemIndex = tab.rawValue
-    preferenceWindowController.showWindow(nil)
 }

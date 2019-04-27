@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
-    @IBAction func showQuickListSettingClicked(_ sender: Any) {
-        showSettingWindow(tab: .QuickList)
+    @IBAction func preferencesClicked(_ sender: Any) {
+        showSettingWindow()
     }
 }

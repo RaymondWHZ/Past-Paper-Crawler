@@ -26,6 +26,7 @@ class MainViewController: NSViewController {
         }
     }
     var currentCode = ""
+    var currentSubjectPrompt = ""
     var accessCount = 0
     
     @IBOutlet var subjectPopButton: QuickListPopUpButton!
@@ -62,11 +63,11 @@ class MainViewController: NSViewController {
     }
     
     @IBAction func operationConfirmed(_ sender: Any) {
-        if quickOpPerformButton.isHidden { return }
-        quickOpPerformButton.isHidden = true
         let text = quickOpComboBox.stringValue
         if quickOpMode == .Subject {
-            subjectPopButton.performConfirmSelection()
+            if !quickOpPerformButton.isHidden {
+                subjectPopButton.performConfirmSelection()
+            }
         }
         else if let selectedPaper = quickOpPossiblePapers.first(where: { $0.name == text }) {
             quickOpDownload(paper: selectedPaper)
@@ -75,7 +76,9 @@ class MainViewController: NSViewController {
     
     func quickOpDownload(paper: WebFile, to path: String? = nil) {
         quickOpProcess.startAnimation(nil)
-        quickOpPromptLabel.setToDefault()
+        quickOpPromptLabel.showPrompt("Downloading...")
+        quickOpComboBox.isEnabled = false
+        quickOpPerformButton.isEnabled = false
         ADDownload(papers: [paper], to: path) {
             path, failed in
             DispatchQueue.main.async {
@@ -85,62 +88,100 @@ class MainViewController: NSViewController {
                         self.quickOpDownload(paper: paper, to: path)
                     }
                 }
+                else {
+                    self.quickOpPromptLabel.showPrompt("Download Succeed!")
+                }
                 self.quickOpProcess.stopAnimation(nil)
-            }
-        }
-    }
-    
-    func subjectOpen(subject: Subject) {
-        subjectPromptLabel.setToDefault()
-        
-        // lock up button
-        subjectPopButton.isEnabled = false
-        subjectProgress.startAnimation(nil)
-        
-        let paperWindow: NSWindowController = getController("Papers Window")!
-        let paperView = paperWindow.contentViewController as! PapersViewController
-        
-        DispatchQueue.global(qos: .userInteractive).async {
-            defer {
-                // unlock button
-                DispatchQueue.main.async {
-                    self.subjectPopButton.isEnabled = true
-                    self.subjectPopButton.discardSelectedSubject()
-                    self.subjectProgress.stopAnimation(nil)
-                }
-            }
-            
-            // load current subject
-            if !paperView.showManager.loadFrom(subject: subject) {
-                DispatchQueue.main.async {
-                    self.subjectPromptLabel.showError("Failed to load subject!")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                
-                // display paper window
-                paperView.papersTable.reloadData()
-                paperView.resetSurrounding()
-                paperWindow.showWindow(nil)
-                
-                // set back prompt
-                self.subjectPopButton.item(at: 0)!.title = self.defaultPopButtonPrompt
+                self.quickOpComboBox.isEnabled = true
+                self.quickOpPerformButton.isEnabled = true
             }
         }
     }
     
     @IBAction func retryClicked(_ sender: Any) {
         quickOpRetryButton.isHidden = true
-        quickOpRetryAction()
+        quickOpRetryAction()  // fire action
     }
     
-    @IBAction func subjectClicked(_ sender: Any) {
-        quickOpPerformButton.isHidden = true
+    func startLoadingSubject() {
+        // lock up button
+        quickOpComboBox.isEnabled = false
+        quickOpPerformButton.isEnabled = false
+        subjectPopButton.isEnabled = false
+        subjectProgress.startAnimation(nil)
+    }
+    
+    func endLoadingSubject() {
         
+    }
+    
+    var _subjactLoading: Bool = false
+    var subjectLoading: Bool {
+        get {
+            return _subjactLoading
+        }
+        set {
+            _subjactLoading = newValue
+            if newValue {
+                // lock up button
+                quickOpComboBox.isEnabled = false
+                quickOpPerformButton.isEnabled = false
+                subjectPopButton.isEnabled = false
+                subjectProgress.startAnimation(nil)
+            }
+            else {
+                quickOpComboBox.isEnabled = true
+                quickOpPerformButton.isEnabled = true
+                subjectPopButton.isEnabled = true
+                subjectProgress.stopAnimation(nil)
+            }
+        }
+    }
+    
+    @IBAction func subjectSelected(_ sender: Any) {
         if let subject = subjectPopButton.selectedSubject {
-            subjectOpen(subject: subject)
+            var undone = false
+            undoManager?.registerUndo(withTarget: subjectPopButton) { _ in
+                undone = true
+                self.subjectLoading = false
+            }
+            
+            subjectPromptLabel.setToDefault()
+            
+            subjectLoading = true
+            
+            let paperWindow: NSWindowController = getController("Papers Window")!
+            let paperView = paperWindow.contentViewController as! PapersViewController
+            
+            DispatchQueue.global(qos: .userInteractive).async {
+                defer {
+                    DispatchQueue.main.async {
+                        self.subjectLoading = false
+                        self.undoManager?.removeAllActions()
+                    }
+                }
+                
+                // load current subject
+                if !paperView.rawLoad(subject: subject) {
+                    DispatchQueue.main.async {
+                        self.subjectPromptLabel.showError("Failed to load subject!")
+                    }
+                    return
+                }
+                
+                if undone { return }
+                
+                DispatchQueue.main.async {
+                    // display paper window
+                    paperView.subjectPopButton.selectedSubject = subject
+                    paperView.defaultUpdateAfterLoadingSubject()
+                    paperWindow.showWindow(nil)
+                    
+                    // set back prompt
+                    self.subjectPopButton.discardSelectedSubject()
+                    self.quickOpPerformButton.isHidden = true
+                }
+            }
         }
     }
 }
@@ -172,11 +213,11 @@ extension MainViewController: NSComboBoxDelegate {
         
         let text = quickOpComboBox.stringValue
         
-        subjectPopButtonOperationQueue.sync {
+        subjectPopButtonOperationQueue.sync {  // find subject from quick list
             let lowercasedText = text.lowercased()
             var found = false
             for index in 2..<2+PFQuickListCount {
-                if let item = subjectPopButton.item(at: index), item.title.lowercased().hasPrefix(lowercasedText) {
+                if let item = subjectPopButton.item(at: index), item.isEnabled && item.title.lowercased().hasPrefix(lowercasedText) {
                     DispatchQueue.main.async {
                         self.subjectPopButton.select(item)
                         self.quickOpMode = .Subject
@@ -206,18 +247,22 @@ extension MainViewController: NSComboBoxDelegate {
                 quickOpPromptLabel.showError("Subject code incomplete!")
             }
             currentCode = ""
+            currentSubjectPrompt = ""
             quickOpProcess.stopAnimation(nil)
             return
         }
         
         let code = text[0...3]
-        
-        if code == currentCode {
-            quickOpPromptLabel.setToDefault()
-            return
+        if code != currentCode {
+            currentCode = code
+            loadSubject(code: code)
         }
-        currentCode = code
-        
+        else if !currentSubjectPrompt.isEmpty {
+            quickOpPromptLabel.showPrompt(currentSubjectPrompt)
+        }
+    }
+    
+    func loadSubject(code: String) {
         quickOpPromptLabel.showPrompt("Loading subject...")
         quickOpProcess.startAnimation(nil)
         
@@ -236,6 +281,9 @@ extension MainViewController: NSComboBoxDelegate {
                 DispatchQueue.main.async {
                     self.quickOpPossiblePapers = []
                     self.quickOpPromptLabel.showError("Failed to find subject code!")
+                    self.quickOpRetryAction = {
+                        self.loadSubject(code: code)
+                    }
                 }
                 
                 return
@@ -249,6 +297,9 @@ extension MainViewController: NSComboBoxDelegate {
                 DispatchQueue.main.async {
                     self.quickOpPossiblePapers = []
                     self.quickOpPromptLabel.showError("Failed to get paper list!")
+                    self.quickOpRetryAction = {
+                        self.loadSubject(code: code)
+                    }
                 }
                 
                 return
@@ -260,7 +311,8 @@ extension MainViewController: NSComboBoxDelegate {
             
             DispatchQueue.main.async {
                 self.quickOpPossiblePapers = files
-                self.quickOpPromptLabel.setToDefault()
+                self.currentSubjectPrompt = "Subject: \(subject.name)"
+                self.quickOpPromptLabel.showPrompt(self.currentSubjectPrompt)
             }
         }
     }

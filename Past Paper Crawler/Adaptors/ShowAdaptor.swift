@@ -14,20 +14,20 @@ private let season = "season"
 private let seasonRange = 5
 private let paper = "paper"
 private let paperRange = 12
-private let edition = "edition"
-private let editionRange = 13
+private let region = "region"
+private let regionRange = 13
 private let type = "type"
 private let typeRange = 9...10
 
 private let withPaperLength = 13 + 4
 private let withEditionLength = 14 + 4
 
-private let criteriaKeys = [year, season, paper, edition, type]
+private let criteriaKeys = [year, season, paper, region, type]
 
 typealias ADCriteria = [String : String]
 
 private let yearPrefix = "20"
-private let editionOne = "Edition \(1)"
+private let noRegion = "Region -"
 private let none = "None"
 private let other = "other..."
 
@@ -46,7 +46,7 @@ private let types = [
 ]
 
 private let paperPrefix = "Paper "
-private let editionPrefix = "Edition "
+private let regionPrefix = "Region "
 
 
 private let regularFilePattern = "[0-9]{4}_[wsmy][0-9]{2}_[a-z]{2}(_[1-9][1-9]?)?.pdf"  // "0478_s18_ms_11.pdf" or "0478_s18_er.pdf"
@@ -54,7 +54,7 @@ private let regularFileRegex = try! NSRegularExpression(pattern: regularFilePatt
 private func info(of paperName: String) -> ADCriteria {
     let count = paperName.count
     
-    var ret: ADCriteria = [year: other, season: other, paper: other, edition: other, type: other]
+    var ret: ADCriteria = [year: other, season: other, paper: other, region: other, type: other]
     
     if regularFileRegex.firstMatch(in: paperName, range: NSRange(location: 0, length: paperName.count)) == nil {
         return ret
@@ -77,12 +77,12 @@ private func info(of paperName: String) -> ADCriteria {
     ret[paper] = paperPrefix + cPaper
     
     if count < withEditionLength {
-        ret[edition] = editionOne
+        ret[region] = noRegion
         return ret
     }
     
-    let cEdition: String = paperName[editionRange]
-    ret[edition] = editionPrefix + cEdition
+    let cEdition: String = paperName[regionRange]
+    ret[region] = regionPrefix + cEdition
     
     return ret
 }
@@ -95,13 +95,13 @@ private func isPaper(_ name: String) -> Bool {
 
 private func paperLocator(of name: String) -> String? {
     if !isPaper(name) { return nil }
-    return name[seasonRange...yearRange.upperBound] + name[paperRange...editionRange]
+    return name[seasonRange...yearRange.upperBound] + name[paperRange...regionRange]
 }
 
 private func paperDescription(of name: String) -> String? {
     if !isPaper(name) { return nil }
     let fInfo = info(of: name)
-    return "\(fInfo[year]!) \(fInfo[season]!) \(fInfo[paper]!) \(fInfo[edition]!)"
+    return "\(fInfo[year]!) \(fInfo[season]!) \(fInfo[paper]!) \(fInfo[region]!)"
 }
 
 
@@ -130,42 +130,42 @@ class ADPaperAnswerCouple {
         
         fInfo = info(of: qpName).filter { $0.key != type }
     }
-}
-
-private func makeCoupleArray(from papers: [WebFile]) -> [ADPaperAnswerCouple] {
-    // filter out files that are not qp or ms and those before 2005
-    var filtered: [(WebFile, String)] = []
-    papers.forEach { (f) in
-        let name = f.name
-        if name.count < 13 + 4 { return }
-        let type = name[typeRange]
-        if (type == "ms" || type == "qp") {
-            let year = name[yearRange]
-            if year.compare("04") == ComparisonResult.orderedDescending {
-                if let locator = paperLocator(of: name) {
-                    filtered.append((f, locator + type[0]))
+    
+    static func makeArray(from papers: [WebFile]) -> [ADPaperAnswerCouple] {
+        // filter out files that are not qp or ms and those before 2005
+        var filtered: [(WebFile, String)] = []
+        papers.forEach { (f) in
+            let name = f.name
+            if name.count < 13 + 4 { return }
+            let type = name[typeRange]
+            if (type == "ms" || type == "qp") {
+                let year = name[yearRange]
+                if year > "04" {
+                    if let locator = paperLocator(of: name) {
+                        filtered.append((f, locator + type[0]))
+                    }
                 }
             }
         }
-    }
-    
-    // sort the files to put same qp and ms together (faster than random search, nlogn < n^2)
-    let sortedList = filtered.sorted { $0.1 < $1.1 }
-    
-    // find all couples and put them into array
-    var coupleArray: [ADPaperAnswerCouple] = []
-    var currentPos = 0
-    while currentPos < sortedList.count - 1 {
-        let file1 = sortedList[currentPos].0
-        let file2 = sortedList[currentPos + 1].0
-        if let couple = ADPaperAnswerCouple(qp: file2, ms: file1) {
-            coupleArray.append(couple)
+        
+        // sort the files to put same qp and ms together (faster than random search, nlogn < n^2)
+        let sortedList = filtered.sorted { $0.1 < $1.1 }
+        
+        // find all couples and put them into array
+        var coupleArray: [ADPaperAnswerCouple] = []
+        var currentPos = 0
+        while currentPos < sortedList.count - 1 {
+            let file1 = sortedList[currentPos].0
+            let file2 = sortedList[currentPos + 1].0
+            if let couple = ADPaperAnswerCouple(qp: file2, ms: file1) {
+                coupleArray.append(couple)
+                currentPos += 1
+            }
             currentPos += 1
         }
-        currentPos += 1
+        
+        return coupleArray
     }
-    
-    return coupleArray
 }
 
 
@@ -208,8 +208,7 @@ class ADShowManager {
     
     var showAll: Bool = PFDefaultShowAll
     
-    var currentLevel: String = ""
-    var currentSubject: String = ""
+    var currentSubject: Subject?
     
     private var wholeList: [WebFile] = []
     private var wholeCoupleList: [ADPaperAnswerCouple] = []
@@ -218,18 +217,15 @@ class ADShowManager {
     // ---- access part ----
     
     func loadFrom(subject: Subject) -> Bool {
-        let level = subject.level
-        let name = subject.name
-        guard let paperList = PFUsingWebsite.getPapers(level: level, subject: name) else {
+        guard let paperList = PFUsingWebsite.getPapers(level: subject.level, subject: subject.name) else {
             return false
         }
         
-        currentLevel = level
-        currentSubject = name
+        currentSubject = subject
         wholeList = paperList
-        wholeCoupleList = makeCoupleArray(from: paperList)
+        wholeCoupleList = ADPaperAnswerCouple.makeArray(from: paperList)
         criteriaSummary = summarizeCriteria(for: paperList)
-        currentCriteria = [:]
+        _criteria = [:]
         
         // all cache must be reloaded
         cleanCache()
@@ -264,23 +260,18 @@ class ADShowManager {
     
     // ---- critria part ----
     
-    let authoritizedKeys = [year, season, paper, edition, type]
+    let authoritizedKeys = [year, season, paper, region, type]
     
     // e.g. [year: "2018", season: "s"]
-    private var currentCriteria: ADCriteria = [:]
-    
-    func setCriterion(name: String, value: String) {
-        currentCriteria[name] = value
-        
-        // show lists must be reloaded
-        cleanCache()
-    }
-    
-    func removeCriterion(name: String) {
-        currentCriteria.removeValue(forKey: name)
-        
-        // show lists must be reloaded
-        cleanCache()
+    private var _criteria: ADCriteria = [:]
+    var criteria: ADCriteria {
+        get {
+            return _criteria
+        }
+        set {
+            _criteria = newValue
+            cleanCache()
+        }
     }
     
     // ---- all part ----
@@ -294,8 +285,8 @@ class ADShowManager {
                 (raw) in
                 
                 let paperInfo = info(of: raw.name)
-                for cri in currentCriteria.keys{
-                    if paperInfo[cri] != currentCriteria[cri]{
+                for cri in _criteria.keys{
+                    if paperInfo[cri] != _criteria[cri]{
                         return false
                     }
                 }
@@ -326,8 +317,8 @@ class ADShowManager {
                 (raw) in
                 
                 let fInfo = raw.fInfo
-                for cri in currentCriteria.keys {
-                    if let info = fInfo[cri], info != currentCriteria[cri]! {
+                for cri in _criteria.keys {
+                    if let info = fInfo[cri], info != _criteria[cri]! {
                         return false
                     }
                 }

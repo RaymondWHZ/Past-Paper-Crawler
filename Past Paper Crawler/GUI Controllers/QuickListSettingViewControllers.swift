@@ -12,19 +12,14 @@ class QuickListViewController: NSViewController {
     
     @IBOutlet weak var levelPopButton: NSPopUpButton!
     @IBOutlet weak var subjectProgress: NSProgressIndicator!
-    @IBOutlet weak var subjectTable: NSTableView!
+    @IBOutlet weak var subjectTable: SelectTableView!
     @IBOutlet var promptLabel: PromptLabel!
-    
-    var currentSubjects: [String] = []  // subjects that display in the table
-    var selected: [Bool] = []  // indicates whether subject with corresponding index is selected
-    var changes: [(String, Bool)] = []  // record all changes made to selection (subject name, change to state)
-    var lazySelectedLevel = ""  // remain previous when level button changes, used to update changes
     
     var refreshEnabled = true
     let modifyQueue = DispatchQueue(label: "Quick List Modify Protect (All)")
     
     func modifyOn(action: @escaping () -> ()) {
-        modifyQueue.async {
+        modifyQueue.sync {  // async to maximize performance
             self.refreshEnabled = false
             action()
             self.refreshEnabled = true
@@ -35,27 +30,59 @@ class QuickListViewController: NSViewController {
         super.viewDidLoad()
         
         // set up table manipulators
-        subjectTable.dataSource = self
-        subjectTable.delegate = self
+        subjectTable.selectedAction = { row, state in
+            let name = self.subjectTable.entrys[row]
+            
+            var lastQuicklist: QuickList?
+            
+            self.modifyOn {
+                PFModifyQuickList { quickList in
+                    let nameLoc = quickList.firstIndex(where: { $0.name == name })
+                    if state {  // add subject into list when not exist
+                        if nameLoc == nil {
+                            lastQuicklist = quickList
+                            quickList.append(Subject(level: self.lazySelectedLevel, name: name))
+                        }
+                    }
+                    else {
+                        if nameLoc != nil {  // find and remove subject from list when exist
+                            lastQuicklist = quickList
+                            quickList.remove(at: nameLoc!)
+                        }
+                    }
+                }
+            }
+            
+            if lastQuicklist != nil {
+                self.undoManager?.registerUndo(withTarget: self) { _ in
+                    PFModifyQuickList { $0 = lastQuicklist! }
+                }
+            }
+        }
+    }
+    
+    override func viewDidAppear() {
+        levelSelected(levelPopButton)
         
-        PFObserveQuickListChange(self, selector: #selector(updateData))
+        PFObserveQuickListChange(self, selector: #selector(quickListChanged))
     }
     
     override func viewWillDisappear() {
         PFEndObserve(self)
     }
     
+    var lazySelectedLevel = ""  // remain previous when level button changes, used to update changes
     @IBAction func levelSelected(_ sender: Any) {
-        promptLabel.setToDefault()
-        
-        // clear all lists to avoid crash
-        currentSubjects.removeAll()
-        selected.removeAll()
-        subjectTable.reloadData()
-        
-        if levelPopButton.indexOfSelectedItem == 0 {  // not deal with default choice
-            return
+        let lastSelectedLevel = lazySelectedLevel
+        var undone = false
+        undoManager?.registerUndo(withTarget: self) { _ in
+            undone = true
+            self.levelPopButton.selectItem(withTitle: lastSelectedLevel)
+            self.levelSelected(self.levelPopButton)
         }
+        
+        promptLabel.setToDefault()
+        print(promptLabel.defaultText)
         
         lazySelectedLevel = levelPopButton.selectedItem!.title  // update lazy variable
         
@@ -81,18 +108,18 @@ class QuickListViewController: NSViewController {
                 return
             }
             
-            self.currentSubjects = subjects
-            self.updateTable()
+            if undone { return }
+            
+            DispatchQueue.main.async {
+                self.subjectTable.entrys = subjects
+                self.tickSubjects()
+            }
         }
     }
     
-    @IBAction func showSelectedClicked(_ sender: Any) {  // called when view selected button clicked
-        // fetch and show sub view
-        performSegue(withIdentifier: "Show Selected", sender: nil)
-    }
-    
-    func updateTable(reloadData: Bool = true) {  // updates table view according to quick list
-        selected = Array(repeating: false, count: currentSubjects.count)
+    func tickSubjects() {
+        subjectTable.selectedIndices = []
+        let entrys = subjectTable.entrys
         PFUseQuickList { quickList in
             for subject in quickList {
                 if subject.level != lazySelectedLevel || !subject.enabled {  // exclude other levels or disabled ones
@@ -100,64 +127,24 @@ class QuickListViewController: NSViewController {
                 }
                 
                 // find and tick on certain subject
-                if let index = currentSubjects.index(of: subject.name) {
-                    selected[index] = true
+                if let index = entrys.index(of: subject.name) {
+                    subjectTable.setState(of: index, to: true)
                 }
-            }
-        }
-        
-        if reloadData {
-            DispatchQueue.main.async {
-                self.subjectTable.reloadData()
             }
         }
     }
     
-    @objc func updateData() {
+    @objc func quickListChanged() {
         if refreshEnabled {
-            updateTable(reloadData: false)
-        }
-    }
-}
-
-extension QuickListViewController: NSTableViewDataSource {
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return currentSubjects.count
-    }
-    
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        return selected[row]
-    }
-    
-    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
-        let state = object as? Int == 1  // cast Any to Bool
-        selected[row] = state
-        
-        let name = self.currentSubjects[row]
-        
-        modifyOn {
-            PFModifyQuickList { quickList in
-                let nameLoc = quickList.firstIndex(where: { $0.name == name })
-                if state && nameLoc == nil {  // add subject into list when not exist
-                    quickList.append(Subject(level: self.lazySelectedLevel, name: name))
-                }
-                else if nameLoc != nil {  // find and remove subject from list when exist
-                    quickList.remove(at: nameLoc!)
-                }
+            DispatchQueue.main.async {
+                self.tickSubjects()
             }
         }
     }
-}
-
-extension QuickListViewController: NSTableViewDelegate {
     
-    func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if row < currentSubjects.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
-            newCell.title = currentSubjects[row]  // get the title from list
-            return newCell
-        }
-        return nil
+    @IBAction func showSelectedClicked(_ sender: Any) {  // called when view selected button clicked
+        // fetch and show sub view
+        performSegue(withIdentifier: "Show Selected", sender: nil)
     }
 }
 
@@ -165,7 +152,7 @@ extension QuickListViewController: NSTableViewDelegate {
 
 class SelectedViewController: NSViewController {
     
-    @IBOutlet weak var quickListTable: NSTableView!
+    @IBOutlet weak var quickListTable: SelectTableView!
     @IBOutlet weak var upButton: NSButton!
     @IBOutlet weak var downButton: NSButton!
     
@@ -177,22 +164,45 @@ class SelectedViewController: NSViewController {
     let modifyQueue = DispatchQueue(label: "Quick List Modify Protect (Selected)")
     
     func modifyOn(action: @escaping () -> ()) {
-        modifyQueue.async {
+        modifyQueue.async {  // async to maximize performance
             self.refreshEnabled = false
             action()
             self.refreshEnabled = true
         }
     }
     
+    func rowInQuickListOf(rowInSubject: Int) -> Int {
+        return quickListTable.selected[0..<rowInSubject].trueCount
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        quickListTable.defaultSelected = true
+        
         PFUseQuickList { self.subjects = $0 }
-        selected = Array(repeating: true, count: subjects.count)
+        reloadQuickListTable()
         
         // set up table manipulators
-        quickListTable.dataSource = self
-        quickListTable.delegate = self
+        quickListTable.selectedAction = { row, state in
+            self.modifyOn {  // performance measure: subthread update
+                PFModifyQuickList { quickList in
+                    let position = self.rowInQuickListOf(rowInSubject: row)
+                    if state {
+                        quickList.insert(self.subjects[row], at: position)
+                    }
+                    else {
+                        quickList.remove(at: position)
+                    }
+                }
+            }
+        }
+        
+        quickListTable.selectionChangedAction = {
+            let selectedRow = self.quickListTable.selectedRow
+            self.upButton.isEnabled = selectedRow > 0  // can't move up a top subject
+            self.downButton.isEnabled = selectedRow < self.quickListTable.entryCount - 1  // con't move down a bottom subject
+        }
         
         PFObserveQuickListChange(self, selector: #selector(updateData))
     }
@@ -201,19 +211,30 @@ class SelectedViewController: NSViewController {
         PFEndObserve(self)
     }
     
-    func drag(_ from: Int, _ to: Int) {  // swap position of to subjects
+    func reloadQuickListTable() {
+        quickListTable.entrys = subjects.map { $0.name }
+    }
+    
+    func drag(_ row1: Int, _ row2: Int) {  // swap position of to subjects
+        undoManager?.registerUndo(withTarget: self) { _ in
+            self.drag(row2, row1)
+        }
+        
         modifyOn {
             // swap elements in both lists at the same time
-            if self.selected[from] && self.selected[to] {
-                PFModifyQuickList { $0.swapAt(from, to) }
+            if self.quickListTable.selected[row1] && self.quickListTable.selected[row2] {
+                PFModifyQuickList { quicklist in
+                    let index1 = self.rowInQuickListOf(rowInSubject: row1)
+                    let index2 = self.rowInQuickListOf(rowInSubject: row2)
+                    quicklist.swapAt(index1, index2)
+                }
             }
-            self.subjects.swapAt(from, to)
-            self.selected.swapAt(from, to)
             
-            DispatchQueue.main.sync {
-                // refresh table
-                self.quickListTable.reloadData()
-                self.quickListTable.selectRowIndexes(IndexSet(integer: to), byExtendingSelection: false)
+            self.subjects.swapAt(row1, row2)
+            
+            DispatchQueue.main.async {
+                self.quickListTable.swapRows(row1: row1, row2: row2)
+                self.quickListTable.selectRowIndexes(IndexSet(integer: row2), byExtendingSelection: false)
             }
         }
     }
@@ -232,50 +253,8 @@ class SelectedViewController: NSViewController {
         if refreshEnabled {
             PFUseQuickList { self.subjects = $0 }
             DispatchQueue.main.async {
-                self.quickListTable.reloadData()
+                self.reloadQuickListTable()
             }
         }
-    }
-}
-
-extension SelectedViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return subjects.count
-    }
-    
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        return selected[row]
-    }
-    
-    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
-        let state = object as! Int == 1  // cast Any to Bool
-        selected[row] = state
-        modifyOn {  // performance measure: subthread update
-            PFModifyQuickList { quickList in
-                let position = self.selected[0..<row].reduce(into: 0, { $0 += $1 ? 1 : 0 })
-                if state {
-                    quickList.insert(self.subjects[row], at: position)
-                }
-                else {
-                    quickList.remove(at: position)
-                }
-            }
-        }
-    }
-}
-
-extension SelectedViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if row < subjects.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
-            newCell.title = subjects[row].name  // get the title from list
-            return newCell
-        }
-        return nil
-    }
-    
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        let selected = quickListTable.selectedRow
-        upButton.isEnabled = selected > 0  // can't move up a top subject
-        downButton.isEnabled = selected < subjects.count - 1  // con't move down a bottom subject
     }
 }

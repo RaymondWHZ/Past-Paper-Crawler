@@ -20,46 +20,23 @@ class PapersViewController: NSViewController {
     @IBOutlet weak var paperPopButton: NSPopUpButton!
     @IBOutlet weak var editionPopButton: NSPopUpButton!
     
-    @IBOutlet weak var papersTable: NSTableView!
+    @IBOutlet weak var papersTable: SelectTableView!
     @IBOutlet weak var selectAllButton: NSButton!
     
+    var lazyCriteriaIndices: [String : Int] = [:]
+    
     @IBOutlet var viewPromptLabel: PromptLabel!
-    @IBOutlet weak var showAllCheckbox: NSButton!
+    @IBOutlet var selectModePopButton: NSPopUpButton!
     @IBOutlet weak var typePopButton: NSPopUpButton!
     
-    @IBOutlet var downloadCountLabel: PromptLabel!
+    var lazySelectModeIndex: Int = -1
+    
     @IBOutlet weak var downloadButton: NSButton!
     @IBOutlet weak var downloadProgress: NSProgressIndicator!
+    @IBOutlet var downloadPromptLabel: PromptLabel!
     
-    var allControls: [NSControl] = []
-    
-    // ---custom variables---
-    
-    var showManager = ADShowManager()
-    
-    var selected: [Bool] = [] {  // indicates whether subject with corresponding index is selected
-        didSet {
-            let selectedCount = selected.reduce(into: 0) { if $1 { $0 += 1 } }
-            if selectedCount == 0 {
-                selectAllButton.state = .off
-                downloadCountLabel.setToDefault()
-                downloadButton.isEnabled = false
-            }
-            else {
-                selectAllButton.state = (selectedCount == selected.count) ? .on : .off
-                let fileCount = (showAllCheckbox.state == .on) ? selectedCount : selectedCount * 2
-                downloadCountLabel.showPrompt("Selected \(fileCount) files")
-                downloadButton.isEnabled = true
-            }
-        }
-    }
-    
-    // ---standard functions---
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        allControls = [
+    lazy var allControls: [NSControl] = {
+        return [
             subjectPopButton,
             
             yearPopButton,
@@ -70,18 +47,53 @@ class PapersViewController: NSViewController {
             papersTable,
             selectAllButton,
             
-            showAllCheckbox,
+            selectModePopButton,
             typePopButton
         ]
+    }()
+    
+    lazy var criteriaPopButtons: [NSPopUpButton] = {
+        return [
+            yearPopButton,
+            seasonPopButton,
+            paperPopButton,
+            editionPopButton,
+            typePopButton
+        ]
+    }()
+    
+    var windowTitle: String? {
+        get {
+            return view.window?.title
+        }
+        set {
+            view.window?.title = newValue ?? ""
+        }
+    }
+    
+    // ---custom variables---
+    
+    private var showManager = ADShowManager()
+    
+    // ---standard functions---
+    
+    func updateTable() {
+        papersTable.entrys = showManager.currentShowList
+    }
+    
+    var fileCount = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         // set up table manipulators
-        papersTable.dataSource = self
-        papersTable.delegate = self
-        
-        if PFDefaultShowAll {
-            showAllCheckbox.state = .on
-            changedShowOption(showAllCheckbox)
+        papersTable.selectAllButton = selectAllButton
+        papersTable.selectedAction = { _, _ in
+            self.updateDownloadControls()
         }
+        
+        selectModePopButton.selectItem(at: PFDefaultShowAll ? 1 : 0)
+        changedSelectOption(selectModePopButton)
     }
     
     // ---custom functions---
@@ -97,54 +109,128 @@ class PapersViewController: NSViewController {
         }
     }
     
-    // quick accesses to showProxy
+    // quick accesse to showManager
+    var criteriaSummary: ADCriteriaSummary?
     
-    var currentLevel: String {
-        get {
-            return showManager.currentLevel
-        }
-    }
-    var currentSubject: String {
-        get {
-            return showManager.currentSubject
-        }
-    }
-    var currentDisplay: [String] {
-        get {
-            return showManager.currentShowList
-        }
+    @IBAction func changedSelectOption(_ sender: Any) {
+        let selectedIndex = selectModePopButton.indexOfSelectedItem
+        let lastIndex = lazySelectModeIndex
+        changeSelectOption(to: selectedIndex, lastIndex: lastIndex)
     }
     
-    @IBAction func selectAllClicked(_ sender: Any) {
-        papersTable.reloadData()  // the table will automatically detect whether it's on
-    }
-    
-    @IBAction func changedShowOption(_ sender: Any) {
-        let isOn = showAllCheckbox.state == .on
-        typePopButton.isHidden = !isOn
+    func changeSelectOption(to index: Int, lastIndex: Int) {
+        if index == lastIndex { return }
         
-        viewPromptLabel.defaultText = (isOn) ? "All files are shown." : "Papers and answers are put together omitting any other file or paper before 2005."
+        if lastIndex != -1 {
+            let lastSelected = papersTable.selectedIndices
+            undoManager?.registerUndo(withTarget: self) { _ in
+                self.selectModePopButton.selectItem(at: lastIndex)
+                self.changeSelectOption(to: lastIndex, lastIndex: index)
+                self.papersTable.selectedIndices = lastSelected
+            }
+        }
         
-        showManager.showAll = isOn
-        selectAllButton.state = .off
-        papersTable.reloadData()
+        if index == 0 {
+            typePopButton.isHidden = true
+            papersTable.tableColumns.first?.title = "Papers (with answer)"
+            viewPromptLabel.defaultText = "Papers and answers are put together omitting any other file or paper before 2005."
+            showManager.showAll = false
+        }
+        else {
+            typePopButton.isHidden = false
+            papersTable.tableColumns.first?.title = "Files"
+            viewPromptLabel.defaultText = "All files are shown."
+            showManager.showAll = true
+        }
+        
+        viewPromptLabel.setToDefault()
+        updateTable()
+        
+        lazySelectModeIndex = index
     }
     
     @IBAction func subjectSelected(_ sender: Any) {
-        guard let subject = subjectPopButton.selectedSubject else {
+        if let subject = subjectPopButton.selectedSubject {
+            load(subject: subject)
+        }
+    }
+    
+    func defaultUpdateAfterLoadingSubject() {
+        guard let subject = showManager.currentSubject else {
             return
         }
+        
+        // remove all previous criteria
+        setCriteriaPopButtons(summary: showManager.criteriaSummary)
+        
+        // auto switch to show all when no couple found
+        if showManager.currentShowList.count == 0 {
+            if !showManager.showAll {
+                DispatchQueue.main.async {
+                    self.selectModePopButton.selectItem(at: 1)
+                    self.changeSelectOption(to: 1, lastIndex: -1)
+                }
+            }
+            return
+        }
+        
+        // reset selection
+        updateTable()
+        
+        // set up title
+        windowTitle = subject.name
+    }
+    
+    func rawLoad(subject: Subject) -> Bool {
+        return showManager.loadFrom(subject: subject)
+    }
+    
+    func load(subject: Subject) {
+        if subject == showManager.currentSubject { return }
+        load(subject: subject) {
+            DispatchQueue.main.async(execute: self.defaultUpdateAfterLoadingSubject)
+        }
+    }
+    
+    func backLoad(subject: Subject, lastSelected: [Int], lastCriteria: ADCriteria, lastSelectMode: Int) {
+        if subject == showManager.currentSubject { return }
+        load(subject: subject) {
+            DispatchQueue.main.async {
+                self.showManager.criteria = lastCriteria
+                self.setCriteriaPopButtons(summary: self.showManager.criteriaSummary, criteria: lastCriteria)
+                self.selectModePopButton.selectItem(at: lastSelectMode)
+                self.updateTable()
+                self.papersTable.selectedIndices = lastSelected
+            }
+        }
+    }
+    
+    func load(subject: Subject, callback: @escaping () -> ()) {
+        let lastSubject = showManager.currentSubject
+        if subject == lastSubject {
+            callback()
+            return
+        }
+        
+        let lastSelected = papersTable.selectedIndices
+        let lastCriteria = showManager.criteria
+        let lastSelectMode = selectModePopButton.indexOfSelectedItem
+        
+        var undone = false
+        undoManager?.registerUndo(withTarget: self) { _ in
+            undone = true
+            self.backLoad(subject: lastSubject!, lastSelected: lastSelected, lastCriteria: lastCriteria, lastSelectMode: lastSelectMode)
+        }
+        
+        self.subjectPopButton.selectedSubject = subject
         
         viewPromptLabel.setToDefault()
         
         // lock up buttons
         controlEnabled = false
         downloadButton.isEnabled = false
+        downloadPromptLabel.isHidden = true
         papersProgress.startAnimation(nil)
-        
-        // select item
-        subjectPopButton.selectItem(at: 0)
-        subjectPopButton.item(at: 0)!.title = subject.name + " "
         
         DispatchQueue.global(qos: .userInteractive).async {
             defer {
@@ -152,11 +238,12 @@ class PapersViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.controlEnabled = true
                     self.papersProgress.stopAnimation(nil)
+                    self.updateDownloadControls()
                 }
             }
             
             // access website to get all papers
-            if !self.showManager.loadFrom(subject: subject) {
+            if !self.rawLoad(subject: subject) {
                 DispatchQueue.main.async {
                     self.viewPromptLabel.showError("Failed to load subject!")
                 }
@@ -164,130 +251,129 @@ class PapersViewController: NSViewController {
                 return
             }
             
-            DispatchQueue.main.async {
-                self.selectAllButton.state = .off
-                self.papersTable.reloadData()
-                self.resetSurrounding()
-            }
+            if undone { return }
+            callback()
         }
     }
     
-    @IBAction func criteriaSelected(_ sender: Any) {
+    @IBAction func criterionSelected(_ sender: Any) {
         let popButton = sender as! NSPopUpButton
         let name = popButton.identifier!.rawValue
         let index = popButton.indexOfSelectedItem
+        let lastIndex = lazyCriteriaIndices[name] ?? 0
+        
+        if index == lastIndex { return }
+        
+        updateCriterion(for: popButton, lastIndex: lastIndex)
+    }
+    
+    func updateCriterion(for popButton: NSPopUpButton, lastIndex: Int) {
+        let name = popButton.identifier!.rawValue
+        let index = popButton.indexOfSelectedItem
+        let lastSelected = papersTable.selectedIndices
+        
+        undoManager?.registerUndo(withTarget: self, handler: { _ in
+            popButton.selectItem(at: lastIndex)
+            self.updateCriterion(for: popButton, lastIndex: index)
+            self.papersTable.selectedIndices = lastSelected
+        })
+        
         if index == 0 {
-            showManager.removeCriterion(name: name)
+            showManager.criteria.removeValue(forKey: name)
         }
         else {
             let value = popButton.item(at: index)!.title
-            showManager.setCriterion(name: name, value: value)
+            showManager.criteria[name] = value
         }
-        papersTable.reloadData()
+        updateTable()
+        
+        lazyCriteriaIndices[name] = index
     }
     
-    func resetSurrounding() {  // only called when new subject selected
-        // set up title
-        view.window?.title = currentSubject
+    func setCriteriaPopButtons(summary: ADCriteriaSummary? = nil, criteria: ADCriteria? = nil) {
+        if summary != nil {
+            criteriaPopButtons.forEach { popButton in
+                let identifier = popButton.identifier!.rawValue  // get button identifier
+                let selections = Array(summary![identifier]!)  // get list of choice from summary, converting Set to Array
+                while popButton.numberOfItems > 1 { popButton.removeItem(at: 1) }  // remove original items
+                popButton.addItems(withTitles: selections)  // push in corresponding list of choice
+            }
+            criteriaSummary = summary  // fetch all selections
+        }
         
-        // set up subject selector
-        subjectPopButton.itemArray[0].title = currentSubject + " "  // add space to avoid duplication in list
-        
-        if papersTable.numberOfRows == 0 {
-            if !showManager.showAll {  // auto switch to show all when no couple found
-                DispatchQueue.main.async {
-                    self.showAllCheckbox.state = .on
-                    self.changedShowOption(self.showAllCheckbox)
+        if criteria != nil {
+            criteriaPopButtons.forEach { popButton in
+                let identifier = popButton.identifier!.rawValue
+                if let value = criteria![identifier] {
+                    popButton.selectItem(withTitle: value)
                 }
             }
-            return
+            showManager.criteria = criteria!
         }
-        
-        // remove all previous criteria
-        resetCriteria()
     }
     
-    func resetCriteria() {
-        // set up criteria selector
-        let summary = showManager.criteriaSummary  // fetch all selections
-        for popButton in [
-            yearPopButton,
-            seasonPopButton,
-            paperPopButton,
-            editionPopButton,
-            typePopButton
-            ] {
-                let identifier = popButton!.identifier!.rawValue  // get button identifier
-                let selections = Array(summary[identifier]!)  // get list of choice from summary, converting Set to Array
-                while popButton!.numberOfItems > 1 { popButton!.removeItem(at: 1) }  // remove original items
-                popButton!.addItems(withTitles: selections)  // push in corresponding list of choice
-        }
-    }
+    let tooMuchFileAlert: NSAlert = {
+        let alert = NSAlert()
+        alert.messageText = "Number of selected files is too large, which may result in long download period. Would you like to continue?"
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Cancel")
+        alert.addButton(withTitle: "Continue")
+        return alert
+    }()
+    
+    let cancelRespond = NSApplication.ModalResponse.alertFirstButtonReturn
     
     @IBAction func downloadClicked(_ sender: Any) {
-        // collect all indeices to download
-        var selectedIndices: [Int] = []
-        for (index, state) in selected.enumerated() {
-            if state {
-                selectedIndices.append(index)
+        if fileCount > 20 {
+            let respond = tooMuchFileAlert.runModal()
+            if respond == cancelRespond {
+                return
             }
         }
         
-        download(papers: showManager.getSelectedPapers(at: selectedIndices))
+        // collect all indeices to download
+        download(papers: showManager.getSelectedPapers(at: papersTable.selectedIndices))
     }
     
     func download(papers: [WebFile], to path: String? = nil) {
         // start spinning
         downloadProgress?.startAnimation(nil)
+        downloadButton.isEnabled = false
+        downloadPromptLabel.showPrompt("Downloading...")
         
         ADDownload(papers: papers, to: path) {
             path, failed in
             DispatchQueue.main.async {
-                // if all complished (might have another download mission), stop spinning
-                if webFileDownloadStack == 0 {
-                    self.downloadProgress?.stopAnimation(nil)
-                }
+                self.downloadProgress?.stopAnimation(nil)
+                self.downloadButton.isEnabled = true
                 
                 // if any failed, show the failed view
                 if !failed.isEmpty {
+                    self.downloadPromptLabel.showError("Download Failed!")
                     self.presentAsSheet(
                         getFailedView(failedList: failed, retryAction: {
                             self.download(papers: $0, to: path)
                         })
                     )
                 }
+                else {
+                    self.downloadPromptLabel.showPrompt("Download Succeed!")
+                }
             }
         }
     }
-}
-
-extension PapersViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        let count = currentDisplay.count
-        let selectAll = selectAllButton.state == .on
-        selected = Array(repeating: selectAll, count: count)
-        return count
-    }
     
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        if row < selected.count {
-            return selected[row]
+    func updateDownloadControls() {
+        let selectedCount = papersTable.selectedCount
+        if selectedCount == 0 {
+            fileCount = 0
+            downloadPromptLabel.setToDefault()
+            downloadButton.isEnabled = false
         }
-        return false
-    }
-    
-    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
-        let state = object as! Int == 1  // cast Any to Bool
-        selected[row] = state
-    }
-}
-
-extension PapersViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
-        if row < currentDisplay.count, let newCell = tableColumn?.dataCell as? NSButtonCell {  // fetch template cell
-            newCell.title = currentDisplay[row]  // get the title from list
-            return newCell
+        else {
+            fileCount = (selectModePopButton.indexOfSelectedItem == 0) ? selectedCount * 2 : selectedCount
+            downloadPromptLabel.showPrompt("\(fileCount) File(s)")
+            downloadButton.isEnabled = true
         }
-        return nil
     }
 }

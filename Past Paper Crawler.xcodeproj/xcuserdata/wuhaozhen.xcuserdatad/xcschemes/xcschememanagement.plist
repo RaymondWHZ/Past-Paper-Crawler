@@ -9,10 +9,15 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Past Paper Crawler Yoyo Special Edition.xcscheme_^#shared#^_</key>
+		<key>Past Paper Crawler Core Test.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
+		</dict>
+		<key>Past Paper Crawler Yoyo Special Edition.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>Past Paper Crawler.xcscheme</key>
 		<dict>
@@ -21,12 +26,19 @@
 		</dict>
 		<key>Past Paper Crawler.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>B600BBBB226DAF1500BC2B24</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B60320CF213254AD00488A42</key>
 		<dict>
 			<key>primary</key>
@@ -38,6 +50,11 @@
 			<true/>
 		</dict>
 		<key>B60320EC213254AF00488A42</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B6226692226C07C8007318B7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -19,6 +19,7 @@ let userDefaults = UserDefaults.standard
 let fileManager = FileManager.default
 let workspace = NSWorkspace.shared
 
+// lazy load open panel
 let directoryOpenPanel: NSOpenPanel = {
     let openPanel = NSOpenPanel()
     openPanel.canChooseFiles = false
@@ -27,3 +28,15 @@ let directoryOpenPanel: NSOpenPanel = {
     openPanel.treatsFilePackagesAsDirectories = true
     return openPanel
 }()
+
+private let preferenceWindowController: NSWindowController = getController("Settings")!
+private let preferenceViewController = preferenceWindowController.contentViewController as! NSTabViewController
+
+func showSettingWindow() {
+    preferenceWindowController.showWindow(nil)
+}
+
+func showQuickListSettingWindow() {
+    preferenceViewController.selectedTabViewItemIndex = 1
+    preferenceWindowController.showWindow(nil)
+}

@@ -34,6 +34,10 @@ class Subject : NSObject, NSCoding {
         name = decoder.decodeObject(forKey: "Name") as? String ?? ""
         enabled = decoder.decodeBool(forKey: "Enabled")
     }
+    
+    static func == (s1: Subject, s2: Subject) -> Bool {
+        return s1.level == s2.level && s1.name == s2.name
+    }
 }
 
 private var subjectUtils: [String: SubjectUtil] = [:]

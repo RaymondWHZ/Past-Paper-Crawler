@@ -10,7 +10,7 @@
         <scene sceneID="QSH-AL-Z1x">
             <objects>
                 <windowController storyboardIdentifier="Settings" showSeguePresentationStyle="single" id="ezF-oh-akO" sceneMemberID="viewController">
-                    <window key="window" title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Yxm-Ug-coC">
+                    <window key="window" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Yxm-Ug-coC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="163" y="208" width="480" height="270"/>
@@ -240,8 +240,38 @@ Gw
                                 <rect key="frame" x="20" y="286" width="381" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F8h-gY-2nZ">
+                                <rect key="frame" x="18" y="255" width="208" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Select paper &amp; answer pairs" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oMa-Nu-pjl" id="rTG-rL-kc9">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="Aqe-GR-YIH">
+                                        <items>
+                                            <menuItem title="Select paper &amp; answer pairs" state="on" id="oMa-Nu-pjl">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="Select individual files" id="hbw-mF-5dQ">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="selectModeSelected:" target="NhA-1H-zyV" id="baI-50-9V0"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j0c-Yi-H2W">
+                                <rect key="frame" x="226" y="260" width="65" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="by default" id="l4h-7n-0kN">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y9M-Ia-ZaT">
-                                <rect key="frame" x="18" y="190" width="99" height="17"/>
+                                <rect key="frame" x="18" y="182" width="99" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Download path:" id="FyZ-mP-0Qk">
                                     <font key="font" metaFont="system"/>
@@ -250,7 +280,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nXn-3t-Ztt">
-                                <rect key="frame" x="19" y="96" width="312" height="18"/>
+                                <rect key="frame" x="19" y="88" width="312" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Create subject folder (e.g. Mathematics (0580))" bezelStyle="regularSquare" imagePosition="left" inset="2" id="XPm-sC-1Dv">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -260,19 +290,8 @@ Gw
                                     <action selector="createFolderOptionChanged:" target="NhA-1H-zyV" id="SIr-KO-3cS"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Afz-tM-faC">
-                                <rect key="frame" x="19" y="264" width="165" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Show all files by default" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Rhd-Kt-WIb">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="showModeSelected:" target="NhA-1H-zyV" id="Ppx-oi-cpV"/>
-                                </connections>
-                            </button>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXk-J8-AQl">
-                                <rect key="frame" x="18" y="224" width="385" height="34"/>
+                                <rect key="frame" x="18" y="216" width="385" height="34"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" title="Showing panel automatically switches to show all mode when no paper &amp; answer pairs found " id="sar-n4-Txs">
                                     <font key="font" metaFont="system"/>
@@ -281,11 +300,11 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZmP-dn-M0R">
-                                <rect key="frame" x="20" y="213" width="381" height="5"/>
+                                <rect key="frame" x="20" y="205" width="381" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQY-pX-Ky4">
-                                <rect key="frame" x="19" y="165" width="106" height="18"/>
+                                <rect key="frame" x="19" y="157" width="106" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="radio" title="Ask evey time" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2kG-kA-FMS">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -296,7 +315,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QO-vm-1RY">
-                                <rect key="frame" x="19" y="143" width="123" height="18"/>
+                                <rect key="frame" x="19" y="135" width="123" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="radio" title="Use default path" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="vLS-le-0as">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -307,7 +326,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1O-NY-VdS">
-                                <rect key="frame" x="19" y="65" width="317" height="18"/>
+                                <rect key="frame" x="19" y="57" width="317" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Show file(s) in Finder after finishing downloading" bezelStyle="regularSquare" imagePosition="left" inset="2" id="90b-Wt-Ulo">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -318,11 +337,11 @@ Gw
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ksU-YF-25q">
-                                <rect key="frame" x="20" y="87" width="381" height="5"/>
+                                <rect key="frame" x="20" y="79" width="381" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
                             <pathControl focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hXQ-sQ-Qhf">
-                                <rect key="frame" x="32" y="117" width="369" height="22"/>
+                                <rect key="frame" x="32" y="109" width="369" height="22"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <pathCell key="cell" selectable="YES" focusRingType="none" alignment="left" id="3bI-pK-ekZ">
                                     <font key="font" metaFont="system"/>
@@ -330,7 +349,7 @@ Gw
                                 </pathCell>
                             </pathControl>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bt4-8d-HEp">
-                                <rect key="frame" x="144" y="142" width="53" height="17"/>
+                                <rect key="frame" x="144" y="134" width="53" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="inline" title="change" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="IRJ-de-X0l">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -348,7 +367,7 @@ Gw
                         <outlet property="createFolderCheckBox" destination="nXn-3t-Ztt" id="ERz-rv-bvY"/>
                         <outlet property="openInFinderCheckBox" destination="o1O-NY-VdS" id="iGN-4v-65U"/>
                         <outlet property="pathControl" destination="hXQ-sQ-Qhf" id="6lk-dT-vmn"/>
-                        <outlet property="showAllCheckBox" destination="Afz-tM-faC" id="J5g-ze-KwB"/>
+                        <outlet property="selectModePopButton" destination="F8h-gY-2nZ" id="OAr-cT-e2Q"/>
                         <outlet property="useDefaultOption" destination="0QO-vm-1RY" id="h4w-NA-Vj5"/>
                         <outlet property="websitePopButton" destination="NsG-j3-zJQ" id="6me-xw-gfj"/>
                     </connections>
@@ -377,15 +396,12 @@ Gw
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5k1-AF-TJA">
                                 <rect key="frame" x="102" y="330" width="358" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7Az-0G-bMD" id="Dva-GT-el3">
+                                <popUpButtonCell key="cell" type="push" title="IGCSE" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="pJO-KJ-sFm" id="Dva-GT-el3">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="XFk-jG-hlk">
                                         <items>
-                                            <menuItem title="-" state="on" id="7Az-0G-bMD">
-                                                <modifierMask key="keyEquivalentModifierMask"/>
-                                            </menuItem>
-                                            <menuItem title="IGCSE" keyEquivalent="i" id="pJO-KJ-sFm"/>
+                                            <menuItem title="IGCSE" state="on" keyEquivalent="i" id="pJO-KJ-sFm"/>
                                             <menuItem title="AS &amp; A-Level" keyEquivalent="a" id="MeL-Sc-vNf"/>
                                             <menuItem title="O-Level" keyEquivalent="o" id="1dI-k9-hfI"/>
                                         </items>
@@ -406,7 +422,7 @@ Gw
                                     <rect key="frame" x="1" y="0.0" width="459" height="279"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="wG1-nP-SGF" id="IXx-t7-MNn">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="wG1-nP-SGF" id="IXx-t7-MNn" customClass="SelectTableView" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="459" height="256"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -474,7 +490,7 @@ Gw
                 </viewController>
                 <customObject id="ZOy-rO-Yuu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2226" y="230"/>
+            <point key="canvasLocation" x="-2226.5" y="230"/>
         </scene>
         <!--Selected View Controller-->
         <scene sceneID="Ah1-9e-Qgt">
@@ -491,7 +507,7 @@ Gw
                                     <rect key="frame" x="1" y="0.0" width="408" height="233"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="pZt-tS-doV" id="pP5-a4-bBI">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="pZt-tS-doV" id="pP5-a4-bBI" customClass="SelectTableView" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="408" height="210"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -605,7 +621,7 @@ DQ
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
-                                                <segue destination="ezF-oh-akO" kind="show" id="U2h-gw-Nqd"/>
+                                                <action selector="preferencesClicked:" target="Voe-Tx-rLC" id="ogP-uF-eRI"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -640,6 +656,44 @@ DQ
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Edit" id="vCr-P7-ZnB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Edit" id="mKX-bx-Cej">
+                                    <items>
+                                        <menuItem title="Undo" keyEquivalent="z" id="nez-gs-1zQ">
+                                            <connections>
+                                                <action selector="undo:" target="Ady-hI-5gd" id="GjA-Rk-AV5"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Redo" keyEquivalent="Z" id="JsL-sl-lLD">
+                                            <connections>
+                                                <action selector="redo:" target="Ady-hI-5gd" id="rjb-n8-TY9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="ek1-mP-fRM"/>
+                                        <menuItem title="Cut" keyEquivalent="x" id="3rd-ZR-vA0">
+                                            <connections>
+                                                <action selector="cut:" target="Ady-hI-5gd" id="B3D-O3-kx8"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Copy" keyEquivalent="c" id="1hd-Up-luI">
+                                            <connections>
+                                                <action selector="copy:" target="Ady-hI-5gd" id="MNm-W5-iJe"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Paste" keyEquivalent="v" id="TZ3-da-ejr">
+                                            <connections>
+                                                <action selector="paste:" target="Ady-hI-5gd" id="wJJ-2C-UDU"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Select All" keyEquivalent="a" id="lqX-Qf-cls">
+                                            <connections>
+                                                <action selector="selectAll:" target="Ady-hI-5gd" id="FpJ-av-XTg"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="View" id="064-us-T7B">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="7hW-H5-Tqg">
@@ -647,11 +701,6 @@ DQ
                                         <menuItem title="Show Main Window" keyEquivalent="n" id="gTe-7c-w0s">
                                             <connections>
                                                 <segue destination="F0b-XC-4I0" kind="show" id="k5S-e6-hFJ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Show Quick List Editor" keyEquivalent="l" id="JLj-PW-AEa">
-                                            <connections>
-                                                <action selector="showQuickListSettingClicked:" target="Voe-Tx-rLC" id="3Ya-jo-swn"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -686,9 +735,6 @@ DQ
                                         </menuItem>
                                     </items>
                                 </menu>
-                            </menuItem>
-                            <menuItem title="Help" id="qoi-aS-YCi">
-                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                         </items>
                     </menu>
@@ -731,16 +777,10 @@ DQ
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yzk-9Z-kfi">
                                 <rect key="frame" x="102" y="40" width="220" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ywl-yd-J0e" id="Jqk-5N-gaS">
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Jqk-5N-gaS">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="1hv-QB-le1">
-                                        <items>
-                                            <menuItem title="-" state="on" id="ywl-yd-J0e">
-                                                <modifierMask key="keyEquivalentModifierMask"/>
-                                            </menuItem>
-                                        </items>
-                                    </menu>
+                                    <menu key="menu" id="1hv-QB-le1"/>
                                 </popUpButtonCell>
                                 <connections>
                                     <action selector="subjectSelected:" target="Lyz-ls-eyS" id="m5x-gk-f9m"/>
@@ -749,13 +789,12 @@ DQ
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2pj-YQ-mmQ">
                                 <rect key="frame" x="102" y="65" width="220" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oxh-vi-44e" id="MI3-XE-v4Q">
+                                <popUpButtonCell key="cell" type="push" title="IGCSE" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="sq9-23-NBP" id="MI3-XE-v4Q">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="8PP-Mc-deB">
                                         <items>
-                                            <menuItem title="-" state="on" id="oxh-vi-44e"/>
-                                            <menuItem title="IGCSE" keyEquivalent="i" id="sq9-23-NBP"/>
+                                            <menuItem title="IGCSE" state="on" keyEquivalent="i" id="sq9-23-NBP"/>
                                             <menuItem title="AS &amp; A-Level" keyEquivalent="a" id="s5s-iA-uJE"/>
                                             <menuItem title="O-Level" keyEquivalent="o" id="NSr-cg-fed"/>
                                         </items>
@@ -912,7 +951,7 @@ DQ
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="subjectClicked:" target="6S3-cq-2dv" id="zh5-ge-3Z9"/>
+                                    <action selector="subjectSelected:" target="6S3-cq-2dv" id="zh5-ge-3Z9"/>
                                 </connections>
                             </popUpButton>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OGv-F0-9pD" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
@@ -933,7 +972,7 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </comboBoxCell>
                                 <connections>
-                                    <action selector="operationConfirmed:" target="6S3-cq-2dv" id="UuE-H5-uqs"/>
+                                    <action selector="operationConfirmed:" target="6S3-cq-2dv" id="bUN-5F-Wol"/>
                                 </connections>
                             </comboBox>
                             <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VFn-Rc-n9h">
@@ -964,7 +1003,7 @@ DQ
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="retryClicked:" target="6S3-cq-2dv" id="zNU-o5-EiB"/>
+                                    <action selector="retryClicked:" target="6S3-cq-2dv" id="7nj-K7-rG9"/>
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLb-RC-qB8">
@@ -992,7 +1031,7 @@ DQ
                 </viewController>
                 <customObject id="tNu-xP-1gO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-524.5" y="662"/>
+            <point key="canvasLocation" x="-524" y="662"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -1020,25 +1059,25 @@ DQ
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="PapersViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="558" height="514"/>
+                        <rect key="frame" x="0.0" y="0.0" width="558" height="524"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cds-3m-UPp">
-                                <rect key="frame" x="20" y="73" width="494" height="361"/>
+                                <rect key="frame" x="20" y="78" width="494" height="366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="dzd-wg-8vQ">
-                                    <rect key="frame" x="1" y="0.0" width="492" height="360"/>
+                                    <rect key="frame" x="1" y="0.0" width="492" height="365"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="dMy-d1-mvE" id="D9t-ZE-12Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="492" height="337"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="dMy-d1-mvE" id="D9t-ZE-12Q" customClass="SelectTableView" customModule="Past_Paper_Crawler" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="492" height="342"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
                                                 <tableColumn width="489" minWidth="40" maxWidth="1000" id="6f6-cj-a0C">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Papers (with answer)">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Title">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1054,11 +1093,11 @@ DQ
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="JjL-in-vxW">
-                                    <rect key="frame" x="1" y="7" width="0.0" height="16"/>
+                                    <rect key="frame" x="1" y="350" width="477" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="uSR-sC-wQV">
-                                    <rect key="frame" x="-15" y="23" width="16" height="0.0"/>
+                                    <rect key="frame" x="-100" y="-100" width="15" height="327"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" id="dMy-d1-mvE">
@@ -1067,7 +1106,7 @@ DQ
                                 </tableHeaderView>
                             </scrollView>
                             <popUpButton identifier="season" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X73-oQ-9Md">
-                                <rect key="frame" x="203" y="439" width="106" height="26"/>
+                                <rect key="frame" x="203" y="449" width="106" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All seasons" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="eJR-kw-E73" id="fSu-zw-HNE">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1079,11 +1118,11 @@ DQ
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="GCg-XZ-iuw"/>
+                                    <action selector="criterionSelected:" target="XfG-lQ-9wD" id="lkv-yn-I7i"/>
                                 </connections>
                             </popUpButton>
                             <popUpButton identifier="paper" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geV-Qa-LQD">
-                                <rect key="frame" x="312" y="439" width="98" height="26"/>
+                                <rect key="frame" x="312" y="449" width="98" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All papers" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3P6-Wj-ZId" id="e7B-op-Uv5">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1095,69 +1134,40 @@ DQ
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="vV6-GW-dvP"/>
+                                    <action selector="criterionSelected:" target="XfG-lQ-9wD" id="Hki-GG-ayF"/>
                                 </connections>
                             </popUpButton>
-                            <popUpButton identifier="edition" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldm-wS-9R5">
-                                <rect key="frame" x="413" y="439" width="104" height="26"/>
+                            <popUpButton identifier="region" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldm-wS-9R5">
+                                <rect key="frame" x="415" y="449" width="102" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="All editions" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="d2w-1l-Vd4" id="zVs-Xq-nfA">
+                                <popUpButtonCell key="cell" type="push" title="All regions" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="d2w-1l-Vd4" id="zVs-Xq-nfA">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="1Zi-WS-lrf">
                                         <items>
-                                            <menuItem title="All editions" state="on" id="d2w-1l-Vd4"/>
+                                            <menuItem title="All regions" state="on" id="d2w-1l-Vd4"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="N9w-bE-eKU"/>
-                                </connections>
-                            </popUpButton>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvb-gV-RhV">
-                                <rect key="frame" x="18" y="19" width="111" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" title="Show all files" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gxq-Ky-HPV">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent">s</string>
-                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="changedShowOption:" target="XfG-lQ-9wD" id="V3H-di-fuI"/>
-                                </connections>
-                            </button>
-                            <popUpButton identifier="type" hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEU-3c-2Lw">
-                                <rect key="frame" x="127" y="17" width="90" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="All types" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fLh-sL-Nel" id="wZo-YS-UeK">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="oK2-UQ-zWD">
-                                        <items>
-                                            <menuItem title="All types" state="on" id="fLh-sL-Nel"/>
-                                        </items>
-                                    </menu>
-                                </popUpButtonCell>
-                                <connections>
-                                    <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="BpA-Mv-01E"/>
+                                    <action selector="criterionSelected:" target="XfG-lQ-9wD" id="zeQ-RM-QQQ"/>
                                 </connections>
                             </popUpButton>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="lx2-AB-0kB">
-                                <rect key="frame" x="522" y="476" width="16" height="16"/>
+                                <rect key="frame" x="522" y="486" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kh4-iP-kxB">
-                                <rect key="frame" x="20" y="445" width="54" height="17"/>
+                                <rect key="frame" x="20" y="455" width="54" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Specify:" id="eKr-8l-Buu">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter:" id="eKr-8l-Buu">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbh-vu-EAX">
-                                <rect key="frame" x="402" y="13" width="118" height="32"/>
+                                <rect key="frame" x="389" y="17" width="131" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Download" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C7f-Ft-7b2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1170,19 +1180,8 @@ DQ
                                     <action selector="downloadClicked:" target="XfG-lQ-9wD" id="bIU-dY-u0d"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-e2-hXv">
-                                <rect key="frame" x="138" y="413" width="69" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="recessed" title="select all" bezelStyle="recessed" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WVZ-jg-Cze">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                    <font key="font" metaFont="systemBold" size="12"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="selectAllClicked:" target="XfG-lQ-9wD" id="yp8-wx-BHh"/>
-                                </connections>
-                            </button>
                             <popUpButton identifier="year" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbS-r3-VU1">
-                                <rect key="frame" x="111" y="439" width="89" height="26"/>
+                                <rect key="frame" x="111" y="449" width="89" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="All years" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5d-1C-hyE" id="dnR-X1-usg">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1194,11 +1193,11 @@ DQ
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="criteriaSelected:" target="XfG-lQ-9wD" id="Wh7-xh-xEf"/>
+                                    <action selector="criterionSelected:" target="XfG-lQ-9wD" id="a25-Fk-H6d"/>
                                 </connections>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3fV-xU-rMf" customClass="QuickListPopUpButton" customModule="Past_Paper_Crawler" customModuleProvider="target">
-                                <rect key="frame" x="18" y="470" width="499" height="26"/>
+                                <rect key="frame" x="18" y="480" width="499" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="(choose a subject)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="B9F-kJ-cBB" id="ryy-uT-nA5">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1216,23 +1215,64 @@ DQ
                                 </connections>
                             </popUpButton>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QXo-pG-Uj4">
-                                <rect key="frame" x="522" y="23" width="16" height="16"/>
+                                <rect key="frame" x="522" y="28" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEa-Oi-fwH" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
-                                <rect key="frame" x="18" y="50" width="500" height="17"/>
+                                <rect key="frame" x="18" y="53" width="498" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Papers and answers are put together omitting any other file or paper before 2005." id="l7H-Yr-ZBW">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Prompt" id="l7H-Yr-ZBW">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OXL-Ds-w2f" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
-                                <rect key="frame" x="220" y="23" width="182" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="(count prompt)" id="EgF-Fg-uVo">
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-e2-hXv">
+                                <rect key="frame" x="441" y="422" width="69" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="recessed" title="select all" bezelStyle="recessed" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WVZ-jg-Cze">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="systemBold" size="12"/>
+                                </buttonCell>
+                            </button>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Syd-wB-6rH">
+                                <rect key="frame" x="18" y="22" width="208" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Select paper &amp; answer pairs" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="q1C-Ge-pJt" id="h1h-SU-oSB">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="zXU-5D-L6x">
+                                        <items>
+                                            <menuItem title="Select paper &amp; answer pairs" state="on" keyEquivalent="P" id="q1C-Ge-pJt"/>
+                                            <menuItem title="Select individual files" keyEquivalent="F" id="8RY-Sh-yOS"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="changedSelectOption:" target="XfG-lQ-9wD" id="3Yo-Ha-FAe"/>
+                                </connections>
+                            </popUpButton>
+                            <popUpButton identifier="type" hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEU-3c-2Lw">
+                                <rect key="frame" x="229" y="21" width="90" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="All types" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fLh-sL-Nel" id="wZo-YS-UeK">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="oK2-UQ-zWD">
+                                        <items>
+                                            <menuItem title="All types" state="on" id="fLh-sL-Nel"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="criterionSelected:" target="XfG-lQ-9wD" id="UWy-0r-39Y"/>
+                                </connections>
+                            </popUpButton>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bCg-YK-DfI" customClass="PromptLabel" customModule="Past_Paper_Crawler" customModuleProvider="target">
+                                <rect key="frame" x="393" y="8" width="123" height="13"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="count prompt" id="4zV-dm-g5i">
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -1241,15 +1281,15 @@ DQ
                     </view>
                     <connections>
                         <outlet property="downloadButton" destination="gbh-vu-EAX" id="6OB-zg-fX9"/>
-                        <outlet property="downloadCountLabel" destination="OXL-Ds-w2f" id="8Nv-2f-oly"/>
                         <outlet property="downloadProgress" destination="QXo-pG-Uj4" id="rax-F4-dNx"/>
+                        <outlet property="downloadPromptLabel" destination="bCg-YK-DfI" id="TeS-d0-afb"/>
                         <outlet property="editionPopButton" destination="Ldm-wS-9R5" id="ygJ-g2-nZG"/>
                         <outlet property="paperPopButton" destination="geV-Qa-LQD" id="azH-3f-HAO"/>
                         <outlet property="papersProgress" destination="lx2-AB-0kB" id="sey-S8-ut0"/>
                         <outlet property="papersTable" destination="D9t-ZE-12Q" id="OEn-fy-3m6"/>
                         <outlet property="seasonPopButton" destination="X73-oQ-9Md" id="UkT-85-9Lw"/>
                         <outlet property="selectAllButton" destination="Gc7-e2-hXv" id="jyi-sM-Dv3"/>
-                        <outlet property="showAllCheckbox" destination="wvb-gV-RhV" id="w2H-yL-TVz"/>
+                        <outlet property="selectModePopButton" destination="Syd-wB-6rH" id="47U-PF-9eo"/>
                         <outlet property="subjectPopButton" destination="3fV-xU-rMf" id="Aet-hs-mcJ"/>
                         <outlet property="typePopButton" destination="hEU-3c-2Lw" id="8jn-Et-0RO"/>
                         <outlet property="viewPromptLabel" destination="cEa-Oi-fwH" id="c4Q-Ge-SBk"/>
@@ -1258,7 +1298,7 @@ DQ
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="229" y="797"/>
+            <point key="canvasLocation" x="229" y="802"/>
         </scene>
         <!--Failed View Controller-->
         <scene sceneID="wvt-Qk-98g">
@@ -1275,7 +1315,7 @@ DQ
                                     <rect key="frame" x="1" y="0.0" width="408" height="244"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="m3D-NF-haX" id="QOB-qK-d7L">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="m3D-NF-haX" id="QOB-qK-d7L" customClass="SelectTableView" customModule="Past_Paper_Crawler" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="408" height="219"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
