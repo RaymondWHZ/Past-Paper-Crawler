@@ -158,7 +158,7 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
     }
     
     override func reloadData() {
-        selectAllButton?.state = (selectedCount == entryCount) ? .on : .off
+        selectAllButton?.state = (entryCount > 0 && selectedCount == entryCount) ? .on : .off
         super.reloadData()
     }
 }
