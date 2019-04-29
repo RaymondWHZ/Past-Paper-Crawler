@@ -127,7 +127,6 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
         
         if state == lastState { return }
         _selected[row] = state
-        selectAllButton?.state = (selectedCount == entryCount) ? .on : .off
         reloadData()
         
         selectedAction(row, state)
@@ -156,5 +155,10 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         selectionChangedAction()
+    }
+    
+    override func reloadData() {
+        selectAllButton?.state = (selectedCount == entryCount) ? .on : .off
+        super.reloadData()
     }
 }

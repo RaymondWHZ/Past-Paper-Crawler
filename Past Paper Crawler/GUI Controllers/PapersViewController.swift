@@ -79,6 +79,7 @@ class PapersViewController: NSViewController {
     
     func updateTable() {
         papersTable.entrys = showManager.currentShowList
+        updateDownloadControls()
     }
     
     var fileCount = 0
@@ -238,7 +239,6 @@ class PapersViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.controlEnabled = true
                     self.papersProgress.stopAnimation(nil)
-                    self.updateDownloadControls()
                 }
             }
             
