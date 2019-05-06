@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class WebFile {
+class WebFile : NSObject, NSCoding {
     let name: String
     let fullUrl: URL
     var classification: String?
@@ -29,7 +29,7 @@ class WebFile {
         self.classification = classification
     }
     
-    func download(to path: String, classify: Bool = false) -> String? {
+    func download(to path: String, classify: Bool = false, avoidDuplication: Bool = false) -> String? {
         guard let data = NSData(contentsOf: fullUrl) else {
             return nil
         }
@@ -39,12 +39,23 @@ class WebFile {
             p += "/"
         }
         if classify && classification != nil {
-            p += classification! + "/"
+            let existingFolders = try? PCFileManager.contentsOfDirectory(atPath: p)
+            let classificationCode = getSubjectCode(of: classification!)
+            if let sameClassification = existingFolders?.first(where: { $0.contains(classificationCode) }) {
+                p += sameClassification + "/"
+            }
+            else {
+                p += classification! + "/"
+            }
         }
-        if !fileManager.fileExists(atPath: p) {
-            try? fileManager.createDirectory(atPath: p, withIntermediateDirectories: true, attributes: nil)
+        if !PCFileManager.fileExists(atPath: p) {
+            try? PCFileManager.createDirectory(atPath: p, withIntermediateDirectories: true, attributes: nil)
         }
         p += name
+        
+        if avoidDuplication && PCFileManager.fileExists(atPath: p) {
+            return p
+        }
         
         if data.write(toFile: p, atomically: true) {
             return p
@@ -52,13 +63,25 @@ class WebFile {
         
         return nil
     }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "Name")
+        aCoder.encode(fullUrl, forKey: "Full Url")
+        aCoder.encode(classification, forKey: "Classification")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        name = aDecoder.decodeObject(forKey: "Name") as! String
+        fullUrl = aDecoder.decodeObject(forKey: "Full Url") as! URL
+        classification = aDecoder.decodeObject(forKey: "Classification") as? String
+    }
 }
 
 
 
 extension Array where Element: WebFile {
     
-    func download(to path: String, classify: Bool = false, showInFinder: Bool = false) -> [WebFile] {
+    func download(to path: String, classify: Bool = false, showInFinder: Bool = false, avoidDuplication: Bool = true) -> [WebFile] {
         var paths: [String]? = (showInFinder) ? [] : nil
         var failed: [WebFile] = []
         
@@ -70,7 +93,7 @@ extension Array where Element: WebFile {
                     group.leave()
                 }
                 
-                if let actualPath = paper.download(to: path, classify: classify) {
+                if let actualPath = paper.download(to: path, classify: classify, avoidDuplication: avoidDuplication) {
                     paths?.append(actualPath)
                 }
                 else {

@@ -16,7 +16,7 @@ func getController<T>(_ name: String) -> T? {
 
 let notificationCenter = NotificationCenter.default
 let userDefaults = UserDefaults.standard
-let fileManager = FileManager.default
+let PCFileManager = FileManager.default
 let workspace = NSWorkspace.shared
 
 // lazy load open panel

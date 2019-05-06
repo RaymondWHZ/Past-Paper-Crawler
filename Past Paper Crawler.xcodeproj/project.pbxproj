@@ -50,6 +50,7 @@
 		B6052CF72195D9E8003C98AC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF62195D9E8003C98AC /* Preferences.swift */; };
 		B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
 		B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
+		B6120497227B3309000577CD /* CacheUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6120496227B3309000577CD /* CacheUtil.swift */; };
 		B6226676226AC035007318B7 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6226675226AC035007318B7 /* Array.swift */; };
 		B62266AD226C16C8007318B7 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B62266AE226C16C8007318B7 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
@@ -61,6 +62,8 @@
 		B62266B4226C16E1007318B7 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
 		B622E029216B885E00229054 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
 		B624662F22699A4800FD5D46 /* SelectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B624662E22699A4800FD5D46 /* SelectTableView.swift */; };
+		B62D24F6227D25220042179D /* CacheUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6120496227B3309000577CD /* CacheUtil.swift */; };
+		B62D24F8227D32F20042179D /* CacheSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62D24F7227D32F20042179D /* CacheSettingViewController.swift */; };
 		B679096A213C399600E2F233 /* ShowAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790969213C399600E2F233 /* ShowAdaptor.swift */; };
 		B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B679096B213C3A9B00E2F233 /* PapersViewController.swift */; };
 		B6790982213D8B6E00E2F233 /* DownloadAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790981213D8B6E00E2F233 /* DownloadAdaptor.swift */; };
@@ -98,10 +101,12 @@
 		B6052CF62195D9E8003C98AC /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListSettingViewControllers.swift; sourceTree = "<group>"; };
 		B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingViewController.swift; sourceTree = "<group>"; };
+		B6120496227B3309000577CD /* CacheUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheUtil.swift; sourceTree = "<group>"; };
 		B6226675226AC035007318B7 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		B622E028216B885E00229054 /* SubjectUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectUtil.swift; sourceTree = "<group>"; };
 		B624662E22699A4800FD5D46 /* SelectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTableView.swift; sourceTree = "<group>"; };
 		B6263C5521744C1000EC5C61 /* Kanna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kanna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B62D24F7227D32F20042179D /* CacheSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheSettingViewController.swift; sourceTree = "<group>"; };
 		B63BCC692134574700F56334 /* Past Paper Crawler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Past Paper Crawler.entitlements"; sourceTree = "<group>"; };
 		B63BCC6A2134C65800F56334 /* PPWebsites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPWebsites.swift; sourceTree = "<group>"; };
 		B657B0B8218414BA009099BA /* CSS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSS.swift; sourceTree = "<group>"; };
@@ -256,6 +261,7 @@
 				B6F988E62163B79D00F07404 /* FailedViewController.swift */,
 				B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */,
 				B624662E22699A4800FD5D46 /* SelectTableView.swift */,
+				B62D24F7227D32F20042179D /* CacheSettingViewController.swift */,
 			);
 			path = "GUI Controllers";
 			sourceTree = "<group>";
@@ -267,6 +273,7 @@
 				B63BCC6A2134C65800F56334 /* PPWebsites.swift */,
 				B6F988E421636B6400F07404 /* WebFile.swift */,
 				B622E028216B885E00229054 /* SubjectUtil.swift */,
+				B6120496227B3309000577CD /* CacheUtil.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -340,7 +347,7 @@
 					};
 					B60320CF213254AD00488A42 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -426,6 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B62D24F6227D25220042179D /* CacheUtil.swift in Sources */,
 				B600BBF4226E98C600BC2B24 /* PublicConstants.swift in Sources */,
 				B600BBF3226E98B400BC2B24 /* WebFile.swift in Sources */,
 				B600BBEC226E985B00BC2B24 /* CSS.swift in Sources */,
@@ -452,10 +460,12 @@
 				B6790987213E7D9200E2F233 /* PublicConstants.swift in Sources */,
 				B62266AF226C16C8007318B7 /* WebFile.swift in Sources */,
 				B622E029216B885E00229054 /* SubjectUtil.swift in Sources */,
+				B6120497227B3309000577CD /* CacheUtil.swift in Sources */,
 				B6226676226AC035007318B7 /* Array.swift in Sources */,
 				B679096C213C3A9B00E2F233 /* PapersViewController.swift in Sources */,
 				B6F859BD2136CD8700D7002C /* QuickListPopUpButton.swift in Sources */,
 				B6B2168222380268002C3689 /* String.swift in Sources */,
+				B62D24F8227D32F20042179D /* CacheSettingViewController.swift in Sources */,
 				B6790982213D8B6E00E2F233 /* DownloadAdaptor.swift in Sources */,
 				B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */,
 				B679096A213C399600E2F233 /* ShowAdaptor.swift in Sources */,
@@ -699,7 +709,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				SYSTEM_HEADER_SEARCH_PATHS = "";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -725,7 +735,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
 				SYSTEM_HEADER_SEARCH_PATHS = "";
 				USER_HEADER_SEARCH_PATHS = "";

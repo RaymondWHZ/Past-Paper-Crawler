@@ -173,7 +173,7 @@ class AllSubjectsViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        levelSelected(levelPopButton)
+        levelSelected(levelPopButton!)
     }
     
     @IBAction func levelSelected(_ sender: Any) {
@@ -290,6 +290,6 @@ class AllSubjectsViewController: NSViewController {
     }
     
     @IBAction func doneClicked(_ sender: Any) {
-        subjectSelected(subjectPopButton)
+        subjectSelected(subjectPopButton!)
     }
 }

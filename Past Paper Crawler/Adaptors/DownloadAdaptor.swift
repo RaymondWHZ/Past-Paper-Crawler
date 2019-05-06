@@ -18,7 +18,7 @@ func ADDownload(papers: [WebFile], to path: String? = nil, exitAction: @escaping
             var ask = true
             if PFUseDefaultPath {
                 var isDir = ObjCBool(false)
-                let exists = fileManager.fileExists(atPath: PFDefaultPath, isDirectory: &isDir)
+                let exists = PCFileManager.fileExists(atPath: PFDefaultPath, isDirectory: &isDir)
                 if exists && isDir.boolValue {
                     ask = false
                     actualPath = PFDefaultPath
@@ -46,7 +46,7 @@ func ADDownload(papers: [WebFile], to path: String? = nil, exitAction: @escaping
             actualPath = path!
         }
         if !actualPath.isEmpty {
-            failed.append(contentsOf: papers.download(to: actualPath, classify: PFCreateFolder, showInFinder: PFOpenInFinder))
+            failed.append(contentsOf: papers.download(to: actualPath, classify: PFCreateFolder, showInFinder: PFOpenInFinder, avoidDuplication: PFAvoidDuplication))
         }
         exitAction(actualPath, failed)
     }

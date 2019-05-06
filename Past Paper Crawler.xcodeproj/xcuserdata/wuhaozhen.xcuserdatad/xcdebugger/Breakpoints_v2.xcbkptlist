@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/PPWebsites.swift"
-            timestampString = "577674378.4370821"
+            timestampString = "578633815.551589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "getPapers0(level:subject:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -72,7 +72,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/Core.swift"
-            timestampString = "577674378.437185"
+            timestampString = "578633112.445246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "12"
@@ -88,12 +88,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/WebFile.swift"
-            timestampString = "577513664.894258"
+            timestampString = "578725900.661008"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "download(to:classify:showInFinder:)"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "download(to:classify:showInFinder:avoidDuplication:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -104,7 +104,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/SubjectUtil.swift"
-            timestampString = "577513664.894305"
+            timestampString = "578633815.551788"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
@@ -120,7 +120,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/SubjectUtil.swift"
-            timestampString = "577513664.894351"
+            timestampString = "578633815.5518349"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
@@ -136,7 +136,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/SubjectUtil.swift"
-            timestampString = "577513664.894395"
+            timestampString = "578633815.551879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
@@ -152,7 +152,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Preferences.swift"
-            timestampString = "577674378.437318"
+            timestampString = "578633815.551927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "112"
@@ -296,11 +296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "577672398.353318"
+            timestampString = "578633815.552067"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "drag(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/PPWebsites.swift"
-            timestampString = "577674378.4374551"
+            timestampString = "578633815.552111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "getPapers0(level:subject:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -328,23 +328,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/PapersViewController.swift"
-            timestampString = "578198273.746635"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "changedSelectOption(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Past Paper Crawler/GUI Controllers/PapersViewController.swift"
-            timestampString = "578198273.747133"
+            timestampString = "578633815.5521621"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
@@ -360,11 +344,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/GUI Controllers/PapersViewController.swift"
-            timestampString = "578198273.747426"
+            timestampString = "578633815.5522031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "changedSelectOption(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/GUI Controllers/PapersViewController.swift"
+            timestampString = "578633815.55224"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "downloadClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -375,124 +375,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Past Paper Crawler/GUI Controllers/FailedViewController.swift"
-            timestampString = "577672907.8188601"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "577672398.353922"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Past_Paper_Crawler.QuickListViewController) -&gt; () in closure #1 (Swift.Int, Swift.Bool) -&gt; () in Past_Paper_Crawler.QuickListViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Past Paper Crawler"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/GUI%20Controllers/QuickListSettingViewControllers.swift"
-                  timestampString = "577428825.950501"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "77">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (inout Swift.Array&lt;Past_Paper_Crawler.Subject&gt;) -&gt; () in closure #2 (Past_Paper_Crawler.QuickListViewController) -&gt; () in closure #1 (Swift.Int, Swift.Bool) -&gt; () in Past_Paper_Crawler.QuickListViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Past Paper Crawler"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/GUI%20Controllers/QuickListSettingViewControllers.swift"
-                  timestampString = "577428825.952433"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "48">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Past Paper Crawler/GUI Controllers/QuickListSettingViewControllers.swift"
-            timestampString = "577672398.3539979"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Int, Swift.Bool) -&gt; () in Past_Paper_Crawler.QuickListViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Past Paper Crawler"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/GUI%20Controllers/QuickListSettingViewControllers.swift"
-                  timestampString = "577428825.958997"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "168">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (inout Swift.Array&lt;Past_Paper_Crawler.Subject&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 (Swift.Int, Swift.Bool) -&gt; () in Past_Paper_Crawler.QuickListViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Past Paper Crawler"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wuhaozhen/Developer/Xcode/Past%20Paper%20Crawler/Past%20Paper%20Crawler/GUI%20Controllers/QuickListSettingViewControllers.swift"
-                  timestampString = "577428825.961439"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "40"
-                  endingLineNumber = "40"
-                  offsetFromSymbolStart = "79">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/PPWebsites.swift"
-            timestampString = "577674378.4376121"
+            timestampString = "578633815.552278"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "getArray(identifier:loadFunc:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -504,7 +392,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/Core.swift"
-            timestampString = "577674378.437662"
+            timestampString = "578633112.4458309"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
@@ -520,13 +408,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Past Paper Crawler/Core/PPWebsites.swift"
-            timestampString = "577674378.437711"
+            timestampString = "578633815.552353"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "getSubjects0(level:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Past Paper Crawler/Core/CacheUtil.swift"
+            timestampString = "578725900.662183"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

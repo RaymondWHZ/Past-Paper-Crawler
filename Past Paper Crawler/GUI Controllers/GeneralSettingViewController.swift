@@ -21,6 +21,7 @@ class GeneralSetViewController: NSViewController {
     @IBOutlet var pathControl: NSPathControl!
     @IBOutlet var browseButton: NSButton!
     @IBOutlet var createFolderCheckBox: NSButton!
+    @IBOutlet var avoidDuplicationCheckBox: NSButton!
     @IBOutlet var openInFinderCheckBox: NSButton!
     
     override func viewDidLoad() {
@@ -38,6 +39,8 @@ class GeneralSetViewController: NSViewController {
         pathControl.url = URL(fileURLWithPath: PFDefaultPath)
         
         createFolderCheckBox.state = (PFCreateFolder) ? .on : .off
+        
+        avoidDuplicationCheckBox.state = (PFAvoidDuplication) ? .on : .off
         
         openInFinderCheckBox.state = (PFOpenInFinder) ? .on : .off
     }
@@ -148,6 +151,10 @@ class GeneralSetViewController: NSViewController {
     
     @IBAction func createFolderOptionChanged(_ sender: Any) {
         PFCreateFolder = createFolderCheckBox.state == .on
+    }
+    
+    @IBAction func avoidDuplicationClicked(_ sender: Any) {
+        PFAvoidDuplication = avoidDuplicationCheckBox.state == .on
     }
     
     @IBAction func openInFinderOptionChanged(_ sender: Any) {

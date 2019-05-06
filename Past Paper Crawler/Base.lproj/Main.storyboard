@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="F0b-XC-4I0">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="F0b-XC-4I0">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,6 +34,7 @@
                     <tabViewItems>
                         <tabViewItem identifier="" id="Jjf-9w-2CN"/>
                         <tabViewItem identifier="" id="M3b-B3-qsI"/>
+                        <tabViewItem id="Vcz-JQ-s7K"/>
                     </tabViewItems>
                     <viewControllerTransitionOptions key="transitionOptions" allowUserInteraction="YES"/>
                     <tabView key="tabView" type="noTabsNoBorder" id="yLE-bR-F5o">
@@ -48,6 +49,7 @@
                         <outlet property="tabView" destination="yLE-bR-F5o" id="60k-fM-KpH"/>
                         <segue destination="NhA-1H-zyV" kind="relationship" relationship="tabItems" id="mSl-eI-Xf4"/>
                         <segue destination="Lst-t0-iPf" kind="relationship" relationship="tabItems" id="Fey-GU-wQo"/>
+                        <segue destination="P52-3C-AFc" kind="relationship" relationship="tabItems" id="Zgi-qB-eL8"/>
                     </connections>
                 </tabViewController>
                 <customObject id="A2y-Hj-74U" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -325,17 +327,6 @@ Gw
                                     <action selector="savePolicySelected:" target="NhA-1H-zyV" id="8Sm-ZW-4kb"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1O-NY-VdS">
-                                <rect key="frame" x="19" y="57" width="317" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Show file(s) in Finder after finishing downloading" bezelStyle="regularSquare" imagePosition="left" inset="2" id="90b-Wt-Ulo">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="openInFinderOptionChanged:" target="NhA-1H-zyV" id="sZf-O2-Nyx"/>
-                                </connections>
-                            </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ksU-YF-25q">
                                 <rect key="frame" x="20" y="79" width="381" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -359,10 +350,33 @@ Gw
                                     <action selector="browseClicked:" target="NhA-1H-zyV" id="tPM-0H-R5s"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMT-Q8-FPL">
+                                <rect key="frame" x="19" y="57" width="365" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Avoid duplication (give up download if file already exists)" bezelStyle="regularSquare" imagePosition="left" inset="2" id="olG-HR-RAU">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="avoidDuplicationClicked:" target="NhA-1H-zyV" id="oGY-5K-v6V"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1O-NY-VdS">
+                                <rect key="frame" x="19" y="37" width="317" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Show file(s) in Finder after finishing downloading" bezelStyle="regularSquare" imagePosition="left" inset="2" id="90b-Wt-Ulo">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openInFinderOptionChanged:" target="NhA-1H-zyV" id="sZf-O2-Nyx"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="askEverytimeOption" destination="aQY-pX-Ky4" id="Db0-gD-duA"/>
+                        <outlet property="avoidDuplicationCheckBox" destination="GMT-Q8-FPL" id="awP-Vn-i9K"/>
                         <outlet property="browseButton" destination="bt4-8d-HEp" id="IXm-U2-Fn1"/>
                         <outlet property="createFolderCheckBox" destination="nXn-3t-Ztt" id="ERz-rv-bvY"/>
                         <outlet property="openInFinderCheckBox" destination="o1O-NY-VdS" id="iGN-4v-65U"/>
@@ -1398,6 +1412,143 @@ DQ
                 <customObject id="Cn8-TS-btG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="229" y="1341"/>
+        </scene>
+        <!--Cache-->
+        <scene sceneID="Abi-zr-Pev">
+            <objects>
+                <viewController title="Cache" id="P52-3C-AFc" customClass="CacheSettingViewController" customModule="Past_Paper_Crawler" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="dfS-uV-k9o">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kgh-Fj-X0x">
+                                <rect key="frame" x="18" y="246" width="404" height="34"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" selectable="YES" title="Past Paper Crawler caches viewed webpages to memory and disk to boost efficiency." id="Wkf-Me-ydL">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HRy-LR-Bd4">
+                                <rect key="frame" x="18" y="222" width="103" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="cache to disk" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tRp-wT-Mba">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="cacheToDiskClicked:" target="P52-3C-AFc" id="fIg-eG-E2C"/>
+                                </connections>
+                            </button>
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfc-xE-DRT">
+                                <rect key="frame" x="20" y="20" width="410" height="196"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="mym-I8-gkP">
+                                    <rect key="frame" x="1" y="0.0" width="408" height="195"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="dOr-Kj-bMz" viewBased="YES" id="ckK-kS-5uG">
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="170"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn width="405" minWidth="40" maxWidth="1000" id="e1q-rj-OXJ">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Current cache on disk">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="zVq-Z9-h1z">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                    <prototypeCellViews>
+                                                        <tableCellView identifier="Cache Table Cell" id="0Ry-l9-b8n" customClass="CacheTableCell" customModule="Past_Paper_Crawler" customModuleProvider="target">
+                                                            <rect key="frame" x="1" y="1" width="405" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TRa-Qp-QkU">
+                                                                    <rect key="frame" x="1" y="0.0" width="325" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" title="cache name" id="dmA-33-SLb">
+                                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bAU-Ax-RKD">
+                                                                    <rect key="frame" x="332" y="-1" width="70" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                                    <buttonCell key="cell" type="inline" title="remove" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="oor-ek-tSv">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="smallSystemBold"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="removeClicked:" target="0Ry-l9-b8n" id="i3S-4M-Riv"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="cacheName" destination="TRa-Qp-QkU" id="iMm-2a-A1P"/>
+                                                                <outlet property="removeButton" destination="bAU-Ax-RKD" id="rsB-9D-Rn7"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
+                                                </tableColumn>
+                                            </tableColumns>
+                                        </tableView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Qfx-F0-fd8">
+                                    <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="MZF-fi-kCW">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <tableHeaderView key="headerView" id="dOr-Kj-bMz">
+                                    <rect key="frame" x="0.0" y="0.0" width="408" height="25"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableHeaderView>
+                            </scrollView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4x-2A-6Dy">
+                                <rect key="frame" x="354" y="194" width="70" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title="remove all" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="OEr-lt-70H">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="removeAllClicked:" target="P52-3C-AFc" id="tfl-CU-aNk"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Oz-x2-soA">
+                                <rect key="frame" x="121" y="213" width="99" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="open folder" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AER-P0-Hja">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openFolderClicked:" target="P52-3C-AFc" id="gWL-LA-0PP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="cacheTable" destination="ckK-kS-5uG" id="Igc-cq-Ecv"/>
+                        <outlet property="cacheToDiskCheckBox" destination="HRy-LR-Bd4" id="7WJ-bP-rec"/>
+                    </connections>
+                </viewController>
+                <customObject id="5NQ-i1-JLm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1623" y="497"/>
         </scene>
     </scenes>
 </document>

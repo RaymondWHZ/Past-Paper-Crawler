@@ -15,11 +15,10 @@ private func getArray<T>(identifier: String, loadFunc: () -> [T]?) -> [T]? {
     var ret: [T]?
     var loadQueue: DispatchQueue?
     arrayLoadQueuesQueue.sync {
-        loadQueue = arrayLoadQueues[identifier] ?? {
-            let queue = DispatchQueue(label: identifier + " Protect")
-            arrayLoadQueues[identifier] = queue
-            return queue
-        }()
+        if arrayLoadQueues[identifier] == nil {
+            arrayLoadQueues[identifier] = DispatchQueue(label: identifier + " Protect")
+        }
+        loadQueue = arrayLoadQueues[identifier]
     }
     loadQueue!.sync {
         let i = identifier as NSString
@@ -38,42 +37,53 @@ private func getArray<T>(identifier: String, loadFunc: () -> [T]?) -> [T]? {
 
 class PastPaperWebsite {
     
-    let root: String
+    let name: String
     
-    init(root: String) {
-        self.root = root
+    init(name: String) {
+        self.name = name
     }
     
     final func getLevels() -> [String]? {
-        return getArray(identifier: self.root, loadFunc: getLevels0)
+        return smartProcessArray(for: self.name, loadFunc: getLevels0)
     }
     
     fileprivate func getLevels0() -> [String]? { return nil }
     
     final func getSubjects(level: String) -> [String]? {
-        return getArray(identifier: self.root + level, loadFunc: { getSubjects0(level: level) })
+        return smartProcessArray(for: self.name + " " + level) { getSubjects0(level: level) }
     }
     
     fileprivate func getSubjects0(level: String) -> [String]? { return nil }
     
     final func getPapers(level: String, subject: String) -> [WebFile]? {
-        return getArray(identifier: self.root + level + subject, loadFunc: { getPapers0(level: level, subject: subject) })
+        let code = getSubjectCode(of: subject)
+        return smartProcessArray(for: self.name + " " + level + " " + subject) { getPapers0(level: level, subject: subject)?.filter { $0.name.hasPrefix(code) } }
     }
     
     fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? { return nil }
 }
 
-let allPastPaperWebsites: [String: PastPaperWebsite] = [
-    "GCE Guide": GCEGuide(),
-    "Papa Cambridge": PapaCambridge(),
-    "Past Paper.Co": PastPaperCo()
-]
+let allPastPaperWebsites: [String: PastPaperWebsite] = {
+    var ret: [String: PastPaperWebsite] = [:]
+    let websites = [
+        GCEGuide(),
+        PapaCambridge(),
+        PastPaperCo()
+    ]
+    websites.forEach { website in
+        ret[website.name] = website
+    }
+    return ret
+}()
 
 class PapaCambridge: PastPaperWebsite {
     
     init() {
-        super.init(root: "https://pastpapers.papacambridge.com/?dir=Cambridge%20International%20Examinations%20%28CIE%29/")
+        super.init(name: "Papa Chambridge")
     }
+    
+    private let root = "https://pastpapers.papacambridge.com/?dir=Cambridge%20International%20Examinations%20%28CIE%29/"
+    
     private let fileRoot = "https://pastpapers.papacambridge.com/Cambridge%20International%20Examinations%20(CIE)/"
     
     private let levelSites = [
@@ -88,7 +98,7 @@ class PapaCambridge: PastPaperWebsite {
     
     override fileprivate func getSubjects0(level: String) -> [String]? {
         let specifiedUrl = root + levelSites[level]!
-        return getContentList(url: specifiedUrl, XPath: "/html/body/section[2]/div/div/div[1]/div/table/tbody/tr/td/a", name: "data-name", criteria: { $0 != ".." })
+        return getContentList(url: specifiedUrl, XPath: "/html/body/section[2]/div/div/div[1]/div/table/tbody/tr/td", name: "data-name", criteria: { $0 != ".." })
     }
     
     override fileprivate func getPapers0(level: String, subject: String) -> [WebFile]? {
@@ -97,7 +107,7 @@ class PapaCambridge: PastPaperWebsite {
         }
         
         let seasonsUrl = root + levelSite + bond(subject) + "/"
-        guard let seasons = getContentList(url: seasonsUrl, XPath: "//*[@id=\"directory-listing\"]/li", name: "data-name", criteria: { $0 != ".." }) else {
+        guard let seasons = getContentList(url: seasonsUrl, XPath: "/html/body/section[2]/div/div/div[1]/div/table/tbody/tr/td", name: "data-name", criteria: { $0 != ".." }) else {
             return nil
         }
         
@@ -117,7 +127,7 @@ class PapaCambridge: PastPaperWebsite {
                 }
                 
                 let papersUrl = seasonsUrl + bond(season) + "/"
-                guard let papers = getContentList(url: papersUrl, XPath: "//*[@id=\"directory-listing\"]/li", name: "data-name", criteria: { $0.hasSuffix(".pdf") }) else {
+                guard let papers = getContentList(url: papersUrl, XPath: "/html/body/section[2]/div/div/div[1]/div/table/tbody/tr/td", name: "data-name", criteria: { $0.hasSuffix(".pdf") }) else {
                     exception = true
                     return
                 }
@@ -147,8 +157,10 @@ class PapaCambridge: PastPaperWebsite {
 class GCEGuide: PastPaperWebsite {
     
     init() {
-        super.init(root: "https://papers.gceguide.com/")
+        super.init(name: "GCE Guide")
     }
+    
+    private let root = "https://papers.gceguide.com/"
     
     private let levelSites = [
         "IGCSE": "IGCSE/",
@@ -177,8 +189,11 @@ class GCEGuide: PastPaperWebsite {
 class PastPaperCo: PastPaperWebsite {
     
     init() {
-        super.init(root: "https://pastpapers.co")
+        super.init(name: "Past Paper.Co")
     }
+    
+    private let root = "https://pastpapers.co"
+    
     private let dirRoot = "https://pastpapers.co/cie/?dir="
     private let fileRoot = "https://pastpapers.co/cie/"
     

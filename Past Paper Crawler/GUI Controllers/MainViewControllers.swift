@@ -83,13 +83,13 @@ class MainViewController: NSViewController {
             path, failed in
             DispatchQueue.main.async {
                 if !failed.isEmpty {
-                    self.quickOpPromptLabel.showError("Download failed!")
+                    self.quickOpPromptLabel.showError("Failed!")
                     self.quickOpRetryAction = {
                         self.quickOpDownload(paper: paper, to: path)
                     }
                 }
                 else {
-                    self.quickOpPromptLabel.showPrompt("Download Succeed!")
+                    self.quickOpPromptLabel.showPrompt("Succeed!")
                 }
                 self.quickOpProcess.stopAnimation(nil)
                 self.quickOpComboBox.isEnabled = true

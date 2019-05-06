@@ -30,7 +30,7 @@ class QuickListViewController: NSViewController {
         super.viewDidLoad()
         
         // set up table manipulators
-        subjectTable.selectedAction = { row, state in
+        subjectTable.userSelectedAction = { row in
             let name = self.subjectTable.entrys[row]
             
             var lastQuicklist: QuickList?
@@ -38,7 +38,7 @@ class QuickListViewController: NSViewController {
             self.modifyOn {
                 PFModifyQuickList { quickList in
                     let nameLoc = quickList.firstIndex(where: { $0.name == name })
-                    if state {  // add subject into list when not exist
+                    if self.subjectTable.selected[row] {  // add subject into list when not exist
                         if nameLoc == nil {
                             lastQuicklist = quickList
                             quickList.append(Subject(level: self.lazySelectedLevel, name: name))
@@ -62,7 +62,7 @@ class QuickListViewController: NSViewController {
     }
     
     override func viewDidAppear() {
-        levelSelected(levelPopButton)
+        levelSelected(levelPopButton!)
         
         PFObserveQuickListChange(self, selector: #selector(quickListChanged))
     }
@@ -78,11 +78,10 @@ class QuickListViewController: NSViewController {
         undoManager?.registerUndo(withTarget: self) { _ in
             undone = true
             self.levelPopButton.selectItem(withTitle: lastSelectedLevel)
-            self.levelSelected(self.levelPopButton)
+            self.levelSelected(self.levelPopButton!)
         }
         
         promptLabel.setToDefault()
-        print(promptLabel.defaultText)
         
         lazySelectedLevel = levelPopButton.selectedItem!.title  // update lazy variable
         
@@ -127,7 +126,7 @@ class QuickListViewController: NSViewController {
                 }
                 
                 // find and tick on certain subject
-                if let index = entrys.index(of: subject.name) {
+                if let index = entrys.firstIndex(of: subject.name) {
                     subjectTable.setState(of: index, to: true)
                 }
             }
@@ -184,11 +183,11 @@ class SelectedViewController: NSViewController {
         reloadQuickListTable()
         
         // set up table manipulators
-        quickListTable.selectedAction = { row, state in
+        quickListTable.userSelectedAction = { row in
             self.modifyOn {  // performance measure: subthread update
                 PFModifyQuickList { quickList in
                     let position = self.rowInQuickListOf(rowInSubject: row)
-                    if state {
+                    if self.quickListTable.selected[row] {
                         quickList.insert(self.subjects[row], at: position)
                     }
                     else {

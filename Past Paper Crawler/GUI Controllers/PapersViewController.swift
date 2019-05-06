@@ -79,7 +79,6 @@ class PapersViewController: NSViewController {
     
     func updateTable() {
         papersTable.entrys = showManager.currentShowList
-        updateDownloadControls()
     }
     
     var fileCount = 0
@@ -89,12 +88,12 @@ class PapersViewController: NSViewController {
         
         // set up table manipulators
         papersTable.selectAllButton = selectAllButton
-        papersTable.selectedAction = { _, _ in
+        papersTable.anySelectedAction = {
             self.updateDownloadControls()
         }
         
         selectModePopButton.selectItem(at: PFDefaultShowAll ? 1 : 0)
-        changedSelectOption(selectModePopButton)
+        changedSelectOption(selectModePopButton!)
     }
     
     // ---custom functions---
@@ -349,7 +348,7 @@ class PapersViewController: NSViewController {
                 
                 // if any failed, show the failed view
                 if !failed.isEmpty {
-                    self.downloadPromptLabel.showError("Download Failed!")
+                    self.downloadPromptLabel.showError("Failed!")
                     self.presentAsSheet(
                         getFailedView(failedList: failed, retryAction: {
                             self.download(papers: $0, to: path)
@@ -357,7 +356,7 @@ class PapersViewController: NSViewController {
                     )
                 }
                 else {
-                    self.downloadPromptLabel.showPrompt("Download Succeed!")
+                    self.downloadPromptLabel.showPrompt("Succeed!")
                 }
             }
         }

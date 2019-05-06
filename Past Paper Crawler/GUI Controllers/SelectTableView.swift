@@ -30,8 +30,9 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
     
     var defaultSelected = false
     
-    //                   row, state
-    var selectedAction: (Int, Bool) -> () = { _,_  in }
+    //                       row
+    var userSelectedAction: (Int) -> () = { _ in }
+    var anySelectedAction: () -> () = { }
     var selectionChangedAction: () -> () = { }
     
     private var _entrys: [String] = []
@@ -91,6 +92,7 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
     var selectAllButton: NSButton? {
         didSet {
             selectAllButton?.setButtonType(.pushOnPushOff)
+            selectAllButton?.target = self
             selectAllButton?.action = #selector(selectAllClicked)
         }
     }
@@ -115,8 +117,6 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
         
         _selected = states
         reloadData()
-        
-        selectedAction(-1, false)
     }
     
     func unduableChangeState(of row: Int, to state: Bool) {
@@ -127,9 +127,8 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
         
         if state == lastState { return }
         _selected[row] = state
+        userSelectedAction(row)
         reloadData()
-        
-        selectedAction(row, state)
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -159,6 +158,7 @@ class SelectTableView: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
     
     override func reloadData() {
         selectAllButton?.state = (entryCount > 0 && selectedCount == entryCount) ? .on : .off
+        anySelectedAction()
         super.reloadData()
     }
 }

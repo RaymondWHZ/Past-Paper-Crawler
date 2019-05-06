@@ -110,7 +110,7 @@ private let quickListChangedName = NSNotification.Name(rawValue: "Quick List Cha
 func PFModifyQuickList(_ action: (inout QuickList) -> ()) {
     quickListQueue.sync {
         action(&quickList)
-        let rawArray = quickList.map({ NSKeyedArchiver.archivedData(withRootObject: $0) })
+        let rawArray = quickList.map { NSKeyedArchiver.archivedData(withRootObject: $0) }
         userDefaults.set(rawArray, forKey: PFQuickListToken)
     }
     notificationCenter.post(name: quickListChangedName, object: nil)
@@ -126,6 +126,16 @@ func PFEndObserve(_ observer: Any) {
 
 // Create subfolder part
 
+let PFAvoidDuplicationToken = "Avoid Duplication"
+var PFAvoidDuplication: Bool {
+    get {
+        return !userDefaults.bool(forKey: PFAvoidDuplicationToken)
+    }
+    set {
+        userDefaults.set(!newValue, forKey: PFAvoidDuplicationToken)
+    }
+}
+
 let PFCreateFolderToken = "Create Folder"
 var PFCreateFolder: Bool {
     get {
@@ -133,5 +143,15 @@ var PFCreateFolder: Bool {
     }
     set {
         userDefaults.set(newValue, forKey: PFCreateFolderToken)
+    }
+}
+
+let PFCacheToDiskToken = "Cache To Disk"
+var PFCacheToDisk: Bool {
+    get {
+        return !userDefaults.bool(forKey: PFCacheToDiskToken)
+    }
+    set {
+        userDefaults.set(!newValue, forKey: PFCacheToDiskToken)
     }
 }

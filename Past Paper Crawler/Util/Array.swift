@@ -18,10 +18,7 @@ extension Array where Element == Bool {
 extension Array {
     
     subscript(indices: [Int]) -> [Element] {
-        var subarray: [Element] = []
-        subarray.reserveCapacity(indices.count)
-        indices.forEach { index in subarray.append(self[index]) }
-        return subarray
+        return indices.map { self[$0] }
     }
 }
 

@@ -26,13 +26,8 @@ class FailedViewController: NSViewController {
         failedTableView.defaultSelected = true
         failedTableView.entrys = failedList.map { $0.name }
         
-        failedTableView.selectedAction = { row, state in
-            if state {
-                self.retryButton.isEnabled = true
-            }
-            else if self.failedTableView.selectedCount == 0 {
-                self.retryButton.isEnabled = false
-            }
+        failedTableView.anySelectedAction = {
+            self.retryButton.isEnabled = self.failedTableView.selectedCount == 0
         }
     }
     

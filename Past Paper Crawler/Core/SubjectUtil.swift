@@ -54,12 +54,12 @@ class SubjectUtil {
     }
     
     static func get(for website: PastPaperWebsite) -> SubjectUtil {
-        if let subjectUtil = subjectUtils[website.root] {
+        if let subjectUtil = subjectUtils[website.name] {
             return subjectUtil
         }
         
         let new = SubjectUtil(website: website)
-        subjectUtils[website.root] = new
+        subjectUtils[website.name] = new
         return new
     }
     
