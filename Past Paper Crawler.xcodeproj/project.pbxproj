@@ -51,6 +51,8 @@
 		B6052CF921965382003C98AC /* QuickListSettingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */; };
 		B60B0E3621356A0700DBE06E /* GeneralSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */; };
 		B6120497227B3309000577CD /* CacheUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6120496227B3309000577CD /* CacheUtil.swift */; };
+		B613514C22801CB7001E3EF2 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
+		B613514E22801CD4001E3EF2 /* DummyPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B613514D22801CD4001E3EF2 /* DummyPreferences.swift */; };
 		B6226676226AC035007318B7 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6226675226AC035007318B7 /* Array.swift */; };
 		B62266AD226C16C8007318B7 /* PPWebsites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63BCC6A2134C65800F56334 /* PPWebsites.swift */; };
 		B62266AE226C16C8007318B7 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60320FF213256F500488A42 /* Core.swift */; };
@@ -60,6 +62,8 @@
 		B62266B2226C16E1007318B7 /* libxmlHTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BA218414BA009099BA /* libxmlHTMLDocument.swift */; };
 		B62266B3226C16E1007318B7 /* libxmlHTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BB218414BA009099BA /* libxmlHTMLNode.swift */; };
 		B62266B4226C16E1007318B7 /* libxmlParserOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657B0BC218414BA009099BA /* libxmlParserOption.swift */; };
+		B62298CD227FE2C2003CB6A9 /* CacheUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6120496227B3309000577CD /* CacheUtil.swift */; };
+		B62298CE227FE2CC003CB6A9 /* CacheSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62D24F7227D32F20042179D /* CacheSettingViewController.swift */; };
 		B622E029216B885E00229054 /* SubjectUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B622E028216B885E00229054 /* SubjectUtil.swift */; };
 		B624662F22699A4800FD5D46 /* SelectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B624662E22699A4800FD5D46 /* SelectTableView.swift */; };
 		B62D24F6227D25220042179D /* CacheUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6120496227B3309000577CD /* CacheUtil.swift */; };
@@ -102,6 +106,7 @@
 		B6052CF821965382003C98AC /* QuickListSettingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListSettingViewControllers.swift; sourceTree = "<group>"; };
 		B60B0E3521356A0700DBE06E /* GeneralSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingViewController.swift; sourceTree = "<group>"; };
 		B6120496227B3309000577CD /* CacheUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheUtil.swift; sourceTree = "<group>"; };
+		B613514D22801CD4001E3EF2 /* DummyPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyPreferences.swift; sourceTree = "<group>"; };
 		B6226675226AC035007318B7 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		B622E028216B885E00229054 /* SubjectUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectUtil.swift; sourceTree = "<group>"; };
 		B624662E22699A4800FD5D46 /* SelectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTableView.swift; sourceTree = "<group>"; };
@@ -157,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				B600BBE5226E97CD00BC2B24 /* main.swift */,
+				B613514D22801CD4001E3EF2 /* DummyPreferences.swift */,
 			);
 			path = "Past Paper Crawler Core Test";
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B62298CE227FE2CC003CB6A9 /* CacheSettingViewController.swift in Sources */,
 				B600BBBD226DAF1500BC2B24 /* CSS.swift in Sources */,
 				B600BBBE226DAF1500BC2B24 /* Kanna.swift in Sources */,
 				B600BBBF226DAF1500BC2B24 /* libxmlHTMLDocument.swift in Sources */,
@@ -426,6 +433,7 @@
 				B600BBD2226DAF1500BC2B24 /* PromptLabel.swift in Sources */,
 				B600BBD3226DAF1500BC2B24 /* SelectTableView.swift in Sources */,
 				B600BBD4226DAF1500BC2B24 /* AppDelegate.swift in Sources */,
+				B62298CD227FE2C2003CB6A9 /* CacheUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,12 +441,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B613514C22801CB7001E3EF2 /* SubjectUtil.swift in Sources */,
 				B62D24F6227D25220042179D /* CacheUtil.swift in Sources */,
 				B600BBF4226E98C600BC2B24 /* PublicConstants.swift in Sources */,
 				B600BBF3226E98B400BC2B24 /* WebFile.swift in Sources */,
 				B600BBEC226E985B00BC2B24 /* CSS.swift in Sources */,
 				B600BBED226E985B00BC2B24 /* Kanna.swift in Sources */,
 				B600BBEE226E985B00BC2B24 /* libxmlHTMLDocument.swift in Sources */,
+				B613514E22801CD4001E3EF2 /* DummyPreferences.swift in Sources */,
 				B600BBEF226E985B00BC2B24 /* libxmlHTMLNode.swift in Sources */,
 				B600BBF0226E985B00BC2B24 /* libxmlParserOption.swift in Sources */,
 				B600BBF1226E985B00BC2B24 /* Core.swift in Sources */,
@@ -552,7 +562,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -567,7 +577,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Past\\ Paper\\ Crawler/Kanna/Modules";
@@ -698,6 +708,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Past Paper Crawler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -724,6 +735,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9MVLP78N36;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Past Paper Crawler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

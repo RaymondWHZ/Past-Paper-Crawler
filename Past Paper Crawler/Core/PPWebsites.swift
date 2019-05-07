@@ -8,33 +8,6 @@
 
 import Cocoa
 
-private var arrayLoadQueues: [String: DispatchQueue] = [:]
-private let arrayLoadQueuesQueue = DispatchQueue(label: "Array Load Queues Protect")
-private let arrayCache = NSCache<NSString, NSArray>()
-private func getArray<T>(identifier: String, loadFunc: () -> [T]?) -> [T]? {
-    var ret: [T]?
-    var loadQueue: DispatchQueue?
-    arrayLoadQueuesQueue.sync {
-        if arrayLoadQueues[identifier] == nil {
-            arrayLoadQueues[identifier] = DispatchQueue(label: identifier + " Protect")
-        }
-        loadQueue = arrayLoadQueues[identifier]
-    }
-    loadQueue!.sync {
-        let i = identifier as NSString
-        if let array = arrayCache.object(forKey: i) {
-            ret = array as? [T]
-            return
-        }
-        if let array = loadFunc() {
-            arrayCache.setObject(array as NSArray, forKey: i)
-            ret = array
-            return
-        }
-    }
-    return ret
-}
-
 class PastPaperWebsite {
     
     let name: String

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/*
+ * The class that represents basic information of a subject
+ */
 class Subject : NSObject, NSCoding {
     let level: String
     let name: String
@@ -40,6 +43,9 @@ class Subject : NSObject, NSCoding {
     }
 }
 
+/*
+ * The class that offeres some searching tools
+ */
 private var subjectUtils: [String: SubjectUtil] = [:]
 class SubjectUtil {
     

@@ -12,7 +12,13 @@ private let cacheQueue = DispatchQueue(label: "Cache Protect")
 
 private let memoryCache = NSCache<NSString, NSArray>()
 
-let cacheDirectory = NSHomeDirectory() + "/Library/Caches/" + Bundle.main.bundleIdentifier! + "/Customized/"
+let cacheDirectory: String = {
+    let path = NSHomeDirectory() + "/Library/Caches/" + Bundle.main.bundleIdentifier! + "/Customized/"
+    if !PCFileManager.fileExists(atPath: path) {
+        try? PCFileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+    }
+    return path
+}()
 
 private func mapPath(from key: String) -> String {
     return cacheDirectory + key
@@ -31,13 +37,14 @@ private func cacheToFile<T>(array: [T], for key: String) {
 
 private func fetchFromFile<T>(for key: String) -> [T]? {
     if let nsArray = NSArray(contentsOfFile: mapPath(from: key)) {
-        return nsArray as? [T] ?? {
-            if nsArray.firstObject is Data {
-                let unarchivedArray = nsArray.map { NSKeyedUnarchiver.unarchiveObject(with: $0 as! Data) }
-                return unarchivedArray as? [T]
-            }
-            return nil
-        }()
+        if let tArray = nsArray as? [T] {
+            return tArray
+        }
+        if nsArray.firstObject is Data {
+            let unarchivedArray = nsArray.map { NSKeyedUnarchiver.unarchiveObject(with: $0 as! Data) }
+            return unarchivedArray as? [T]
+        }
+        return nil
     }
     return nil
 }

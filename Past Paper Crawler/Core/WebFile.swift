@@ -30,10 +30,6 @@ class WebFile : NSObject, NSCoding {
     }
     
     func download(to path: String, classify: Bool = false, avoidDuplication: Bool = false) -> String? {
-        guard let data = NSData(contentsOf: fullUrl) else {
-            return nil
-        }
-        
         var p = path
         if p.last != "/" {
             p += "/"
@@ -55,6 +51,10 @@ class WebFile : NSObject, NSCoding {
         
         if avoidDuplication && PCFileManager.fileExists(atPath: p) {
             return p
+        }
+        
+        guard let data = NSData(contentsOf: fullUrl) else {
+            return nil
         }
         
         if data.write(toFile: p, atomically: true) {
